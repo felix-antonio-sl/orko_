@@ -1,0 +1,57 @@
+# orko Knowledge Resolver
+# KODA-compliant resolver configuration
+# Namespace: ORKO - Organizational Knowledge Ontology
+
+_meta:
+  resolver_version: "1.0.0"
+  koda_compatibility: ">=1.0.0 <2.0.0"
+  last_sync: "2025-12-01T15:58:00-03:00"
+  health_check_interval: weekly
+
+self:
+  namespace: "orko"
+  repository: "github.com/felix-antonio-sl/orko_"
+  visibility: public
+  maintainer: "fs@sanixai.com"
+
+namespaces:
+  orko:
+    type: local
+    base_path: "./"
+    required: true
+    description: "ORKO - Organizational Knowledge Ontology: Complexity, Tamed"
+  
+  koda:
+    type: upstream
+    base_path: "../koda/"
+    fallback: "https://raw.githubusercontent.com/felix-antonio-sl/koda_/main/"
+    required: true
+    description: "KODA Framework - upstream dependency"
+
+resolution_rules:
+  # Core guides (Layer 0-2: Fundamentos, Arquitectura, Tejidos)
+  "urn:knowledge:orko:core:fundamentos:*": "./knowledge/core/guide_core_000_fundamentos_orko.yml"
+  "urn:knowledge:orko:core:arquitectura:*": "./knowledge/core/guide_core_001_arquitectura_orko.yml"
+  "urn:knowledge:orko:core:tejidos:*": "./knowledge/core/guide_core_002_tejidos_orko.yml"
+  
+  # Methodology (Layer 3)
+  "urn:knowledge:orko:metodologia:*": "./knowledge/domains/metodologia/"
+  
+  # Implementation (Layer 4)
+  "urn:knowledge:orko:implementacion:*": "./knowledge/domains/implementacion/"
+  
+  # Agents
+  "urn:knowledge:orko:agents:*": "./agents/"
+
+directories:
+  knowledge: "./knowledge/"
+  core: "./knowledge/core/"
+  domains: "./knowledge/domains/"
+  agents: "./agents/"
+  catalog: "./catalog/"
+  staging: "./staging/"
+  sources: "./sources/"
+
+cache:
+  enabled: true
+  ttl_seconds: 86400

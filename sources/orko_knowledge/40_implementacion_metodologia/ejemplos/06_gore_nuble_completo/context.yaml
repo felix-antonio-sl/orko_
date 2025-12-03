@@ -1,0 +1,20 @@
+id: "gore_nuble_public_sector_minimal"
+nombre: "Gobierno Regional Ñuble (Minimal)"
+tipo_contexto: "enterprise"
+jurisdiction_ids:
+  - "cl"
+default_trajectory: "Minimal"
+team_size_range: "300-600"
+funding_stage: "public_budget"
+risk_profile: "Riesgo político y reputacional alto, con presión por ejecución presupuestaria y coordinación multi-actor."
+industry_sector: "Public_Sector"
+regulatory_context: "Marco normativo y de probidad del sector público chileno (ley de bases, compras públicas, transparencia)."
+maturity_level: "public_admin_mature"
+crisis_flags:
+  cash_crunch: false
+  incidentes_recurrentes: false
+hypergrowth_flags:
+  contratacion_rapida: false
+  expansion_geografica: false
+tech_stack_maturity: "mixed_legacy_modern"
+cultural_context: "Cultura de servicio público con énfasis en accountability, múltiples stakeholders y procesos administrativos formales."

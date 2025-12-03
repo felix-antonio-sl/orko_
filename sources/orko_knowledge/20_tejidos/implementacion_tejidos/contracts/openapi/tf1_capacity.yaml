@@ -1,0 +1,501 @@
+openapi: 3.1.0
+
+info:
+  title: ORKO TF1 Capacity Fabric API
+  version: 2.0.0
+  description: |
+    REST API for TF1 Capacity Fabric - Design, development, deployment, and management of organizational capacities.
+    
+    **Primitivo:** P1_Capacidad | **Axioma:** A2_Existencia_Capacidad  
+    **Trazabilidad:** ../../../01_TF1_capacity.md
+    
+    **Focus:** LLM agent design and management
+    
+  contact:
+    name: ORKO Architecture Team
+    email: architecture@orko.org
+
+servers:
+  - url: https://api.orko.org/v2
+    description: Production
+  - url: http://localhost:8000/v2
+    description: Local development
+
+tags:
+  - name: Capacities
+  - name: Lifecycle
+  - name: Metrics
+
+components:
+  schemas:
+    
+    CapacityAsset:
+      type: object
+      required: [id, name, capacity_type, substrate, role, ownership, lifecycle]
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+          maxLength: 255
+        description:
+          type: string
+          maxLength: 2000
+        capacity_type:
+          type: string
+          enum: [C0, C1, C2, C3]
+        substrate:
+          type: string
+          enum: [Humano, Algorítmico, Mecánico, Mixto]
+        role:
+          type: string
+          enum: [Producción, Habilitación]
+        
+        ownership:
+          type: object
+          required: [accountable_id, override_enabled]
+          properties:
+            accountable_id:
+              type: string
+              format: uuid
+            delegated_from:
+              type: string
+              format: uuid
+              nullable: true
+            delegation_mode:
+              $ref: '../schemas/base.yaml#/components/schemas/DelegationMode'
+            override_enabled:
+              type: boolean
+        
+        lifecycle:
+          type: object
+          required: [current_state, version]
+          properties:
+            current_state:
+              type: string
+              enum: [Planning, Development, Testing, Active, Idle, Deprecated, Retired]
+            version:
+              type: integer
+              minimum: 1
+            utilization_avg:
+              type: number
+              minimum: 0
+              maximum: 1
+        
+        human_specs:
+          type: object
+          properties:
+            skills:
+              type: array
+              items:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  level:
+                    type: string
+                    enum: [Beginner, Intermediate, Advanced, Expert]
+                  certified:
+                    type: boolean
+            availability:
+              type: number
+              minimum: 0
+              maximum: 1
+            cost_per_hour:
+              type: number
+        
+        algorithmic_specs:
+          type: object
+          properties:
+            llm_config:
+              type: object
+              properties:
+                provider:
+                  type: string
+                  enum: [OpenAI, Anthropic, Google_Vertex, Azure_OpenAI, AWS_Bedrock, Local_vLLM, Local_Ollama]
+                model_family:
+                  type: string
+                  enum: [GPT_4, Claude_3, Gemini, Llama_3, Mistral, Mixtral]
+                model_id:
+                  type: string
+                endpoint_url:
+                  type: string
+                  format: uri
+                parameters:
+                  type: object
+                  properties:
+                    temperature:
+                      type: number
+                    max_tokens:
+                      type: integer
+            agent_config:
+              type: object
+              properties:
+                role:
+                  type: string
+                  enum: [Manager, Researcher, Analyst, Writer, Critic, Executor]
+                system_prompt:
+                  type: string
+                  maxLength: 10000
+                tools:
+                  type: array
+                  items:
+                    type: object
+                memory_enabled:
+                  type: boolean
+            guardrails:
+              type: object
+              properties:
+                enabled:
+                  type: boolean
+                input_validation:
+                  type: object
+                  properties:
+                    pii_detection:
+                      type: boolean
+                    injection_detection:
+                      type: boolean
+                    max_length:
+                      type: integer
+                output_validation:
+                  type: object
+                  properties:
+                    schema_validation:
+                      type: boolean
+                    toxicity_filter:
+                      type: boolean
+                operational_limits:
+                  type: object
+                  properties:
+                    max_cost_per_execution:
+                      type: number
+                    max_time_seconds:
+                      type: number
+                    rate_limit_per_minute:
+                      type: integer
+            cost_per_token_input:
+              type: number
+            cost_per_token_output:
+              type: number
+        
+        mechanical_specs:
+          type: object
+          properties:
+            hardware_type:
+              type: string
+            throughput:
+              type: number
+            maintenance_schedule:
+              type: string
+        
+        quality_metrics:
+          type: object
+          properties:
+            success_rate:
+              type: number
+            avg_latency_ms:
+              type: number
+            availability:
+              type: number
+            cost_per_execution:
+              type: number
+            human_override_rate:
+              type: number
+              nullable: true
+            guardrail_violation_rate:
+              type: number
+              nullable: true
+        
+        trajectory:
+          type: object
+          properties:
+            total_executions:
+              type: integer
+            drift_detected:
+              type: boolean
+            last_retrain_date:
+              type: string
+              format: date
+            performance_trend:
+              type: string
+              enum: [Improving, Stable, Degrading, Unknown]
+        
+        used_by_flows:
+          type: array
+          items:
+            type: string
+            format: uuid
+        
+        purpose:
+          type: object
+          properties:
+            linked_okrs:
+              type: array
+              items:
+                type: string
+                format: uuid
+            business_justification:
+              type: string
+              maxLength: 1000
+        
+        tags:
+          type: array
+          items:
+            type: string
+        
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+    
+    CapacityListResponse:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/CapacityAsset'
+        total:
+          type: integer
+        page:
+          type: integer
+    
+    TF1ScoreResponse:
+      type: object
+      properties:
+        tf1_score:
+          type: number
+          minimum: 0
+          maximum: 100
+        components:
+          type: object
+          properties:
+            coverage:
+              type: number
+            quality:
+              type: number
+            availability:
+              type: number
+            governance:
+              type: number
+            efficiency:
+              type: number
+        threshold_met:
+          type: boolean
+    
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+        message:
+          type: string
+        timestamp:
+          type: string
+          format: date-time
+
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+security:
+  - bearerAuth: []
+
+paths:
+  /capacities:
+    get:
+      tags: [Capacities]
+      summary: List capacities
+      parameters:
+        - name: substrate
+          in: query
+          schema:
+            type: string
+            enum: [Humano, Algorítmico, Mecánico, Mixto]
+        - name: capacity_type
+          in: query
+          schema:
+            type: string
+            enum: [C0, C1, C2, C3]
+        - name: lifecycle_state
+          in: query
+          schema:
+            type: string
+        - name: page
+          in: query
+          schema:
+            type: integer
+            default: 1
+        - name: page_size
+          in: query
+          schema:
+            type: integer
+            default: 20
+      responses:
+        '200':
+          description: List of capacities
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CapacityListResponse'
+    
+    post:
+      tags: [Capacities]
+      summary: Create capacity
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CapacityAsset'
+      responses:
+        '201':
+          description: Capacity created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CapacityAsset'
+        '400':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  
+  /capacities/{capacity_id}:
+    parameters:
+      - name: capacity_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+    
+    get:
+      tags: [Capacities]
+      summary: Get capacity
+      responses:
+        '200':
+          description: Capacity details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CapacityAsset'
+        '404':
+          description: Not found
+    
+    put:
+      tags: [Capacities]
+      summary: Update capacity
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CapacityAsset'
+      responses:
+        '200':
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CapacityAsset'
+    
+    delete:
+      tags: [Capacities]
+      summary: Delete capacity
+      responses:
+        '204':
+          description: Deleted
+        '409':
+          description: Cannot delete (referenced by flows)
+  
+  /capacities/{capacity_id}/activate:
+    post:
+      tags: [Lifecycle]
+      summary: Activate capacity
+      parameters:
+        - name: capacity_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Activated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CapacityAsset'
+  
+  /capacities/{capacity_id}/pause:
+    post:
+      tags: [Lifecycle]
+      summary: Pause capacity
+      parameters:
+        - name: capacity_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Paused
+  
+  /capacities/{capacity_id}/deprecate:
+    post:
+      tags: [Lifecycle]
+      summary: Deprecate capacity
+      parameters:
+        - name: capacity_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Deprecated
+  
+  /capacities/{capacity_id}/metrics:
+    get:
+      tags: [Metrics]
+      summary: Get capacity metrics
+      parameters:
+        - name: capacity_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Metrics
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  quality_metrics:
+                    type: object
+                  trajectory:
+                    type: object
+  
+  /metrics/tf1-score:
+    get:
+      tags: [Metrics]
+      summary: Get TF1 fabric health score
+      responses:
+        '200':
+          description: TF1 Score
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TF1ScoreResponse'

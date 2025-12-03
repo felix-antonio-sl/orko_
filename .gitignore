@@ -1,0 +1,25 @@
+# KODA standard gitignore
+staging/*
+!staging/.gitkeep
+
+# OS
+.DS_Store
+
+# Python
+*.pyc
+__pycache__/
+.venv*/
+*.egg-info/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+
+# Build artifacts
+dist/
+build/
+
+# Temporary
+*.tmp
+*.bak

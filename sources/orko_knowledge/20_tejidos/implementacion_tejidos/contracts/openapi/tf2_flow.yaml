@@ -1,0 +1,777 @@
+openapi: 3.1.0
+
+info:
+  title: ORKO TF2 Flow Fabric API
+  version: 2.0.0
+  description: |
+    REST API for TF2 Flow Fabric - Orchestration, automation, execution of flows.
+    **Primitivos:** P2_Flujo + P1_Capacidad | **Axioma:** A1_Transformación  
+    **Trazabilidad:** ../../../02_TF2_flow.md
+    **Includes:** E7 FlowExecution (detailed runtime tracking)
+  contact:
+    name: ORKO Architecture Team
+
+servers:
+  - url: https://api.orko.org/v2
+  - url: http://localhost:8000/v2
+
+tags:
+  - name: Flows
+  - name: Execution
+  - name: Metrics
+
+components:
+  schemas:
+    
+    FlowAsset:
+      type: object
+      required: [id, name, flow_type, cognitive_level, steps, dependencies, autonomy, lifecycle]
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+          maxLength: 255
+        description:
+          type: string
+        flow_type:
+          type: string
+          enum: [Process, Pipeline, Orchestration, Workflow]
+        cognitive_level:
+          type: string
+          enum: [C0_Mechanical, C1_Decisional, C2_Cognitive, Mixed]
+        role:
+          type: string
+          enum: [Producción, Habilitación]
+        
+        steps:
+          type: array
+          items:
+            type: object
+            required: [id, name, capacity_id]
+            properties:
+              id:
+                type: string
+              name:
+                type: string
+              capacity_id:
+                type: string
+                format: uuid
+              input_schema:
+                type: object
+              output_schema:
+                type: object
+              timeout_seconds:
+                type: integer
+              retry_policy:
+                type: object
+                properties:
+                  max_attempts:
+                    type: integer
+                  backoff_strategy:
+                    type: string
+                    enum: [Linear, Exponential, Constant]
+              is_handoff:
+                type: boolean
+        
+        dependencies:
+          type: object
+          description: "DAG: {step_id: [dependencies]}"
+          additionalProperties:
+            type: array
+            items:
+              type: string
+        
+        orchestration:
+          type: object
+          properties:
+            pattern:
+              type: string
+              enum: [Sequential, Parallel, Hierarchical, Debate, Custom]
+            coordinator_capacity_id:
+              type: string
+              format: uuid
+              nullable: true
+            agents:
+              type: array
+              items:
+                type: object
+                properties:
+                  agent_capacity_id:
+                    type: string
+                    format: uuid
+                  role:
+                    type: string
+                    enum: [Coordinator, Worker, Critic, Validator]
+        
+        autonomy:
+          type: object
+          required: [delegation_mode]
+          properties:
+            delegation_mode:
+              $ref: '../schemas/base.yaml#/components/schemas/DelegationMode'
+            hitl_checkpoints:
+              type: array
+              items:
+                type: object
+                properties:
+                  step_id:
+                    type: string
+                  condition:
+                    type: string
+                  human_capacity_id:
+                    type: string
+                    format: uuid
+                  timeout_seconds:
+                    type: integer
+                  escalation_rule:
+                    type: object
+                    description: "Defines escalation path when HITL unavailable or timeout"
+                    properties:
+                      timeout_seconds:
+                        type: integer
+                        description: "Max wait time before escalation"
+                      fallback_capacity_id:
+                        type: string
+                        format: uuid
+                        description: "Fallback human capacity if primary unavailable"
+                        nullable: true
+                      escalation_chain:
+                        type: array
+                        description: "Ordered list of fallback capacities"
+                        items:
+                          type: string
+                          format: uuid
+                      default_action:
+                        type: string
+                        enum: [pause, abort, continue_autonomous, escalate_to_supervisor]
+                        description: "Action to take if entire chain unavailable"
+            override_mechanism:
+              type: object
+              properties:
+                human_can_pause:
+                  type: boolean
+                circuit_breaker_enabled:
+                  type: boolean
+                emergency_stop_capacity_id:
+                  type: string
+                  format: uuid
+        
+        guardrails:
+          type: object
+          properties:
+            operational:
+              type: object
+              properties:
+                max_iterations:
+                  type: integer
+                max_cost_usd:
+                  type: number
+                max_execution_time_seconds:
+                  type: integer
+            quality:
+              type: object
+              properties:
+                min_success_rate:
+                  type: number
+                max_error_rate:
+                  type: number
+            scope:
+              type: object
+              properties:
+                allowed_tools:
+                  type: array
+                  items:
+                    type: string
+                forbidden_actions:
+                  type: array
+                  items:
+                    type: string
+                data_access_scope:
+                  type: object
+                  description: "Security boundary: which TF3 information assets this flow can access"
+                  properties:
+                    allowed_information_assets:
+                      type: array
+                      description: "Whitelist of specific TF3 asset IDs this flow can access"
+                      items:
+                        type: string
+                        format: uuid
+                    forbidden_subdomains:
+                      type: array
+                      description: "TF3 subdomains this flow CANNOT access (blacklist)"
+                      items:
+                        type: string
+                        enum: [Foundation, Analytics, Semantic]
+                    max_read_volume_mb:
+                      type: number
+                      description: "Maximum data this flow can read per execution (prevent exfiltration)"
+                      nullable: true
+                    pii_access_allowed:
+                      type: boolean
+                      description: "Whether this flow is authorized to access PII-containing assets"
+                      default: false
+        
+        compensation:
+          type: object
+          properties:
+            enabled:
+              type: boolean
+            saga_pattern:
+              type: boolean
+            compensation_steps:
+              type: object
+            rollback_on_failure:
+              type: boolean
+        
+        lifecycle:
+          type: object
+          required: [current_state, version]
+          properties:
+            current_state:
+              type: string
+              enum: [Draft, Testing, Staging, Active, Paused, Deprecated, Retired]
+            version:
+              type: integer
+        
+        execution_history:
+          type: object
+          properties:
+            total_executions:
+              type: integer
+            successful:
+              type: integer
+            failed:
+              type: integer
+            avg_duration_seconds:
+              type: number
+            last_execution:
+              type: string
+              format: date-time
+            executions:
+              type: array
+              items:
+                $ref: '#/components/schemas/FlowExecution'
+              description: "E7 instances with detailed tracking"
+        
+        quality_metrics:
+          type: object
+          properties:
+            success_rate:
+              type: number
+            stp_rate:
+              type: number
+            avg_cycle_time_seconds:
+              type: number
+            handoff_ratio:
+              type: number
+            cost_per_execution:
+              type: number
+        
+        drift_monitoring:
+          type: object
+          properties:
+            enabled:
+              type: boolean
+            baseline_success_rate:
+              type: number
+            current_success_rate:
+              type: number
+            drift_detected:
+              type: boolean
+        
+        triggers:
+          type: array
+          items:
+            type: object
+            properties:
+              type:
+                type: string
+                enum: [Scheduled, Event, Manual, API]
+              config:
+                type: object
+        
+        consumes_information:
+          type: array
+          items:
+            type: string
+            format: uuid
+        produces_information:
+          type: array
+          items:
+            type: string
+            format: uuid
+        
+        security:
+          type: object
+          properties:
+            execution_permissions:
+              type: array
+              items:
+                type: string
+                format: uuid
+            audit_required:
+              type: boolean
+        
+        purpose:
+          type: object
+          properties:
+            linked_okrs:
+              type: array
+              items:
+                type: string
+                format: uuid
+        
+        tags:
+          type: array
+          items:
+            type: string
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+    
+    FlowExecution:
+      type: object
+      required: [id, flow_id, started_at, status, trigger]
+      description: "E7 entity - detailed runtime tracking"
+      properties:
+        id:
+          type: string
+          format: uuid
+        flow_id:
+          type: string
+          format: uuid
+        started_at:
+          type: string
+          format: date-time
+        ended_at:
+          type: string
+          format: date-time
+          nullable: true
+        duration_seconds:
+          type: number
+          nullable: true
+        executed_by_capacity_id:
+          type: string
+          format: uuid
+        trigger:
+          type: string
+          enum: [Manual, Scheduled, Event_Driven, Transition]
+        trigger_context:
+          type: object
+          description: "Event payload, schedule config, etc."
+        status:
+          type: string
+          enum: [In_Progress, Completed, Failed, Cancelled]
+        current_step_id:
+          type: string
+          nullable: true
+        steps_completed:
+          type: integer
+        steps_total:
+          type: integer
+        outputs_produced:
+          type: array
+          items:
+            type: object
+            properties:
+              info_id:
+                type: string
+                format: uuid
+              step_id:
+                type: string
+              produced_at:
+                type: string
+                format: date-time
+        failure:
+          type: object
+          nullable: true
+          properties:
+            failed_at:
+              type: string
+              format: date-time
+            failed_step_id:
+              type: string
+            error_type:
+              type: string
+              enum: [Timeout, Validation, Infrastructure, Business_Logic]
+            error_message:
+              type: string
+            stack_trace:
+              type: string
+              nullable: true
+            retry_count:
+              type: integer
+        metrics:
+          type: object
+          description: "DORA metrics per execution"
+          properties:
+            cycle_time:
+              type: number
+              description: "ended_at - started_at (seconds)"
+            wait_time:
+              type: number
+              description: "Time waiting dependencies"
+            active_time:
+              type: number
+              description: "Actual work time"
+            handoff_count:
+              type: integer
+            rework:
+              type: boolean
+        
+        override:
+          type: object
+          nullable: true
+          description: "Human override auditable (HAIC enforcement)"
+          properties:
+            reason:
+              type: string
+              description: "Why override was needed"
+            policy_class:
+              type: string
+              enum: [Safety, Ethics, Cost, Quality]
+              description: "Policy category overridden"
+            hitl_sla_seconds:
+              type: integer
+              minimum: 0
+              description: "SLA for human response time"
+            overridden_by:
+              type: string
+              format: uuid
+              description: "Capacity ID who overrode"
+            overridden_at:
+              type: string
+              format: date-time
+          required: [reason, policy_class]
+        
+        workaround:
+          type: object
+          nullable: true
+          description: "Workaround tracking (WSLC debt detection)"
+          properties:
+            flag:
+              type: boolean
+              default: false
+            kind:
+              type: string
+              enum: [improvisation, bricolage, policy_gap]
+              description: "Type of workaround applied"
+            description:
+              type: string
+              nullable: true
+            frequency:
+              type: integer
+              nullable: true
+              description: "How many times this workaround in last N days"
+          required: [flag]
+        
+        handoff_friction_score:
+          type: integer
+          minimum: 0
+          maximum: 100
+          nullable: true
+          description: "Cost of handoff between steps/roles (Meyer friction)"
+    
+    FlowListResponse:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/FlowAsset'
+        total:
+          type: integer
+        page:
+          type: integer
+    
+    ExecutionRequest:
+      type: object
+      properties:
+        flow_id:
+          type: string
+          format: uuid
+        trigger:
+          type: string
+          enum: [Manual, API]
+        trigger_context:
+          type: object
+        input_data:
+          type: object
+    
+    ExecutionResponse:
+      type: object
+      properties:
+        execution_id:
+          type: string
+          format: uuid
+        status:
+          type: string
+        started_at:
+          type: string
+          format: date-time
+    
+    TF2ScoreResponse:
+      type: object
+      properties:
+        tf2_score:
+          type: number
+          minimum: 0
+          maximum: 100
+        components:
+          type: object
+          properties:
+            coverage:
+              type: number
+            reliability:
+              type: number
+            efficiency:
+              type: number
+            safety:
+              type: number
+            stp_rate:
+              type: number
+        threshold_met:
+          type: boolean
+    
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+        message:
+          type: string
+        timestamp:
+          type: string
+          format: date-time
+
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+security:
+  - bearerAuth: []
+
+paths:
+  /flows:
+    get:
+      tags: [Flows]
+      summary: List flows
+      parameters:
+        - name: cognitive_level
+          in: query
+          schema:
+            type: string
+        - name: lifecycle_state
+          in: query
+          schema:
+            type: string
+        - name: page
+          in: query
+          schema:
+            type: integer
+            default: 1
+      responses:
+        '200':
+          description: List of flows
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FlowListResponse'
+    
+    post:
+      tags: [Flows]
+      summary: Create flow
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FlowAsset'
+      responses:
+        '201':
+          description: Flow created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FlowAsset'
+  
+  /flows/{flow_id}:
+    parameters:
+      - name: flow_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+    
+    get:
+      tags: [Flows]
+      summary: Get flow
+      responses:
+        '200':
+          description: Flow details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FlowAsset'
+    
+    put:
+      tags: [Flows]
+      summary: Update flow
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FlowAsset'
+      responses:
+        '200':
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FlowAsset'
+    
+    delete:
+      tags: [Flows]
+      summary: Delete flow
+      responses:
+        '204':
+          description: Deleted
+  
+  /flows/{flow_id}/execute:
+    post:
+      tags: [Execution]
+      summary: Execute flow
+      description: Trigger flow execution (creates E7 instance)
+      parameters:
+        - name: flow_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExecutionRequest'
+      responses:
+        '202':
+          description: Execution started
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExecutionResponse'
+  
+  /flows/{flow_id}/activate:
+    post:
+      tags: [Lifecycle]
+      summary: Activate flow
+      parameters:
+        - name: flow_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Activated
+  
+  /flows/{flow_id}/pause:
+    post:
+      tags: [Lifecycle]
+      summary: Pause flow
+      parameters:
+        - name: flow_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Paused
+  
+  /executions/{execution_id}:
+    get:
+      tags: [Execution]
+      summary: Get E7 execution details
+      parameters:
+        - name: execution_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: E7 execution details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FlowExecution'
+  
+  /executions/{execution_id}/cancel:
+    post:
+      tags: [Execution]
+      summary: Cancel execution
+      parameters:
+        - name: execution_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Cancelled
+  
+  /executions/{execution_id}/override:
+    post:
+      tags: [Execution]
+      summary: Human override (HITL)
+      description: Human intervenes in execution
+      parameters:
+        - name: execution_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                action:
+                  type: string
+                  enum: [Approve, Reject, Modify]
+                data:
+                  type: object
+                reason:
+                  type: string
+      responses:
+        '200':
+          description: Override applied
+  
+  /metrics/tf2-score:
+    get:
+      tags: [Metrics]
+      summary: Get TF2 fabric health score
+      responses:
+        '200':
+          description: TF2 Score
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TF2ScoreResponse'

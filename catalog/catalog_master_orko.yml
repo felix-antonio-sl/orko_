@@ -1,0 +1,176 @@
+# ORKO Knowledge Catalog
+# Master inventory of all artifacts
+# Organizational Knowledge Ontology - "Complexity, Tamed"
+
+_manifest:
+  urn: "urn:knowledge:orko:catalog:master:1.0.0"
+  federation:
+    visibility: public
+    license: "MIT"
+  provenance:
+    created_by: "FS"
+    created_at: "2025-12-01"
+    last_modified_at: "2025-12-01"
+
+ID: ORKO-CATALOG-MASTER-01
+Version: 1.0.0
+Status: Published
+Version-Notes: "v1.0.0 - Initial catalog structure for ORKO namespace"
+
+Catalog:
+  # Layer 0-2: Theoretical Foundation
+  Core_Guides:
+    - urn: "urn:knowledge:orko:core:fundamentos:1.0.0"
+      title: "Fundamentos Teóricos ORKO (Layer 0)"
+      description: "Genoma de ORKO: Primitivos (P1-P5), Invariantes (I1-I8), Teoremas"
+      file: "knowledge/core/guide_core_000_fundamentos_orko.yml"
+      Exported_IDs:
+        - "ORKO-CORE-FUND-01"
+        - "ORKO-AX-A1"
+        - "ORKO-AX-A2"
+        - "ORKO-AX-A3"
+        - "ORKO-AX-A4"
+        - "ORKO-AX-A5"
+        - "ORKO-INV-I1"
+        - "ORKO-INV-I2"
+        - "ORKO-INV-I3"
+        - "ORKO-INV-I4"
+        - "ORKO-INV-I5"
+        - "ORKO-INV-I6"
+        - "ORKO-INV-I7"
+        - "ORKO-INV-I8"
+      status: draft
+      layer: 0
+      
+    - urn: "urn:knowledge:orko:core:arquitectura:1.0.0"
+      title: "Arquitectura ORKO (Layer 1)"
+      description: "Diseño del sistema: Contratos, relaciones, principios de diseño (PD1-PD76)"
+      file: "knowledge/core/guide_core_001_arquitectura_orko.yml"
+      Exported_IDs:
+        - "ORKO-CORE-ARQ-01"
+        - "ORKO-C-C1"
+        - "ORKO-C-C2"
+        - "ORKO-C-C3"
+        - "ORKO-C-C4"
+        - "ORKO-C-C5"
+      status: draft
+      layer: 1
+      
+    - urn: "urn:knowledge:orko:core:tejidos:1.0.0"
+      title: "Tejidos Tecnológicos ORKO (Layer 2)"
+      description: "Especificación de Tejidos (TF1-TF3) que instancian los primitivos"
+      file: "knowledge/core/guide_core_002_tejidos_orko.yml"
+      status: draft
+      layer: 2
+
+  # Layer 3-4: Methodology & Implementation
+  Domains:
+    - urn: "urn:knowledge:orko:metodologia:fases:1.0.0"
+      title: "Metodología ORKO - Fases de Transformación (Layer 3)"
+      description: "Receta de transformación: Fases, Playbooks, Templates"
+      file: "knowledge/domains/metodologia/kb_metodologia_001_fases_orko.yml"
+      status: draft
+      layer: 3
+      
+    - urn: "urn:knowledge:orko:metodologia:playbooks:1.0.0"
+      title: "Playbooks ORKO"
+      description: "Playbooks por nivel de salud: Survival, Minimal, Advanced"
+      file: "knowledge/domains/metodologia/kb_metodologia_002_playbooks_orko.yml"
+      status: draft
+      layer: 3
+      
+    - urn: "urn:knowledge:orko:implementacion:toolkit:1.0.0"
+      title: "ORKO Toolkit (Layer 4-5)"
+      description: "Calculadoras, scripts, herramientas compiladas para usuario final"
+      file: "knowledge/domains/implementacion/kb_implementacion_001_toolkit_orko.yml"
+      status: draft
+      layer: 4
+
+  Agents:
+    - urn: "urn:knowledge:orko:agents:arquitecto-orko:1.0.0"
+      title: "Arquitecto ORKO"
+      description: "Agente experto integral sobre las 6 capas ORKO (Layer 0-5) para consultas generales"
+      file: "agents/arquitecto-orko/agent_arquitecto_orko.yaml"
+      status: published
+      primary: true
+
+    - urn: "urn:knowledge:orko:agents:orko-director:1.0.0"
+      title: "Director ORKO"
+      description: "Higher-Order Agent que orquesta la cuadrilla de 6 especialistas ORKO"
+      file: "agents/orko-director/agent_orko_director.yaml"
+      status: published
+      higher_order: true
+
+    - urn: "urn:knowledge:orko:agents:orko-theorist:1.0.0"
+      title: "ORKO Theorist"
+      description: "Especialista en Fundamentos Teóricos: Genoma, axiomas, primitivos, invariantes y teoremas (Layer 0)"
+      file: "agents/orko-theorist/agent_orko_theorist.yaml"
+      status: published
+
+    - urn: "urn:knowledge:orko:agents:orko-sage:1.0.0"
+      title: "ORKO Sage"
+      description: "Guardián de referencias fundacionales (WST, AOC, IA, eGov) que dan sustento teórico a ORKO"
+      file: "agents/orko-sage/agent_orko_sage.yaml"
+      status: published
+
+    - urn: "urn:knowledge:orko:agents:orko-architect:1.0.0"
+      title: "ORKO Architect"
+      description: "Arquitecto de sistemas organizacionales basado en contratos, principios, relaciones y vistas (Layer 1)"
+      file: "agents/orko-architect/agent_orko_architect.yaml"
+      status: published
+
+    - urn: "urn:knowledge:orko:agents:orko-guide:1.0.0"
+      title: "ORKO Guide"
+      description: "Especialista metodológico en fases, playbooks y trayectorias de transformación (Layer 3)"
+      file: "agents/orko-guide/agent_orko_guide.yaml"
+      status: published
+
+    - urn: "urn:knowledge:orko:agents:orko-weaver:1.0.0"
+      title: "ORKO Weaver"
+      description: "Ingeniero de tejidos técnicos TF1/TF2/TF3 para llevar la arquitectura a implementación (Layer 2)"
+      file: "agents/orko-weaver/agent_orko_weaver.yaml"
+      status: published
+
+    - urn: "urn:knowledge:orko:agents:orko-builder:1.0.0"
+      title: "ORKO Builder"
+      description: "Especialista en Toolkit, calculadoras, templates y ejemplos prácticos (Layer 4-5)"
+      file: "agents/orko-builder/agent_orko_builder.yaml"
+      status: published
+
+  Schemas: []
+    # Future: JSON schemas for ORKO primitives validation
+
+Statistics:
+  total_artifacts: 14
+  core_guides: 3
+  domains: 3
+  agents: 8
+  schemas: 0
+  last_updated: "2025-12-01"
+
+# ORKO Layer Architecture Reference
+Layer_Architecture:
+  Layer_0:
+    name: "Fundamentos Teóricos"
+    content: "Genoma - Primitivos, Invariantes, Teoremas"
+    status: "Stable"
+  Layer_1:
+    name: "Arquitectura"
+    content: "Contratos, relaciones, PD1-PD76"
+    status: "Stable"
+  Layer_2:
+    name: "Tejidos"
+    content: "TF1-TF3 - Instanciación de primitivos"
+    status: "Defined"
+  Layer_3:
+    name: "Metodología"
+    content: "Fases, Playbooks, Templates"
+    status: "Complete"
+  Layer_4:
+    name: "Implementación"
+    content: "Scripts, generadores, specs"
+    status: "Functional"
+  Layer_5:
+    name: "Producto (Toolkit)"
+    content: "Entregable compilado para usuario final"
+    status: "Released"

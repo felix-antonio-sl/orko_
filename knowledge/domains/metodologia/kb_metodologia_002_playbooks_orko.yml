@@ -1,0 +1,76 @@
+# ORKO Domain KB - Metodología ORKO: Playbooks
+# Layer 3 - Playbooks de Recovery, Transformation, Operational
+
+_manifest:
+  urn: "urn:knowledge:orko:metodologia:playbooks:1.0.0"
+  federation:
+    visibility: public
+    license: "MIT"
+  compatibility:
+    min_consumer_version: "1.0.0"
+    breaking_changes_from: null
+  resolution:
+    canonical_url: "file://knowledge/domains/metodologia/kb_metodologia_002_playbooks_orko.yml"
+    mirrors: []
+  dependencies:
+    requires:
+      - "urn:knowledge:orko:metodologia:fases:1.0.0"
+  provenance:
+    created_by: "FS"
+    created_at: "2025-12-01"
+    last_modified_by: "FS"
+    last_modified_at: "2025-12-01"
+    signature: null
+
+ID: ORKO-MET-PB-01
+Version: 1.0.0
+Status: Draft
+Human-Creator: FS
+Human-Editor: FS
+Model-Collaborator: IA-CLAUDE
+Creation-Date: 2025-12-01
+Modification-Date: 2025-12-01
+Version-Notes: "v1.0.0 - Esqueleto de KB para playbooks de metodología ORKO."
+Ctx: "Playbooks de metodología ORKO por tipo de necesidad (Recovery, Transformation, Operational)."
+
+LLM_Parsing_Instructions:
+  ID: KODA-LLM-PARSER-ORKO-MET-PB-01
+  Req: "Mandatory block following Metadata."
+  Prohib: "Suponer lógicas de playbooks no definidas en las fuentes."
+  Content: |
+    BEGIN_LLM_INSTRUCTIONS
+    You are an AI agent consuming a KODA/Spec KB for ORKO playbooks.
+    Treat each playbook family as an index tied to a symptom and a phase.
+    END_LLM_INSTRUCTIONS
+
+Purp: "Organizar los playbooks ORKO por familia y síntoma, referenciando sus markdown."
+Obj:
+  - "Separar playbooks de Recuperación, Transformación y Operación."
+  - "Anclar cada familia a su directorio correspondiente."
+
+Playbook_Families:
+  Recovery:
+    ID: ORKO-PB-REC-01
+    Symptom_Examples:
+      - "Salud organizacional baja (H_org < umbral)."
+      - "Silos severos."
+      - "Incumplimientos graves de seguridad."
+    Src_Dir: "sources/orko_knowledge/30_metodologia_orko/06_playbooks_recovery/"
+  Transformation:
+    ID: ORKO-PB-TRF-01
+    Symptom_Examples:
+      - "Migración de plataforma."
+      - "Rearquitectura mayor."
+    Src_Dir: "sources/orko_knowledge/30_metodologia_orko/07_playbooks_transformation/"
+  Operational:
+    ID: ORKO-PB-OPS-01
+    Symptom_Examples:
+      - "Incidentes recurrentes."
+      - "Problemas de operación diaria."
+    Src_Dir: "sources/orko_knowledge/30_metodologia_orko/08_playbooks_operational/"
+
+Cross_References:
+  ID: ORKO-MET-PB-XREF-01
+  Links:
+    - Target: "urn:knowledge:orko:metodologia:fases:1.0.0"
+      Ctx: "Cada playbook se aplica en fases específicas del ciclo."

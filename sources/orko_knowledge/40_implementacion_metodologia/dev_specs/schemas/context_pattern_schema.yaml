@@ -1,0 +1,96 @@
+# CONTEXT PATTERN SCHEMA (skeleton v0.1)
+# Basado en SPEC_ARQUITECTURA_DEFINITIVA §2.Schema_2_Context_Pattern
+# y PLAN_ETAPA_2_EXPANSION (FASE 4–5).
+
+schema_id: "Schema_2_Context_Pattern"
+schema_type: "context_pattern"
+schema_version: "0.1.0"
+description: "Schema tipo para modelar patrones de contexto organizacional (I8_Adaptacion_Contextual)."
+
+fields:
+  - id: "id"
+    type: "string"
+    required: true
+    description: "Identificador canónico del patrón de contexto."
+  - id: "nombre"
+    type: "string"
+    required: true
+    description: "Nombre legible del patrón (ej. scaleup_saas, enterprise_regulada)."
+  - id: "tipo_contexto"
+    type: "string"
+    required: true
+    enum: ["startup", "scaleup", "enterprise", "NGO"]
+    description: "Tipo de contexto principal."
+  - id: "jurisdiction_ids"
+    type: "list[string]"
+    required: true
+    description: "IDs de jurisdicciones asociadas (ver jurisdiction_instances.yaml)."
+  - id: "risk_profile"
+    type: "string"
+    required: false
+    description: "Descripción corta del perfil de riesgo."
+  - id: "funding_stage"
+    type: "string"
+    required: false
+    description: "Etapa de funding aproximada (seed, series_a, etc.)."
+  - id: "team_size_range"
+    type: "string"
+    required: false
+    description: "Rango típico de tamaño de equipo (ej. 50-200)."
+  - id: "default_trajectory"
+    type: "string"
+    required: true
+    enum: ["Survival", "Minimal", "Avanzada"]
+    description: "Trayectoria recomendada según el patrón."
+  - id: "industry_sector"
+    type: "string"
+    required: false
+    description: "Sector industrial principal."
+  - id: "regulatory_context"
+    type: "string"
+    required: false
+    description: "Descripción breve del contexto regulatorio dominante."
+  - id: "maturity_level"
+    type: "string"
+    required: false
+    description: "Nivel de madurez organizacional."
+  - id: "crisis_flags"
+    type: "map[bool]"
+    required: false
+    description: "Flags de crisis relevantes (cash_crunch, incidentes_recurrentes, etc.)."
+  - id: "hypergrowth_flags"
+    type: "map[bool]"
+    required: false
+    description: "Flags de hipercrescimiento (contratacion_rapida, expansion_geografica, etc.)."
+  - id: "tech_stack_maturity"
+    type: "string"
+    required: false
+    description: "Descripción corta de madurez del stack tecnológico."
+  - id: "cultural_context"
+    type: "string"
+    required: false
+    description: "Notas sobre cultura organizacional relevante para trayectorias."
+
+# Dimensiones principales (véase SPEC §2)
+dimensions:
+  - organization_size
+  - industry_sector
+  - regulatory_context
+  - maturity_level
+  - crisis_flags
+  - hypergrowth_flags
+  - tech_stack_maturity
+  - cultural_context
+
+examples:
+  - id: "scaleup_saas_200p_minimal"
+    nombre: "Scaleup SaaS 200p (Minimal)"
+    tipo_contexto: "scaleup"
+    jurisdiction_ids: ["eu", "uk"]
+    default_trajectory: "Minimal"
+    team_size_range: "150-250"
+  - id: "enterprise_regulada_avanzada"
+    nombre: "Enterprise regulada (Avanzada)"
+    tipo_contexto: "enterprise"
+    jurisdiction_ids: ["us"]
+    default_trajectory: "Avanzada"

@@ -1,0 +1,72 @@
+# COMPLIANCE FRAMEWORK SCHEMA (skeleton v0.1)
+# Basado en SPEC_ARQUITECTURA_DEFINITIVA §2.Schema_1_Compliance_Framework
+# y PLAN_ETAPA_2_EXPANSION (FASE 3).
+
+schema_id: "Schema_1_Compliance_Framework"
+schema_type: "compliance_framework"
+schema_version: "0.1.0"
+description: "Schema tipo para modelar frameworks de compliance jurisdiccionales (P4_Limite)."
+
+fields:
+  - id: "id"
+    type: "string"
+    required: true
+    description: "Identificador canónico del framework de compliance."
+  - id: "nombre"
+    type: "string"
+    required: true
+    description: "Nombre legible del framework (ej. GDPR, SOX)."
+  - id: "categoria"
+    type: "string"
+    required: true
+    enum: ["Regulatory", "Sectorial", "Interno"]
+    description: "Tipo de framework."
+  - id: "aplicable_jurisdictions"
+    type: "list[string]"
+    required: true
+    description: "Lista de IDs de jurisdicción a las que aplica este framework."
+  - id: "enforcement_level"
+    type: "string"
+    required: true
+    enum: ["Low", "Medium", "High"]
+    description: "Nivel de enforcement relativo."
+  - id: "penalty_max"
+    type: "string"
+    required: false
+    description: "Descripción resumida de penalidad máxima (texto o rango)."
+  - id: "audit_frequency"
+    type: "string"
+    required: false
+    description: "Frecuencia típica de auditoría (ej. anual, trimestral)."
+  - id: "flags"
+    type: "map[bool]"
+    required: false
+    description: "Flags relevantes (data_residency_required, consent_required, etc.)."
+
+# Dimensiones principales (véase SPEC §2)
+dimensions:
+  - data_residency
+  - privacy_regime
+  - labor_law
+  - financial_regulation
+  - sector_specific
+  - ai_regulation
+  - sanctions_compliance
+  - audit_requirements
+  - enforcement_level
+
+examples:
+  - id: "compliance_gdpr_eu"
+    nombre: "GDPR EU"
+    categoria: "Regulatory"
+    aplicable_jurisdictions: ["eu"]
+    enforcement_level: "High"
+    flags:
+      data_residency_required: true
+      consent_required: true
+  - id: "compliance_sox_us"
+    nombre: "SOX US"
+    categoria: "Regulatory"
+    aplicable_jurisdictions: ["us"]
+    enforcement_level: "High"
+    flags: {}

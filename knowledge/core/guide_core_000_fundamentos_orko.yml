@@ -1,0 +1,266 @@
+# ORKO Core Guide 000 - Fundamentos Teóricos
+# Layer 0 - Genoma ORKO
+
+_manifest:
+  urn: "urn:knowledge:orko:core:fundamentos:1.0.0"
+  federation:
+    visibility: public
+    license: "MIT"
+  compatibility:
+    min_consumer_version: "1.0.0"
+    breaking_changes_from: null
+  resolution:
+    canonical_url: "file://knowledge/core/guide_core_000_fundamentos_orko.yml"
+    mirrors: []
+  dependencies:
+    requires:
+      - "urn:knowledge:koda:core:spec:1.0.0"
+      - "urn:knowledge:koda:core:transform:1.0.0"
+  provenance:
+    created_by: "FS"
+    created_at: "2025-12-01"
+    last_modified_by: "FS"
+    last_modified_at: "2025-12-01"
+    signature: null
+
+ID: ORKO-CORE-FUND-01
+Version: 1.0.0
+Status: Draft
+Human-Creator: FS
+Human-Editor: FS
+Model-Collaborator: IA-CLAUDE
+Creation-Date: 2025-12-01
+Modification-Date: 2025-12-01
+Version-Notes: "v1.0.0 - Esqueleto inicial de los fundamentos teóricos ORKO en formato KODA/Spec."
+Ctx: "Fundamentos teóricos de ORKO: axiomas, primitivos, invariantes, teoremas y ciclo fundamental, referenciando markdown legacy en sources/orko_knowledge/00_fundamentos_teoricos/."
+
+LLM_Parsing_Instructions:
+  ID: KODA-LLM-PARSER-ORKO-FUND-01
+  Req: "Mandatory block following Metadata."
+  Prohib: "Usar este artifact para reescritura creativa; es un índice estructural."
+  Content: |
+    BEGIN_LLM_INSTRUCTIONS
+    You are an AI agent consuming a KODA/Spec artifact for ORKO foundations.
+    Your job is to parse structure and references with absolute fidelity.
+
+    FIDELITY: Preserve IDs, section boundaries, lists and mappings exactly.
+    Do NOT expand or invent theoretical content beyond what is explicitly present.
+
+    REFERENCE POLICY:
+    - Ref: fields refer to IDs defined inside this document.
+    - Src: fields point to legacy markdown files under sources/orko_knowledge/00_fundamentos_teoricos/.
+    - Never rewrite the markdown content; only summarize when explicitly asked.
+
+    LANGUAGE POLICY:
+    - Keywords in English (ID, Ctx, Purp, Obj, Def, Ref, Src, Ex).
+    - Content in original language (es).
+    END_LLM_INSTRUCTIONS
+
+Purp: "Proveer una vista estructurada del Genoma ORKO (Layer 0) y actuar como índice KODA/Spec hacia los documentos markdown de fundamentos."
+Obj:
+  - "Enumerar los conjuntos de Axiomas, Primitivos, Invariantes y Teoremas."
+  - "Documentar la relación entre el Genoma ORKO y los dominios superiores (arquitectura, tejidos, metodología)."
+  - "Servir como puente entre los agentes ORKO (Theorist, Sage) y las fuentes markdown legacy."
+
+Overview:
+  ID: ORKO-FUND-OV-01
+  Ctx: "Visión general de los fundamentos teóricos."
+  Def: |
+    Layer 0 define el Genoma ORKO:
+    - Axiomas: verdades de diseño no negociables.
+    - Primitivos: bloques constructivos a partir de los cuales se compone todo el sistema.
+    - Invariantes: restricciones que nunca deben romperse.
+    - Teoremas: resultados derivados que conectan los anteriores.
+  Src: "sources/orko_knowledge/00_fundamentos_teoricos/00_introduccion.md"
+
+Axioms_Index:
+  ID: ORKO-FUND-AXIOMS-01
+  Ctx: "Localización de los axiomas A1-A5."
+  Src: "sources/orko_knowledge/00_fundamentos_teoricos/01_axiomas.md"
+  Note: "El detalle de cada axioma se mantiene en el markdown; este artifact actúa como índice estructural."
+
+Axioms_Detailed:
+  ID: ORKO-FUND-AX-DETAIL
+  Ctx: "Resumen estructurado de los 5 axiomas A1–A5 a partir de 01_axiomas.md."
+
+  A1_Existencia_Transformacion:
+    ID: ORKO-AX-A1
+    Def: "En todo sistema organizacional existe transformación: algo cambia de estado S₁ a estado S₂."
+    Purp: "Establecer que sin transformación no hay organización relevante para ORKO; todo el marco parte de que algo se transforma."
+    Formalization: "Existe al menos una transformación T que lleva el sistema de S₁ a S₂; T tiene duración, costo y calidad medibles."
+    Key_Points:
+      - "Sin transformación el sistema es estático y queda fuera del alcance de ORKO."
+      - "Conecta directamente con el primitivo Flujo (secuencia de transformaciones)."
+      - "Fundamentado en Work System Theory y otras fuentes que modelan organizaciones como sistemas de trabajo."
+    Src: "sources/orko_knowledge/00_fundamentos_teoricos/01_axiomas.md"
+
+  A2_Existencia_Capacidad:
+    ID: ORKO-AX-A2
+    Def: "Toda transformación requiere capacidad que la efectúa; la transformación no ocurre espontáneamente."
+    Purp: "Introducir el concepto de capacidad como portadora de la acción, separando el qué puede hacerse del quién la ejecuta."
+    Formalization: "Para cada transformación T, ∃ Capacidad C tal que C causa T; capacidad es potencial medible (throughput, latencia, disponibilidad)."
+    Key_Points:
+      - "Capacidad ≠ actor; separa sustrato (humano, mecánico, algorítmico) de lo que puede hacer."
+      - "Deriva el primitivo CAPACIDAD y unifica recursos, competencias y autoridad en un concepto operativo."
+      - "Sienta la base para razonar sobre substratos mixtos humano–algorítmicos (TSTI)."
+    Src: "sources/orko_knowledge/00_fundamentos_teoricos/01_axiomas.md"
+
+  A3_Existencia_Informacion:
+    ID: ORKO-AX-A3
+    Def: "Existe estructura portadora de significado que coordina transformaciones y actúa como memoria del sistema."
+    Purp: "Afirmar que la coordinación y la memoria organizacional requieren información explícita, no solo capacidades y flujos."
+    Formalization: "Para coordinar transformaciones y preservar estado, ∃ Información que reduce incertidumbre y describe el sistema."
+    Key_Points:
+      - "Unifica dato, señal y estado como subtipos de Información (persistente, transitoria, agregada)."
+      - "Sin información no hay coordinación ni historia del sistema; solo acciones aisladas."
+      - "Deriva el primitivo INFORMACIÓN y conecta con teoría de la información y del conocimiento."
+    Src: "sources/orko_knowledge/00_fundamentos_teoricos/01_axiomas.md"
+
+  A4_Existencia_Restriccion:
+    ID: ORKO-AX-A4
+    Def: "No todo es posible en todo momento; existen restricciones que acotan el espacio de posibilidades."
+    Purp: "Introducir límites explícitos como parte fundamental del modelo, sin los cuales el espacio de diseño sería inoperable."
+    Formalization: "En todo sistema válido ∃ al menos un conjunto de límites que restringen capacidades, flujos e información."
+    Key_Points:
+      - "Los límites pueden provenir de la física, la regulación, los recursos, la economía y la organización."
+      - "Deriva el primitivo LÍMITE y habilita la noción de autonomía acotada en otros invariantes (I5, I6, I8)."
+      - "Permite medir severidad, cobertura y violaciones como base para gobernanza y compliance."
+    Src: "sources/orko_knowledge/00_fundamentos_teoricos/01_axiomas.md"
+
+  A5_Existencia_Intencionalidad:
+    ID: ORKO-AX-A5
+    Def: "La transformación organizacional tiene propósito: existe un outcome deseado que direcciona la acción."
+    Purp: "Completar el cuadro introduciendo el PARA QUÉ; sin propósito, el sistema podría transformar eficientemente sin sentido."
+    Formalization: "Para cada transformación relevante existe al menos un Propósito que define criterios de éxito (target_value, current_value, progress)."
+    Key_Points:
+      - "Distingue claramente mecánica (A1–A4) de teleología (A5)."
+      - "Deriva el primitivo PROPÓSITO y conecta outputs con valor para clientes y stakeholders."
+      - "Fundamenta la evaluación y priorización de cambios (qué vale la pena transformar y hacia dónde)."
+    Src: "sources/orko_knowledge/00_fundamentos_teoricos/01_axiomas.md"
+
+Primitives_Index:
+  ID: ORKO-FUND-PRIM-01
+  Ctx: "Localización de los primitivos P1-P5."
+  Src: "sources/orko_knowledge/00_fundamentos_teoricos/02_primitivos.md"
+
+Invariants_Index:
+  ID: ORKO-FUND-INV-01
+  Ctx: "Localización de los invariantes I1-I8."
+  Src: "sources/orko_knowledge/00_fundamentos_teoricos/03_invariantes.md"
+
+Theorems_Index:
+  ID: ORKO-FUND-TH-01
+  Ctx: "Localización de los teoremas fundamentales."
+  Src: "sources/orko_knowledge/00_fundamentos_teoricos/06_teoremas_fundamentales.md"
+
+Fundamental_Cycle:
+  ID: ORKO-FUND-CYCLE-01
+  Ctx: "Ciclo fundamental SDA/WSLC."
+  Src: "sources/orko_knowledge/00_fundamentos_teoricos/04_ciclo_fundamental.md"
+
+Master_Equation:
+  ID: ORKO-FUND-EQ-01
+  Ctx: "Ecuación maestra de valor organizacional."
+  Src: "sources/orko_knowledge/00_fundamentos_teoricos/07_ecuacion_maestra.md"
+
+Cross_References:
+  ID: ORKO-FUND-XREF-01
+  Links:
+    - XRef: "urn:knowledge:orko:core:arquitectura:1.0.0"
+      Ctx: "Los contratos y principios de Layer 1 deben respetar todos los invariantes."
+    - XRef: "urn:knowledge:orko:core:tejidos:1.0.0"
+      Ctx: "Los tejidos TF1-TF3 implementan los primitivos y respetan invariantes."
+    - XRef: "urn:knowledge:orko:metodologia:fases:1.0.0"
+      Ctx: "Las fases metodológicas deben preservar los invariantes a lo largo del tiempo."
+
+Invariants_Detailed:
+  ID: ORKO-FUND-INV-DETAIL
+  Ctx: "Resumen estructurado de los 8 invariantes (I1–I8) a partir de 03_invariantes.md."
+
+  I1_Minimalidad:
+    ID: ORKO-INV-I1
+    Def: "El sistema usa el mínimo número de primitivos necesarios y suficientes (P1–P5)."
+    Purp: "Garantizar parsimonia ontológica y reducir fricción cognitiva para diseñar y razonar sobre ORKO."
+    Formalization: "Ningún primitivo P ∈ {P1..P5} es expresable como combinación de los demás; P1–P5 bastan para modelar conceptos organizacionales clave."
+    Key_Points:
+      - "Cada primitivo (Capacidad, Flujo, Información, Límite, Propósito) es irreducible."
+      - "P1–P5 son suficientes para representar humanos, máquinas, procesos, datos, límites y objetivos."
+      - "Minimalidad se apoya en parsimonia (Ockham), teoría de sistemas y categoría."
+    Src: "sources/orko_knowledge/00_fundamentos_teoricos/03_invariantes.md"
+
+  I2_Ortogonalidad:
+    ID: ORKO-INV-I2
+    Def: "Los primitivos son mutuamente independientes sin solapamiento conceptual (10 pares ortogonales)."
+    Purp: "Evitar ambigüedad entre capacidades, flujos, información, límites y propósito, permitiendo combinarlas sin interferencias."
+    Formalization: "∀ Pi, Pj ∈ {P1..P5}, i ≠ j: Pi ⊥ Pj si Pi puede variar independientemente de Pj."
+    Key_Points:
+      - "La ortogonalidad se demuestra analizando pares de primitivos (Capacidad vs Flujo, Información, Límite, Propósito, etc.)."
+      - "Cada dimensión captura un aspecto distinto: mecánica (cómo), contenido (qué), restricción (hasta dónde), teleología (para qué)."
+      - "I2 asegura claridad de diseño y facilita extensiones sin romper el modelo."
+    Src: "sources/orko_knowledge/00_fundamentos_teoricos/03_invariantes.md"
+
+  I3_Trazabilidad:
+    ID: ORKO-INV-I3
+    Def: "Toda transformación, decisión y artefacto tiene origen, responsable y justificación rastreables."
+    Purp: "Habilitar accountability, auditoría, debugging y aprendizaje organizacional."
+    Formalization: "∀ entidad E del sistema, ∃ metadata(E) con created_by, created_at, reason y lineage (DAG de ancestros)."
+    Key_Points:
+      - "Define requisitos de trazabilidad específicos por primitivo (Capacidad, Flujo, Información, Límite, Propósito)."
+      - "Se apoya en prácticas de data lineage, event sourcing, blockchain y governance regulatoria."
+      - "Conecta directamente con HAIC (I5) y trajectory-awareness (I6) al exigir trails auditables."
+    Src: "sources/orko_knowledge/00_fundamentos_teoricos/03_invariantes.md"
+
+  I4_Clasificacion_Contextual:
+    ID: ORKO-INV-I4
+    Def: "Todo componente operativo se clasifica como Producción o Habilitación según su contexto organizacional."
+    Purp: "Resolver la confusión entre producción y habilitación, especialmente en organizaciones de software y datos."
+    Formalization: "∀ C ∈ {Capacidad, Flujo}, clasificar(C, Org, Ctx) → {Producción, Habilitación}, pudiendo variar por organización y contexto."
+    Key_Points:
+      - "Producción: salida en flujo directo a destinatario final de valor; Habilitación: amplifica otras capacidades."
+      - "Incluye reglas operativas (R1 flujo directo cliente, R2 amplificación interna, R3 híbridos contextuales)."
+      - "Permite reclasificar componentes cuando cambia el contexto (pivotes, productización, etc.)."
+    Src: "sources/orko_knowledge/00_fundamentos_teoricos/03_invariantes.md"
+
+  I5_HAIC_Human_AI_Collaboration:
+    ID: ORKO-INV-I5
+    Def: "Toda capacidad algorítmica decisional debe tener exactamente un accountable humano con autoridad de override y derecho a explicabilidad."
+    Purp: "Asegurar que la colaboración humano–AI mantenga accountability humana, autonomía algorítmica acotada y explicabilidad suficiente."
+    Formalization: "∀ cap algorítmica C1+: ∃! humano h tal que accountability_chain(cap) → h, h.can_override(cap) y cap.must_explain_to(h)."
+    Key_Points:
+      - "Constraints clave: accountability humana, capacidad de override, explainability y autonomía acotada en dimensiones explícitas."
+      - "Distingue genoma (núcleo ético-estructural) de fenotipo (modos M1–M6 de delegación y patrones de override)."
+      - "Es transversal a todos los dominios D1–D4 y no se limita a un solo tejido (TF7 es implementación, no definición de HAIC)."
+    Src: "sources/orko_knowledge/00_fundamentos_teoricos/03_invariantes.md"
+
+  I6_Trajectory_Awareness:
+    ID: ORKO-INV-I6
+    Def: "Toda capacidad algorítmica debe tener trayectoria de uso registrada que condicione su autonomía y evolución."
+    Purp: "Convertir el historial de ejecuciones y feedback en base para mejora continua y ajuste seguro del nivel de delegación."
+    Formalization: "∀ cap algorítmica, ∃ trajectory(cap) = {executions, feedback, metrics} que informa evolution_cap y adjustment_autonomy."
+    Key_Points:
+      - "Distingue capacidades mecánicas (se degradan con uso) de algorítmicas (mejoran con uso)."
+      - "Define dimensiones de trayectoria (Execution History, Human Feedback, Context Shifts) y mecanismos de evolución (progresión M1–M6, retraining, drift detection)."
+      - "Conecta con I5 al requerir que cambios de autonomía se basen en evidencia empírica."
+    Src: "sources/orko_knowledge/00_fundamentos_teoricos/03_invariantes.md"
+
+  I7_Emergencia_Complejidad:
+    ID: ORKO-INV-I7
+    Def: "Las capacidades organizacionales emergen en niveles crecientes de complejidad; EA, TD y ORKO son propiedades emergentes, no módulos aislados."
+    Purp: "Ubicar prácticas como Enterprise Architecture y Transformación Digital en una jerarquía de niveles que no puede saltarse."
+    Formalization: "∃ jerarquía {L0..L5} donde L(n+1) emerge cuando complejidad L(n) supera umbral crítico; cada práctica P tiene nivel_mínimo(P)."
+    Key_Points:
+      - "Define niveles 0–5 (ejecución mecánica, decisión local, reflexión operacional, reflexión estructural, reflexión estratégica, meta-reflexión)."
+      - "EA emerge en Nivel 3, TD en Nivel 4 y ORKO opera en Nivel 5 como meta-marco."
+      - "Incluye propiedades de inclusión, no-saltabilidad, umbral crítico y recursión fractal en el patrón SDA."
+    Src: "sources/orko_knowledge/00_fundamentos_teoricos/03_invariantes.md"
+
+  I8_Adaptacion_Contextual:
+    ID: ORKO-INV-I8
+    Def: "ORKO adapta su expresión metodológica según contexto organizacional, manteniendo genoma teórico inmutable y siendo independiente del uso de AI."
+    Purp: "Evitar enfoques one-size-fits-all separando genoma (A1–A5, P1–P5, I1–I8) de fenotipo (metodología, módulos, templates) parametrizable por contexto."
+    Formalization: "∀ organización O con contexto C, ∃ expresión metodológica M(C) que es fiel al genoma, respeta contratos C1–C5, es mínima para C y distinta si C cambia; M(C) es determinable sin AI."
+    Key_Points:
+      - "Define un Context Schema con ~36 parámetros (tipo organizacional, escala, regulación, madurez digital, crisis, restricciones, cultura, objetivos)."
+      - "Incluye Expression Rules que activan/desactivan módulos y trayectorias según contexto (compliance, crisis, escala, madurez, sector)."
+      - "Permite un modo manual (sin AI) y un modo asistido HAIC; I8 es ortogonal a I5 pero lo aprovecha como amplificador."
+    Src: "sources/orko_knowledge/00_fundamentos_teoricos/03_invariantes.md"

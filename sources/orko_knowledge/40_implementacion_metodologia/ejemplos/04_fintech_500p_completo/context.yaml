@@ -1,0 +1,21 @@
+id: "fintech_regulada_500p_avanzada"
+nombre: "Fintech regulada 500p (Avanzada)"
+tipo_contexto: "scaleup"
+jurisdiction_ids:
+  - "eu"
+  - "uk"
+default_trajectory: "Avanzada"
+team_size_range: "400-600"
+funding_stage: "series_d"
+risk_profile: "Riesgo regulatorio y de compliance alto por operar en servicios financieros regulados y múltiples jurisdicciones."
+industry_sector: "Fintech"
+regulatory_context: "Entorno con supervisión financiera estricta, requisitos fuertes de KYC/AML y protección de datos."
+maturity_level: "scaleup_late"
+crisis_flags:
+  cash_crunch: false
+  incidentes_recurrentes: true
+hypergrowth_flags:
+  contratacion_rapida: true
+  expansion_geografica: true
+tech_stack_maturity: "high"
+cultural_context: "Cultura orientada a growth y cumplimiento, con alta presión por lanzar productos financieros rápidos manteniendo compliance estricto."

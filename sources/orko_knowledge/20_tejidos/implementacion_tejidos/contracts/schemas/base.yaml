@@ -1,0 +1,545 @@
+# ORKO BASE SCHEMA DEFINITIONS
+# JSON Schema Draft 2020-12
+# Trazabilidad: ../../../00_introduccion_tejidos.md
+
+$schema: "https://json-schema.org/draft/2020-12/schema"
+$id: "https://orko.arch/schemas/base/v2.0"
+
+definitions:
+  
+  # ============================================================================
+  # PRIMITIVE TYPES
+  # ============================================================================
+  
+  UUID:
+    type: string
+    format: uuid
+    pattern: "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$"
+    description: "Universal Unique Identifier (RFC 4122)"
+    examples:
+      - "550e8400-e29b-41d4-a716-446655440000"
+  
+  Timestamp:
+    type: string
+    format: date-time
+    description: "ISO 8601 timestamp with timezone (RFC 3339)"
+    examples:
+      - "2025-01-11T20:15:00Z"
+      - "2025-01-11T17:15:00-03:00"
+  
+  Date:
+    type: string
+    format: date
+    description: "ISO 8601 date (YYYY-MM-DD)"
+    examples:
+      - "2025-01-11"
+  
+  Duration:
+    type: number
+    description: "Duration in seconds (allows fractional)"
+    minimum: 0
+    examples:
+      - 3600      # 1 hour
+      - 0.250     # 250ms
+  
+  Percentage:
+    type: number
+    minimum: 0
+    maximum: 100
+    description: "Percentage value [0..100]"
+    examples:
+      - 85.5
+      - 100.0
+  
+  Score:
+    type: number
+    minimum: 0
+    maximum: 100
+    description: "Score value [0..100]"
+    examples:
+      - 75.0
+  
+  # ============================================================================
+  # COGNITIVE LEVELS
+  # Trazabilidad: 00_introduccion_tejidos.md §3.2
+  # ============================================================================
+  
+  CognitiveLevel:
+    type: string
+    enum:
+      - C0    # Mechanical - Sin decision-making
+      - C1    # Decisional - Rule-based, ML routing
+      - C2    # Cognitive - LLM agents, reasoning
+      - C3    # Meta-cognitive - Strategy, reflection (humans only)
+    description: |
+      Cognitive level según ORKO hierarchy:
+      - C0: Mechanical operations (RPA, scheduled jobs, sensors)
+      - C1: Decisional with rules/ML (classifiers, routers, rule engines)
+      - C2: Cognitive with LLMs (agents, multi-agent, reasoning)
+      - C3: Meta-cognitive (humans only - strategy, architecture)
+    examples:
+      - C2
+  
+  # ============================================================================
+  # CAPACITY TYPES
+  # Trazabilidad: 01_TF1_capacity.md §2
+  # ============================================================================
+  
+  SubstrateType:
+    type: string
+    enum:
+      - Humano
+      - Algorítmico
+      - Mecánico
+      - Mixto
+    description: |
+      Physical substrate of capacity:
+      - Humano: People, teams
+      - Algorítmico: ML models, LLM agents, algorithms
+      - Mecánico: Hardware, sensors, robots
+      - Mixto: Human-in-the-loop scenarios
+    examples:
+      - Algorítmico
+  
+  CapacityType:
+    type: object
+    required:
+      - cognitive_level
+      - substrate
+    properties:
+      cognitive_level:
+        $ref: "#/definitions/CognitiveLevel"
+      substrate:
+        $ref: "#/definitions/SubstrateType"
+    description: "Composite capacity classification"
+    examples:
+      - cognitive_level: C2
+        substrate: Algorítmico
+  
+  # ============================================================================
+  # LIFECYCLE STATES
+  # Trazabilidad: 01_TF1_capacity.md §2, 02_TF2_flow.md §2
+  # ============================================================================
+  
+  LifecycleState:
+    type: string
+    enum:
+      - Draft
+      - Testing
+      - Staging
+      - Active
+      - Paused
+      - Deprecated
+      - Retired
+    description: |
+      Standard lifecycle for all ORKO assets:
+      - Draft: Initial design
+      - Testing: Under validation
+      - Staging: Pre-production
+      - Active: Production operational
+      - Paused: Temporarily disabled
+      - Deprecated: Marked for retirement
+      - Retired: Archived, not operational
+    examples:
+      - Active
+  
+  # ============================================================================
+  # FLOW EXECUTION STATUS
+  # Trazabilidad: 02_TF2_flow.md §2 (E7 integration)
+  # ============================================================================
+  
+  ExecutionStatus:
+    type: string
+    enum:
+      - In_Progress
+      - Completed
+      - Failed
+      - Cancelled
+    description: |
+      Runtime status of flow execution (E7):
+      - In_Progress: Currently executing
+      - Completed: Successfully finished
+      - Failed: Terminated with error
+      - Cancelled: User/system cancelled
+    examples:
+      - Completed
+  
+  ExecutionTrigger:
+    type: string
+    enum:
+      - Manual
+      - Scheduled
+      - Event_Driven
+      - Transition
+    description: |
+      What triggered flow execution:
+      - Manual: User-initiated
+      - Scheduled: Cron/timer based
+      - Event_Driven: Event bus trigger
+      - Transition: State machine transition
+    examples:
+      - Event_Driven
+  
+  # ============================================================================
+  # INFORMATION TYPES
+  # Trazabilidad: 03_TF3_information.md §2
+  # ============================================================================
+  
+  InformationType:
+    type: string
+    enum:
+      - Persistente
+      - Transitoria
+      - Agregada
+    description: |
+      Information persistence model:
+      - Persistente: Long-term storage (databases, data lakes)
+      - Transitoria: Temporary (cache, message queues)
+      - Agregada: Derived from other assets (reports, metrics)
+    examples:
+      - Persistente
+  
+  InformationStructure:
+    type: string
+    enum:
+      - Structured
+      - Semi_Structured
+      - Unstructured
+    description: |
+      Data structure type:
+      - Structured: Relational tables, schemas
+      - Semi_Structured: JSON, XML, logs
+      - Unstructured: Text, PDFs, images, audio
+    examples:
+      - Unstructured
+  
+  InformationSubdomain:
+    type: string
+    enum:
+      - Foundation
+      - Analytics
+      - Semantic
+    description: |
+      TF3 Information sub-domain (focus: LLM ecosystem):
+      - Foundation: Data ingestion, storage, governance
+      - Analytics: BI, metrics, feature engineering
+      - Semantic: RAG, vector stores, knowledge graphs, embeddings
+    examples:
+      - Semantic
+  
+  # ============================================================================
+  # BOUNDED AUTONOMY MODES
+  # Trazabilidad: 02_TF2_flow.md §3 (Orchestration patterns)
+  # ============================================================================
+  
+  DelegationMode:
+    type: string
+    enum:
+      - M1
+      - M2
+      - M3
+      - M4
+      - M5
+      - M6
+    description: |
+      ORKO bounded autonomy spectrum (I5_HAIC):
+      - M1 (Humano Puro): Human does everything
+      - M2 (Asistido Por Agente): Agent assists, human executes
+      - M3 (Sugerencia Agente, Humano Decide): Agent suggests, human approves
+      - M4 (Agente Decide, Humano Puede Vetar): Agent executes, human can veto (HITL checkpoint)
+      - M5 (Agente Autónomo Con Override): Agent autonomous, human can override
+      - M6 (Agente Autónomo Puro): Agent fully autonomous (only for low-risk)
+    examples:
+      - M4
+  
+  # ============================================================================
+  # COMMON PATTERNS
+  # ============================================================================
+  
+  Ownership:
+    type: object
+    required:
+      - owner_capacity_id
+      - created_at
+    properties:
+      owner_capacity_id:
+        $ref: "#/definitions/UUID"
+        description: "Reference to Capacity (human) accountable for this asset"
+      created_at:
+        $ref: "#/definitions/Timestamp"
+      created_by:
+        $ref: "#/definitions/UUID"
+        description: "Reference to Capacity that created this"
+      updated_at:
+        $ref: "#/definitions/Timestamp"
+      updated_by:
+        $ref: "#/definitions/UUID"
+    description: "Standard ownership pattern (I5_HAIC - human accountability)"
+    examples:
+      - owner_capacity_id: "a1b2c3d4-e5f6-4a5b-8c9d-0e1f2a3b4c5d"
+        created_at: "2025-01-11T20:00:00Z"
+        created_by: "a1b2c3d4-e5f6-4a5b-8c9d-0e1f2a3b4c5d"
+  
+  Lifecycle:
+    type: object
+    required:
+      - current_state
+      - version
+    properties:
+      current_state:
+        $ref: "#/definitions/LifecycleState"
+      version:
+        type: integer
+        minimum: 1
+        description: "Monotonically increasing version number"
+      change_log:
+        type: array
+        items:
+          type: object
+          required:
+            - version
+            - state
+            - timestamp
+            - changed_by
+          properties:
+            version:
+              type: integer
+            state:
+              $ref: "#/definitions/LifecycleState"
+            timestamp:
+              $ref: "#/definitions/Timestamp"
+            changed_by:
+              $ref: "#/definitions/UUID"
+            reason:
+              type: string
+              maxLength: 500
+    description: "Standard lifecycle tracking"
+    examples:
+      - current_state: Active
+        version: 3
+        change_log:
+          - version: 1
+            state: Draft
+            timestamp: "2025-01-01T10:00:00Z"
+            changed_by: "a1b2c3d4-e5f6-4a5b-8c9d-0e1f2a3b4c5d"
+            reason: "Initial creation"
+  
+  QualityMetrics:
+    type: object
+    properties:
+      completeness:
+        $ref: "#/definitions/Percentage"
+        description: "% of required fields populated"
+      accuracy:
+        $ref: "#/definitions/Percentage"
+        description: "% of data matching ground truth"
+      consistency:
+        $ref: "#/definitions/Percentage"
+        description: "% without contradictions"
+      validity:
+        $ref: "#/definitions/Percentage"
+        description: "% conforming to schema/rules"
+      freshness:
+        $ref: "#/definitions/Duration"
+        description: "Seconds since last update"
+      overall_score:
+        $ref: "#/definitions/Score"
+        description: "Weighted average quality score"
+    description: "Standard quality metrics pattern"
+    examples:
+      - completeness: 95.0
+        accuracy: 98.5
+        overall_score: 92.0
+  
+  Purpose:
+    type: object
+    properties:
+      linked_okrs:
+        type: array
+        items:
+          $ref: "#/definitions/UUID"
+        description: "References to OKR IDs this asset contributes to"
+      business_justification:
+        type: string
+        maxLength: 1000
+        description: "Why this asset exists (P5_Purpose)"
+      value_proposition:
+        type: string
+        maxLength: 500
+        description: "Value delivered to organization"
+    description: "Standard purpose linkage (P5_Purpose transversal)"
+    examples:
+      - linked_okrs:
+          - "okr-001-2025-q1"
+        business_justification: "Automate customer support response generation"
+        value_proposition: "Reduce response time from 2h to 5min"
+  
+  Tags:
+    type: array
+    items:
+      type: string
+      pattern: "^[a-z0-9_-]+$"
+      maxLength: 50
+    maxItems: 20
+    description: "Lowercase tags for classification and search"
+    examples:
+      - ["llm", "rag", "customer_support", "production"]
+  
+  # ============================================================================
+  # ERROR PATTERNS
+  # ============================================================================
+  
+  ErrorType:
+    type: string
+    enum:
+      - Timeout
+      - Validation
+      - Infrastructure
+      - Business_Logic
+      - Rate_Limit
+      - Authentication
+      - Authorization
+    description: "Standard error classification"
+    examples:
+      - Validation
+  
+  Error:
+    type: object
+    required:
+      - error_type
+      - error_message
+      - timestamp
+    properties:
+      error_type:
+        $ref: "#/definitions/ErrorType"
+      error_message:
+        type: string
+        maxLength: 2000
+      stack_trace:
+        type: string
+        maxLength: 10000
+      timestamp:
+        $ref: "#/definitions/Timestamp"
+      context:
+        type: object
+        description: "Additional error context (JSON)"
+    description: "Standard error capture pattern"
+  
+  # ============================================================================
+  # LLM-SPECIFIC TYPES (Focus)
+  # ============================================================================
+  
+  LLMProvider:
+    type: string
+    enum:
+      - OpenAI
+      - Anthropic
+      - Google_Vertex
+      - Azure_OpenAI
+      - AWS_Bedrock
+      - HuggingFace
+      - Local_vLLM
+      - Local_Ollama
+    description: "LLM provider/serving platform"
+    examples:
+      - OpenAI
+  
+  LLMModelFamily:
+    type: string
+    enum:
+      - GPT_4
+      - GPT_3_5
+      - Claude_3
+      - Claude_2
+      - Gemini
+      - Llama_3
+      - Mistral
+      - Mixtral
+      - Custom
+    description: "LLM model family"
+    examples:
+      - Claude_3
+  
+  AgentRole:
+    type: string
+    enum:
+      - Manager          # Decomposes tasks, coordinates
+      - Researcher       # Web search, RAG retrieval
+      - Analyst          # Data analysis, reasoning
+      - Writer           # Content generation
+      - Critic           # Review, quality control
+      - Executor         # Task execution, tool calling
+      - Custom
+    description: "Agent role in multi-agent system"
+    examples:
+      - Researcher
+  
+  VectorStoreType:
+    type: string
+    enum:
+      - Pinecone
+      - Weaviate
+      - Chroma
+      - Qdrant
+      - FAISS
+      - Milvus
+      - PostgreSQL_pgvector
+    description: "Vector database for embeddings"
+    examples:
+      - Pinecone
+  
+  EmbeddingModel:
+    type: string
+    enum:
+      - OpenAI_text_embedding_3_large
+      - OpenAI_text_embedding_3_small
+      - Cohere_embed_v3
+      - Voyage_AI
+      - BGE_large
+      - E5_large
+      - Sentence_Transformers
+    description: "Embedding model for vector search"
+    examples:
+      - OpenAI_text_embedding_3_large
+
+# ============================================================================
+# VALIDATION RULES (Invariants)
+# ============================================================================
+
+$defs:
+  invariants:
+    I5_HAIC:
+      description: "Human Accountability in AI Context - All assets MUST have human owner"
+      rule: "ownership.owner_capacity_id MUST reference Capacity with substrate=Humano"
+    
+    I6_Trajectory:
+      description: "Assets learn and evolve with usage"
+      rule: "Lifecycle change_log MUST be append-only, monotonically increasing versions"
+    
+    I3_Trazabilidad:
+      description: "100% traceable to axioms/primitives"
+      rule: "All enums and types MUST reference source specification document"
+
+# ============================================================================
+# METADATA
+# ============================================================================
+
+title: "ORKO Base Schema Definitions"
+version: "2.0.0"
+description: |
+  Foundation schema types for ORKO technological fabrics.
+  Includes primitive types, enums, and common patterns.
+  
+  Focus: LLM ecosystem (agents, RAG, multi-agent orchestration)
+  
+  Trazabilidad:
+    - 00_introduccion_tejidos.md: General architecture
+    - 01_TF1_capacity.md: Capacity types, lifecycle
+    - 02_TF2_flow.md: Flow, E7, bounded autonomy
+    - 03_TF3_information.md: Information types, sub-domains
+
+maintainer:
+  name: "ORKO Architecture Team"
+  contact: "architecture@orko.org"
+
+license: "Proprietary - ORKO Framework"

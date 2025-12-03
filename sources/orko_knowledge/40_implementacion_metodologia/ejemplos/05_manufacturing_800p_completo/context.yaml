@@ -1,0 +1,20 @@
+id: "manufacturing_800p_minimal"
+nombre: "Manufacturing 800p (Minimal)"
+tipo_contexto: "enterprise"
+jurisdiction_ids:
+  - "eu"
+default_trajectory: "Minimal"
+team_size_range: "700-900"
+funding_stage: "private_company"
+risk_profile: "Riesgo operacional moderado-alto por dependencia de cadena de suministro y activos físicos intensivos."
+industry_sector: "Manufacturing"
+regulatory_context: "Entorno regulado por normativas de seguridad industrial, medio ambiente y calidad."
+maturity_level: "enterprise_mature"
+crisis_flags:
+  cash_crunch: false
+  incidentes_recurrentes: true
+hypergrowth_flags:
+  contratacion_rapida: false
+  expansion_geografica: false
+tech_stack_maturity: "low_mid"
+cultural_context: "Cultura fuertemente orientada a operaciones, con foco en eficiencia, seguridad y continuidad productiva."

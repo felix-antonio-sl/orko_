@@ -1,0 +1,82 @@
+# ORKO Core Guide 002 - Tejidos Tecnológicos ORKO
+# Layer 2 - Capacity, Flow, Information
+
+_manifest:
+  urn: "urn:knowledge:orko:core:tejidos:1.0.0"
+  federation:
+    visibility: public
+    license: "MIT"
+  compatibility:
+    min_consumer_version: "1.0.0"
+    breaking_changes_from: null
+  resolution:
+    canonical_url: "file://knowledge/core/guide_core_002_tejidos_orko.yml"
+    mirrors: []
+  dependencies:
+    requires:
+      - "urn:knowledge:koda:core:spec:1.0.0"
+      - "urn:knowledge:koda:core:transform:1.0.0"
+  provenance:
+    created_by: "FS"
+    created_at: "2025-12-01"
+    last_modified_by: "FS"
+    last_modified_at: "2025-12-01"
+    signature: null
+
+ID: ORKO-CORE-TEJ-01
+Version: 1.0.0
+Status: Draft
+Human-Creator: FS
+Human-Editor: FS
+Model-Collaborator: IA-CLAUDE
+Creation-Date: 2025-12-01
+Modification-Date: 2025-12-01
+Version-Notes: "v1.0.0 - Esqueleto inicial de los tejidos ORKO (TF1/TF2/TF3)."
+Ctx: "Tejidos técnicos ORKO: TF1 (Capacity), TF2 (Flow), TF3 (Information), referenciando markdown legacy en sources/orko_knowledge/20_tejidos/."
+
+LLM_Parsing_Instructions:
+  ID: KODA-LLM-PARSER-ORKO-TEJ-01
+  Req: "Mandatory block following Metadata."
+  Prohib: "Introducir detalles de implementación no presentes en los markdown."
+  Content: |
+    BEGIN_LLM_INSTRUCTIONS
+    You are an AI agent consuming a KODA/Spec artifact for ORKO fabrics.
+    Treat this document as a structural map over TF1/TF2/TF3.
+
+    Use Src paths to locate detailed descriptions in markdown.
+    END_LLM_INSTRUCTIONS
+
+Purp: "Mapear los tejidos TF1/TF2/TF3 y sus relaciones, sirviendo de puente entre arquitectura y implementación."
+Obj:
+  - "Describir brevemente qué cubre cada tejido."
+  - "Apuntar a los documentos markdown correspondientes."
+
+Overview:
+  ID: ORKO-TEJ-OV-01
+  Ctx: "Introducción general a los tejidos ORKO."
+  Src: "sources/orko_knowledge/20_tejidos/00_introduccion_tejidos.md"
+
+TF1_Capacity_Fabric:
+  ID: ORKO-TEJ-TF1-01
+  Ctx: "Tejido de Capacidad (agentes, humanos, máquinas)."
+  Src: "sources/orko_knowledge/20_tejidos/01_TF1_capacity.md"
+
+TF2_Flow_Fabric:
+  ID: ORKO-TEJ-TF2-01
+  Ctx: "Tejido de Flujo (orquestación, workflows, pipelines)."
+  Src: "sources/orko_knowledge/20_tejidos/02_TF2_flow.md"
+
+TF3_Information_Fabric:
+  ID: ORKO-TEJ-TF3-01
+  Ctx: "Tejido de Información (datos, conocimiento, lakehouse)."
+  Src: "sources/orko_knowledge/20_tejidos/03_TF3_information.md"
+
+Cross_Fabric_Concerns:
+  ID: ORKO-TEJ-CONCERNS-01
+  Ctx: "Seguridad, observabilidad y otros concerns transversales."
+  Src: "sources/orko_knowledge/20_tejidos/04_concerns_transversales.md"
+
+Integration_Patterns:
+  ID: ORKO-TEJ-INTEG-01
+  Ctx: "Patrones de integración entre tejidos."
+  Src: "sources/orko_knowledge/20_tejidos/05_integracion_tejidos.md"

@@ -1,0 +1,79 @@
+# ORKO Domain KB - Implementación: ORKO Toolkit
+# Layer 4-5 - Producto Toolkit v1.0.0
+
+_manifest:
+  urn: "urn:knowledge:orko:implementacion:toolkit:1.0.0"
+  federation:
+    visibility: public
+    license: "MIT"
+  compatibility:
+    min_consumer_version: "1.0.0"
+    breaking_changes_from: null
+  resolution:
+    canonical_url: "file://knowledge/domains/implementacion/kb_implementacion_001_toolkit_orko.yml"
+    mirrors: []
+  dependencies:
+    requires:
+      - "urn:knowledge:orko:metodologia:fases:1.0.0"
+      - "urn:knowledge:orko:metodologia:playbooks:1.0.0"
+  provenance:
+    created_by: "FS"
+    created_at: "2025-12-01"
+    last_modified_by: "FS"
+    last_modified_at: "2025-12-01"
+    signature: null
+
+ID: ORKO-IMPL-TK-01
+Version: 1.0.0
+Status: Draft
+Human-Creator: FS
+Human-Editor: FS
+Model-Collaborator: IA-CLAUDE
+Creation-Date: 2025-12-01
+Modification-Date: 2025-12-01
+Version-Notes: "v1.0.0 - Esqueleto de KB para el ORKO Toolkit v1.0.0."
+Ctx: "Toolkit ORKO v1.0.0, incluyendo diagnóstico, ejecución, referencia y soporte, bajo sources/ORKO_Toolkit_v1.0.0/."
+
+LLM_Parsing_Instructions:
+  ID: KODA-LLM-PARSER-ORKO-IMPL-TK-01
+  Req: "Mandatory block following Metadata."
+  Prohib: "Asumir comportamiento de herramientas más allá de lo descrito en el toolkit."
+  Content: |
+    BEGIN_LLM_INSTRUCTIONS
+    You are an AI agent consuming a KODA/Spec KB for the ORKO Toolkit.
+    Use this document as a structural map over the toolkit directories.
+    END_LLM_INSTRUCTIONS
+
+Purp: "Describir la estructura del ORKO Toolkit y vincularlo con fases y playbooks."
+Obj:
+  - "Indexar las carpetas principales del Toolkit."
+  - "Señalar cómo cada carpeta soporta fases o playbooks."
+
+Toolkit_Structure:
+  Root:
+    ID: ORKO-TK-ROOT
+    Src_Dir: "sources/ORKO_Toolkit_v1.0.0/"
+  Sections:
+    - ID: ORKO-TK-START
+      Name: "00_COMIENCE_AQUI"
+      Src: "sources/ORKO_Toolkit_v1.0.0/00_COMIENCE_AQUI.md"
+    - ID: ORKO-TK-DIAG
+      Name: "01_DIAGNOSTICO"
+      Src_Dir: "sources/ORKO_Toolkit_v1.0.0/01_DIAGNOSTICO/"
+    - ID: ORKO-TK-EXEC
+      Name: "02_EJECUCION"
+      Src_Dir: "sources/ORKO_Toolkit_v1.0.0/02_EJECUCION/"
+    - ID: ORKO-TK-REF
+      Name: "03_REFERENCIA"
+      Src_Dir: "sources/ORKO_Toolkit_v1.0.0/03_REFERENCIA/"
+    - ID: ORKO-TK-SUP
+      Name: "04_SOPORTE"
+      Src_Dir: "sources/ORKO_Toolkit_v1.0.0/04_SOPORTE/"
+
+Cross_References:
+  ID: ORKO-IMPL-TK-XREF-01
+  Links:
+    - Target: "urn:knowledge:orko:metodologia:fases:1.0.0"
+      Ctx: "El Toolkit provee materiales para ejecutar actividades de fases específicas."
+    - Target: "urn:knowledge:orko:metodologia:playbooks:1.0.0"
+      Ctx: "Cada playbook referencia herramientas específicas del Toolkit."

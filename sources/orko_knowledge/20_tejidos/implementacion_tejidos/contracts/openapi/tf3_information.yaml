@@ -1,0 +1,917 @@
+openapi: 3.1.0
+
+info:
+  title: ORKO TF3 Information Fabric API
+  version: 2.0.0
+  description: |
+    REST API for TF3 Information Fabric - Complete information lifecycle management.
+    **Primitivo:** P3_Información | **Axioma:** A3_Existencia_Información  
+    **Trazabilidad:** ../../../03_TF3_information.md
+    
+    **Sub-domains:**
+    - Foundation: Ingestion, storage, processing, governance
+    - Analytics: BI, ML, predictive/prescriptive
+    - Semantic: RAG, knowledge graphs, vector search
+    
+    **Architecture:** Lakehouse (Bronze → Silver → Gold → Semantic)
+    
+  contact:
+    name: ORKO Architecture Team
+
+servers:
+  - url: https://api.orko.org/v2
+  - url: http://localhost:8000/v2
+
+tags:
+  - name: Information
+  - name: RAG
+  - name: Lineage
+  - name: Metrics
+
+components:
+  schemas:
+    
+    InformationAsset:
+      type: object
+      required: [id, name, information_type, structure, sub_domain, temporal, lineage, quality, governance, lifecycle]
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+          maxLength: 255
+        description:
+          type: string
+          maxLength: 2000
+        
+        information_type:
+          type: string
+          enum: [Persistente, Transitoria, Agregada]
+          description: |
+            - Persistente: Long-term storage (databases, data lakes)
+            - Transitoria: Temporary (cache, message queues)
+            - Agregada: Derived from other assets (reports, metrics)
+        
+        structure:
+          type: string
+          enum: [Structured, Semi_Structured, Unstructured]
+          description: |
+            - Structured: Relational tables, schemas
+            - Semi_Structured: JSON, XML, logs
+            - Unstructured: Text, PDFs, images, audio
+        
+        sub_domain:
+          type: string
+          enum: [Foundation, Analytics, Semantic]
+          description: |
+            - Foundation: Data ingestion, storage, governance
+            - Analytics: BI, metrics, ML models, feature engineering
+            - Semantic: RAG, vector stores, knowledge graphs
+        
+        schema:
+          type: object
+          properties:
+            format:
+              type: string
+              enum: [Parquet, JSON, CSV, Text, Image, Audio, Binary]
+            schema_definition:
+              type: object
+              nullable: true
+              description: JSON Schema for structured data
+            fields:
+              type: array
+              items:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  type:
+                    type: string
+                  nullable:
+                    type: boolean
+                  description:
+                    type: string
+        
+        temporal:
+          type: object
+          required: [timestamp]
+          properties:
+            timestamp:
+              type: string
+              format: date-time
+              description: When information was generated
+            validity_period_seconds:
+              type: integer
+              nullable: true
+              description: null = infinite (persistent)
+            expires_at:
+              type: string
+              format: date-time
+              nullable: true
+            freshness_sla_seconds:
+              type: integer
+              nullable: true
+              description: Max acceptable age
+        
+        lineage:
+          type: object
+          required: [origin]
+          description: |
+            Information lineage tracking (I3_Trazabilidad)
+            
+            **Invariante de Origen:**
+            - origin=Internal ⇒ produced_by_flow OR produced_by_capacity NOT NULL
+            - origin=External ⇒ produced_by_flow=NULL AND produced_by_capacity=NULL AND source_ref NOT NULL
+          properties:
+            origin:
+              type: string
+              enum: [Internal, External]
+              description: |
+                - Internal: Generated within ORKO system (by Flow or Capacity)
+                - External: Ingested from external source
+            produced_by_flow:
+              type: string
+              format: uuid
+              nullable: true
+              description: Flow (TF2) that generated this (Internal only)
+            produced_by_capacity:
+              type: string
+              format: uuid
+              nullable: true
+              description: Capacity (TF1) that produced this (Internal only)
+            source_ref:
+              type: string
+              nullable: true
+              description: External source reference (URL, API endpoint, file path) - External only
+              example: "s3://external-bucket/data/source.parquet"
+            parent_assets:
+              type: array
+              items:
+                type: string
+                format: uuid
+              description: Source information assets (DAG) - Internal derivation only
+            lineage_level:
+              type: string
+              enum: [Field, Table, Dataset]
+        
+        quality:
+          type: object
+          properties:
+            completeness_pct:
+              type: number
+              minimum: 0
+              maximum: 1
+              description: Percentage of non-null fields
+            accuracy_pct:
+              type: number
+              minimum: 0
+              maximum: 1
+              description: Percentage of correct values vs ground truth
+            freshness:
+              type: string
+              enum: [Fresh, Stale, Expired]
+            validity_pct:
+              type: number
+              minimum: 0
+              maximum: 1
+              description: Percentage passing validation rules
+            uniqueness_pct:
+              type: number
+              minimum: 0
+              maximum: 1
+            consistency_score:
+              type: number
+              minimum: 0
+              maximum: 1
+              description: Consistency across datasets
+            
+            fidelity_score:
+              type: integer
+              minimum: 0
+              maximum: 100
+              description: "Fidelidad (STS): exactitud respecto a la fuente - GATE CURACIÓN"
+            density_score:
+              type: integer
+              minimum: 0
+              maximum: 100
+              description: "Densidad informacional (SFD): zero-fat ratio - GATE CURACIÓN"
+            citation_policy:
+              type: string
+              enum: [required_exact, optional, none]
+              default: required_exact
+              description: "Política de citación (KHM) - GATE CURACIÓN"
+        
+        governance:
+          type: object
+          properties:
+            access_control:
+              type: object
+              properties:
+                readers:
+                  type: array
+                  items:
+                    type: string
+                    format: uuid
+                  description: Capacity IDs with read access
+                writers:
+                  type: array
+                  items:
+                    type: string
+                    format: uuid
+                row_level_security:
+                  type: boolean
+            
+            privacy:
+              type: object
+              properties:
+                contains_pii:
+                  type: boolean
+                pii_fields:
+                  type: array
+                  items:
+                    type: string
+                  nullable: true
+                masking_rules:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      field:
+                        type: string
+                      method:
+                        type: string
+                        enum: [Hash, Redact, Tokenize, Encrypt]
+            
+            compliance:
+              type: object
+              properties:
+                regulatory_tags:
+                  type: array
+                  items:
+                    type: string
+                  description: GDPR, HIPAA, SOC2, etc.
+                data_residency:
+                  type: string
+                  nullable: true
+                  example: "EU"
+                retention_policy:
+                  type: object
+                  properties:
+                    retention_days:
+                      type: integer
+                      nullable: true
+                    deletion_method:
+                      type: string
+                      enum: [Hard_Delete, Soft_Delete, Archive]
+            
+            encryption:
+              type: object
+              properties:
+                at_rest:
+                  type: boolean
+                at_transit:
+                  type: boolean
+                key_management:
+                  type: string
+                  nullable: true
+                  description: KMS reference
+        
+        storage:
+          type: object
+          properties:
+            location_uri:
+              type: string
+              description: "s3://, gs://, /data/, postgres://"
+            size_bytes:
+              type: integer
+            partition_key:
+              type: string
+              nullable: true
+            compression:
+              type: string
+              enum: [None, Gzip, Snappy, LZ4]
+              nullable: true
+        
+        analytics:
+          type: object
+          nullable: true
+          description: Analytics-specific fields (if sub_domain=Analytics)
+          properties:
+            metric_definition:
+              type: string
+              nullable: true
+            aggregation_logic:
+              type: string
+              nullable: true
+            compatible_dimensions:
+              type: array
+              items:
+                type: string
+            variance_tolerance_pct:
+              type: number
+              nullable: true
+            
+            model_info:
+              type: object
+              nullable: true
+              description: ML model information
+              properties:
+                model_type:
+                  type: string
+                  enum: [Classification, Regression, Clustering, Ranking]
+                algorithm:
+                  type: string
+                features:
+                  type: array
+                  items:
+                    type: string
+                target_variable:
+                  type: string
+                performance_metrics:
+                  type: object
+                  additionalProperties:
+                    type: number
+                training_dataset_id:
+                  type: string
+                  format: uuid
+        
+        semantic:
+          type: object
+          nullable: true
+          description: Semantic-specific fields (if sub_domain=Semantic) - RAG focus
+          properties:
+            content_type:
+              type: string
+              enum: [Document, QA_Pair, Entity, Relationship]
+            
+            metadata:
+              type: object
+              properties:
+                language:
+                  type: string
+                  example: "en"
+                author:
+                  type: string
+                  nullable: true
+                created_date:
+                  type: string
+                  format: date
+                last_modified:
+                  type: string
+                  format: date
+                tags:
+                  type: array
+                  items:
+                    type: string
+                categories:
+                  type: array
+                  items:
+                    type: string
+            
+            vigencia:
+              type: object
+              description: Knowledge validity tracking
+              properties:
+                review_frequency_days:
+                  type: integer
+                last_review_date:
+                  type: string
+                  format: date
+                  nullable: true
+                next_review_date:
+                  type: string
+                  format: date
+                  nullable: true
+                status:
+                  type: string
+                  enum: [Current, Under_Review, Deprecated, Archived]
+                reviewer_id:
+                  type: string
+                  format: uuid
+                  nullable: true
+            
+            indexing:
+              type: object
+              description: RAG indexing configuration
+              properties:
+                vector_indexed:
+                  type: boolean
+                embedding_model:
+                  type: string
+                  nullable: true
+                  example: "text-embedding-3-large"
+                vector_dimension:
+                  type: integer
+                  nullable: true
+                  example: 1536
+                vector_db_collection:
+                  type: string
+                  nullable: true
+                
+                keyword_indexed:
+                  type: boolean
+                keyword_index_type:
+                  type: string
+                  enum: [BM25, TF_IDF]
+                  nullable: true
+                
+                graph_indexed:
+                  type: boolean
+                entities:
+                  type: array
+                  nullable: true
+                  items:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                      type:
+                        type: string
+                      confidence:
+                        type: number
+                        minimum: 0
+                        maximum: 1
+            
+            rag_config:
+              type: object
+              description: RAG pipeline configuration
+              properties:
+                chunk_strategy:
+                  type: string
+                  enum: [Fixed_Size, Semantic, Recursive]
+                  nullable: true
+                chunk_size:
+                  type: integer
+                  nullable: true
+                  example: 512
+                chunk_overlap:
+                  type: integer
+                  nullable: true
+                  example: 50
+                retrieval_k:
+                  type: integer
+                  nullable: true
+                  description: Top-k results
+                  example: 5
+                reranking_enabled:
+                  type: boolean
+                citation_required:
+                  type: boolean
+        
+        usage:
+          type: object
+          properties:
+            access_count_30d:
+              type: integer
+            query_count_30d:
+              type: integer
+            last_accessed:
+              type: string
+              format: date-time
+              nullable: true
+            consumers:
+              type: array
+              items:
+                type: string
+                format: uuid
+              description: Capacity or Flow IDs consuming this
+        
+        serves_flows:
+          type: array
+          items:
+            type: string
+            format: uuid
+          description: Flows (TF2) consuming this information
+        
+        feeds_capacities:
+          type: array
+          items:
+            type: string
+            format: uuid
+          description: Capacities (TF1) consuming this (e.g., ML models)
+        
+        purpose:
+          type: object
+          properties:
+            usage_role:
+              type: string
+              enum: [Producción, Habilitación]
+              nullable: true
+              description: |
+                Role de la información en la organización (I4):
+                - Producción: Datos operacionales, transaccionales, core business
+                - Habilitación: Metadatos, catálogos, configuración, soporte
+                Si null, se deriva del contexto (consumidores/productores)
+            linked_okrs:
+              type: array
+              items:
+                type: string
+                format: uuid
+            business_value:
+              type: string
+            criticality:
+              type: string
+              enum: [Low, Medium, High, Critical]
+        
+        lifecycle:
+          type: object
+          required: [current_state, version]
+          properties:
+            current_state:
+              type: string
+              enum: [Planning, Ingestion, Processing, Active, Deprecated, Archived, Deleted]
+            version:
+              type: integer
+              minimum: 1
+        
+        tags:
+          type: array
+          items:
+            type: string
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+    
+    InformationListResponse:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/InformationAsset'
+        total:
+          type: integer
+        page:
+          type: integer
+    
+    RAGQueryRequest:
+      type: object
+      required: [query]
+      properties:
+        query:
+          type: string
+          maxLength: 5000
+          description: Natural language query
+        filters:
+          type: object
+          properties:
+            sub_domain:
+              type: string
+              enum: [Semantic]
+            categories:
+              type: array
+              items:
+                type: string
+            tags:
+              type: array
+              items:
+                type: string
+        retrieval_k:
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 5
+        rerank:
+          type: boolean
+          default: false
+        include_citations:
+          type: boolean
+          default: true
+    
+    RAGQueryResponse:
+      type: object
+      properties:
+        query:
+          type: string
+        results:
+          type: array
+          items:
+            type: object
+            properties:
+              info_id:
+                type: string
+                format: uuid
+              name:
+                type: string
+              content_snippet:
+                type: string
+              relevance_score:
+                type: number
+                minimum: 0
+                maximum: 1
+              metadata:
+                type: object
+              citation:
+                type: string
+                nullable: true
+        total_results:
+          type: integer
+        retrieval_time_ms:
+          type: number
+    
+    LineageResponse:
+      type: object
+      properties:
+        asset_id:
+          type: string
+          format: uuid
+        upstream:
+          type: array
+          items:
+            type: object
+            properties:
+              info_id:
+                type: string
+                format: uuid
+              name:
+                type: string
+              relationship:
+                type: string
+        downstream:
+          type: array
+          items:
+            type: object
+            properties:
+              info_id:
+                type: string
+                format: uuid
+              name:
+                type: string
+              relationship:
+                type: string
+    
+    TF3ScoreResponse:
+      type: object
+      properties:
+        tf3_score:
+          type: number
+          minimum: 0
+          maximum: 100
+        components:
+          type: object
+          properties:
+            coverage:
+              type: number
+            quality:
+              type: number
+            freshness:
+              type: number
+            governance:
+              type: number
+            adoption:
+              type: number
+        threshold_met:
+          type: boolean
+    
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+        message:
+          type: string
+        timestamp:
+          type: string
+          format: date-time
+
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+security:
+  - bearerAuth: []
+
+paths:
+  /information:
+    get:
+      tags: [Information]
+      summary: List information assets
+      parameters:
+        - name: sub_domain
+          in: query
+          schema:
+            type: string
+            enum: [Foundation, Analytics, Semantic]
+        - name: information_type
+          in: query
+          schema:
+            type: string
+        - name: structure
+          in: query
+          schema:
+            type: string
+        - name: lifecycle_state
+          in: query
+          schema:
+            type: string
+        - name: tags
+          in: query
+          schema:
+            type: array
+            items:
+              type: string
+        - name: page
+          in: query
+          schema:
+            type: integer
+            default: 1
+        - name: page_size
+          in: query
+          schema:
+            type: integer
+            default: 20
+      responses:
+        '200':
+          description: List of information assets
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InformationListResponse'
+    
+    post:
+      tags: [Information]
+      summary: Create information asset
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InformationAsset'
+      responses:
+        '201':
+          description: Information asset created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InformationAsset'
+  
+  /information/{info_id}:
+    parameters:
+      - name: info_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+    
+    get:
+      tags: [Information]
+      summary: Get information asset
+      responses:
+        '200':
+          description: Information asset details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InformationAsset'
+    
+    put:
+      tags: [Information]
+      summary: Update information asset
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InformationAsset'
+      responses:
+        '200':
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InformationAsset'
+    
+    delete:
+      tags: [Information]
+      summary: Delete information asset
+      responses:
+        '204':
+          description: Deleted
+  
+  /information/{info_id}/lineage:
+    get:
+      tags: [Lineage]
+      summary: Get information lineage
+      description: Get upstream and downstream lineage (DAG)
+      parameters:
+        - name: info_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: depth
+          in: query
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 10
+            default: 3
+      responses:
+        '200':
+          description: Lineage graph
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LineageResponse'
+  
+  /rag/query:
+    post:
+      tags: [RAG]
+      summary: RAG semantic search
+      description: Query semantic information using vector search and/or keyword search
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RAGQueryRequest'
+      responses:
+        '200':
+          description: Search results
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RAGQueryResponse'
+  
+  /rag/embed:
+    post:
+      tags: [RAG]
+      summary: Generate embeddings
+      description: Generate vector embeddings for text
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                texts:
+                  type: array
+                  items:
+                    type: string
+                embedding_model:
+                  type: string
+                  example: "text-embedding-3-large"
+      responses:
+        '200':
+          description: Embeddings generated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  embeddings:
+                    type: array
+                    items:
+                      type: array
+                      items:
+                        type: number
+                  dimension:
+                    type: integer
+  
+  /metrics/tf3-score:
+    get:
+      tags: [Metrics]
+      summary: Get TF3 fabric health score
+      responses:
+        '200':
+          description: TF3 Score
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TF3ScoreResponse'
+  
+  /lakehouse/layers:
+    get:
+      tags: [Information]
+      summary: Get lakehouse layer summary
+      description: Get count and quality by layer (Bronze, Silver, Gold, Semantic)
+      responses:
+        '200':
+          description: Lakehouse summary
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  layers:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        layer:
+                          type: string
+                          enum: [Bronze, Silver, Gold, Semantic]
+                        asset_count:
+                          type: integer
+                        total_size_bytes:
+                          type: integer
+                        avg_quality_score:
+                          type: number

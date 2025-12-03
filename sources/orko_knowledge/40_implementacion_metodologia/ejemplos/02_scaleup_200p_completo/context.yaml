@@ -1,0 +1,21 @@
+id: "scaleup_saas_200p_minimal"
+nombre: "Scaleup SaaS 200p (Minimal)"
+tipo_contexto: "scaleup"
+jurisdiction_ids:
+  - "eu"
+  - "uk"
+default_trajectory: "Minimal"
+team_size_range: "150-250"
+funding_stage: "series_b"
+risk_profile: "Alta presión de crecimiento con riesgo regulatorio moderado-alto por data protection y seguridad."
+industry_sector: "SaaS_B2B"
+regulatory_context: "Protección de datos estricta (EU/UK), foco en privacidad y seguridad de información."
+maturity_level: "scaleup_early"
+crisis_flags:
+  cash_crunch: false
+  incidentes_recurrentes: false
+hypergrowth_flags:
+  contratacion_rapida: true
+  expansion_geografica: true
+tech_stack_maturity: "mid"
+cultural_context: "Cultura product-led y engineering-driven, con presión fuerte por roadmap y entregas rápidas."

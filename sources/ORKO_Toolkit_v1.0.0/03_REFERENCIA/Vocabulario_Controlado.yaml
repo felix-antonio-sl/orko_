@@ -1,0 +1,734 @@
+# ================================================================
+# VOCABULARIO CONTROLADO ORKO - DICCIONARIO CANÓNICO
+# ================================================================
+# 
+# Propósito: Diccionario canónico términos técnicos ORKO Layers 0-3
+# Enforcement: 100% obligatorio (0 términos prohibidos tolerados)
+# Validación: grep, code review, CHECKLIST_VALIDACION.md
+# 
+# Version: 1.0.0
+# Date: 2024-11-14
+# Status: PRODUCTION
+#
+# ================================================================
+
+metadata:
+  version: "1.0.0"
+  date: "2024-11-14"
+  status: "production"
+  scope: "layers_0_to_3"
+  purpose: "Diccionario canónico términos ORKO para desarrollo metodología"
+  enforcement: "mandatory_100_percent"
+  validation_methods:
+    - "grep términos prohibidos en todos archivos .md"
+    - "code review peer obligatorio"
+    - "CHECKLIST_VALIDACION.md pre-commit"
+    - "yamllint VOCABULARIO_CONTROLADO.yaml"
+  statistics:
+    total_terms: null  # Completar al final
+    axiomas: 5
+    primitivos: 5
+    invariantes: 8
+    dominios: 4
+    contratos: 5
+    entidades: 2
+    metricas_core: 3
+    delegation_modes: 6
+    tejidos: 3
+    fases_wslc: 18
+    playbooks: 15
+    trayectorias: 3
+    terminos_prohibidos: 6
+  authors:
+    - "Lead Architecture"
+    - "Lead Methodology"
+  maintainers:
+    - "Equipo Arquitectura ORKO"
+  kernel_contract:
+    release_tag: "v1.0.0-kernel"
+    stable_id_families:
+      - "A*"
+      - "P*"
+      - "I*"
+      - "D*"
+      - "F*"
+      - "P0x"
+      - "trayectorias"
+    stable_metric_ids:
+      - "H_org"
+      - "eta_org"
+      - "ROI_Habilitacion"
+    change_policy: "Cambios futuros serán backward-compatible o documentados como breaking change en el changelog."
+
+# ================================================================
+# LAYER 0: FUNDAMENTOS TEÓRICOS (NO MODIFICABLE)
+# ================================================================
+# Base axiomática, primitivos irreducibles, invariantes preservados
+# Source: out/00_fundamentos_teoricos.md
+# ================================================================
+
+layer_0:
+
+  # ------------------------------------------------------------
+  # AXIOMAS A1-A5: Base conceptual irrefutable
+  # ------------------------------------------------------------
+  axiomas:
+
+    A1_Organizacion:
+      id: "A1"
+      nombre: "Axioma Organización"
+      categoria: "axioma"
+      enunciado: "Organización = colaboración de personas transformando inputs en outputs."
+      alias:
+        - "Organization"
+        - "Org"
+        - "Work System"
+      palabras_clave:
+        - "colaboración"
+        - "personas"
+        - "transformación"
+        - "inputs"
+        - "outputs"
+      fuente_oficial: "00_fundamentos_teoricos/01_axiomas.md"
+
+    A2_Proposito:
+      id: "A2"
+      nombre: "Axioma Propósito"
+      categoria: "axioma"
+      enunciado: "Toda organización existe para un objetivo específico y explícito."
+      alias:
+        - "Purpose"
+        - "Mission"
+        - "Raison d'être"
+      palabras_clave:
+        - "objetivo"
+        - "intencionalidad"
+        - "direccionalidad"
+      fuente_oficial: "00_fundamentos_teoricos/01_axiomas.md"
+
+    A3_Flujo:
+      id: "A3"
+      nombre: "Axioma Flujo"
+      categoria: "axioma"
+      enunciado: "Las organizaciones son redes de flujo, no jerarquías estáticas."
+      alias:
+        - "Flow"
+        - "Network"
+        - "Dynamic System"
+      palabras_clave:
+        - "redes"
+        - "flujo"
+        - "dinámica"
+        - "anti-jerarquía"
+      fuente_oficial: "00_fundamentos_teoricos/01_axiomas.md"
+
+    A4_Limite:
+      id: "A4"
+      nombre: "Axioma Límite"
+      categoria: "axioma"
+      enunciado: "Los sistemas operan bajo restricciones que acotan el espacio de posibilidades."
+      alias:
+        - "Constraint"
+        - "Limit"
+        - "Boundary"
+      palabras_clave:
+        - "restricciones"
+        - "feasibility"
+        - "acotar"
+      fuente_oficial: "00_fundamentos_teoricos/01_axiomas.md"
+
+    A5_Cambio:
+      id: "A5"
+      nombre: "Axioma Cambio"
+      categoria: "axioma"
+      enunciado: "Las organizaciones evolucionan continuamente bajo presión selectiva."
+      alias:
+        - "Evolution"
+        - "Change"
+        - "Adaptation"
+      palabras_clave:
+        - "evolución"
+        - "adaptación"
+        - "presión selectiva"
+      fuente_oficial: "00_fundamentos_teoricos/01_axiomas.md"
+
+  # ------------------------------------------------------------
+  # PRIMITIVOS P1-P5: Elementos irreducibles
+  # ------------------------------------------------------------
+  primitivos:
+
+    P1_Capacidad:
+      id: "P1"
+      nombre: "Primitivo Capacidad"
+      definicion: "Habilidad de ejecutar transformaciones sobre inputs para producir outputs."
+      contrato: "C1_CapacityAsset"
+      alias:
+        - "Capacity"
+        - "CapacityAsset"
+        - "Capability"
+      atributos_core:
+        substrate: ["Humano", "Algorítmico", "Mecánico", "Mixto"]
+        capacity_type: ["C0_Foundational", "C1_Core", "C2_Context", "C3_Commodity"]
+      fuente_oficial: "00_fundamentos_teoricos/02_primitivos.md"
+
+    P2_Flujo:
+      id: "P2"
+      nombre: "Primitivo Flujo"
+      definicion: "Secuencia de transformaciones que conectan capacidades y objetos de información."
+      contrato: "C2_FlowAsset"
+      alias:
+        - "Flow"
+        - "FlowAsset"
+        - "Workflow"
+      atributos_core:
+        flow_type: ["Sequential", "Parallel", "Conditional", "Iterative"]
+      fuente_oficial: "00_fundamentos_teoricos/02_primitivos.md"
+
+    P3_Informacion:
+      id: "P3"
+      nombre: "Primitivo Información"
+      definicion: "Datos estructurados con schema y governance explícita."
+      contrato: "C3_InformationAsset"
+      alias:
+        - "Information"
+        - "InformationAsset"
+        - "Data"
+      atributos_core:
+        estructura: ["Structured", "Semi_Structured", "Unstructured"]
+      fuente_oficial: "00_fundamentos_teoricos/02_primitivos.md"
+
+    P4_Limite:
+      id: "P4"
+      nombre: "Primitivo Límite"
+      definicion: "Restricción explícita que acota decisiones, flujos o capacidades."
+      contrato: "C4_LimitAsset"
+      alias:
+        - "Constraint"
+        - "Limit"
+        - "Boundary"
+      atributos_core:
+        tipos: ["Regulatory", "Budget", "Technical", "Time", "Security", "Political"]
+      fuente_oficial: "00_fundamentos_teoricos/02_primitivos.md"
+
+    P5_Proposito:
+      id: "P5"
+      nombre: "Primitivo Propósito"
+      definicion: "Outcome deseado más métricas asociadas y su posición en jerarquía de objetivos."
+      contrato: "C5_PurposeAsset"
+      alias:
+        - "Purpose"
+        - "Objective"
+      atributos_core:
+        campos: ["outcome", "metrics", "parent_id"]
+      fuente_oficial: "00_fundamentos_teoricos/02_primitivos.md"
+
+  # ------------------------------------------------------------
+  # INVARIANTES I1-I8: Propiedades preservadas
+  # ------------------------------------------------------------
+  invariantes:
+
+    I1_Minimalidad:
+      id: "I1"
+      nombre: "Minimalidad"
+      enunciado: "El sistema usa el conjunto mínimo necesario y suficiente de primitivos."
+      fuente_oficial: "00_fundamentos_teoricos/03_invariantes.md"
+
+    I2_Ortogonalidad:
+      id: "I2"
+      nombre: "Ortogonalidad"
+      enunciado: "Los primitivos son mutuamente independientes y no se solapan en responsabilidad."
+      fuente_oficial: "00_fundamentos_teoricos/03_invariantes.md"
+
+    I3_Trazabilidad:
+      id: "I3"
+      nombre: "Trazabilidad"
+      enunciado: "Toda transformación debe ser auditable desde inputs hasta outputs."
+      fuente_oficial: "00_fundamentos_teoricos/03_invariantes.md"
+
+    I4_Clasificacion_Contextual:
+      id: "I4"
+      nombre: "Clasificación Contextual"
+      enunciado: "Las responsabilidades se asignan explícitamente entre humanos y sistemas algorítmicos."
+      fuente_oficial: "00_fundamentos_teoricos/03_invariantes.md"
+
+    I5_HAIC:
+      id: "I5"
+      nombre: "Human-AI Collaboration (HAIC)"
+      enunciado: "La primacía humana debe quedar explícita en toda decisión asistida por IA."
+      fuente_oficial: "00_fundamentos_teoricos/03_invariantes.md"
+
+    I6_Trajectory_Awareness:
+      id: "I6"
+      nombre: "Trajectory-Awareness"
+      enunciado: "La progresión de autonomía y cambios de trayectoria deben quedar documentados."
+      fuente_oficial: "00_fundamentos_teoricos/03_invariantes.md"
+
+    I7_Emergencia_Complejidad:
+      id: "I7"
+      nombre: "Emergencia de Complejidad"
+      enunciado: "Las prácticas emergen según la complejidad organizacional y madurez del sistema."
+      fuente_oficial: "00_fundamentos_teoricos/03_invariantes.md"
+
+    I8_Adaptacion_Contextual:
+      id: "I8"
+      nombre: "Adaptación Contextual"
+      enunciado: "La metodología debe parametrizarse al contexto sin violar los invariantes del genoma."
+      fuente_oficial: "00_fundamentos_teoricos/03_invariantes.md"
+
+# ================================================================
+# LAYER 1: ARQUITECTURA
+# ================================================================
+# Dominios, contratos, entidades, métricas
+# Source: out/10_arquitectura_orko.md
+# ================================================================
+
+layer_1:
+
+  dominios:
+
+    D1_Arquitectura:
+      id: "D1"
+      nombre: "Arquitectura"
+      definicion: "Diseño de la estructura estática de los sistemas de trabajo."
+      fuente_oficial: "00_fundamentos_teoricos/05_dominios.md"
+
+    D2_Percepcion:
+      id: "D2"
+      nombre: "Percepción"
+      definicion: "Captura y actualización de información sobre el entorno organizacional."
+      fuente_oficial: "00_fundamentos_teoricos/05_dominios.md"
+
+    D3_Decision:
+      id: "D3"
+      nombre: "Decisión"
+      definicion: "Elección informada bajo límites y trade-offs explícitos."
+      fuente_oficial: "00_fundamentos_teoricos/05_dominios.md"
+
+    D4_Operacion:
+      id: "D4"
+      nombre: "Operación"
+      definicion: "Ejecución dinámica de transformaciones sobre capacidades y flujos."
+      fuente_oficial: "00_fundamentos_teoricos/05_dominios.md"
+
+  contratos:
+
+    C1_Capacidad:
+      id: "C1"
+      nombre: "Contrato Capacidad"
+      primitivo_base: "P1_Capacidad"
+      definicion: "Schema operable para describir y gobernar capacidades (P1)."
+      fuente_oficial: "10_arquitectura_orko/01_contratos.md"
+
+    C2_Flujo:
+      id: "C2"
+      nombre: "Contrato Flujo"
+      primitivo_base: "P2_Flujo"
+      definicion: "Schema operable para describir flujos de trabajo y orquestación (P2)."
+      fuente_oficial: "10_arquitectura_orko/01_contratos.md"
+
+    C3_Informacion:
+      id: "C3"
+      nombre: "Contrato Información"
+      primitivo_base: "P3_Informacion"
+      definicion: "Schema operable para activos de información (P3)."
+      fuente_oficial: "10_arquitectura_orko/01_contratos.md"
+
+    C4_Limite:
+      id: "C4"
+      nombre: "Contrato Límite"
+      primitivo_base: "P4_Limite"
+      definicion: "Schema operable para límites y restricciones (P4)."
+      fuente_oficial: "10_arquitectura_orko/01_contratos.md"
+
+    C5_Proposito:
+      id: "C5"
+      nombre: "Contrato Propósito"
+      primitivo_base: "P5_Proposito"
+      definicion: "Schema operable para propósitos, outcomes y métricas (P5)."
+      fuente_oficial: "10_arquitectura_orko/01_contratos.md"
+  entidades:
+    E6_ArchitecturalState:
+      id: "E6"
+      nombre: "Architectural State"
+      definicion: "Snapshot completo del sistema en un momento dado (current, target, intermediate, historical)."
+      fuente_oficial: "20_tejidos/07_architectural_state_management.md"
+    E7_FlowExecution:
+      id: "E7"
+      nombre: "Flow Execution"
+      definicion: "Instancia concreta de ejecución de un flujo, incluyendo estado, métricas y lineage."
+      fuente_oficial: "20_tejidos/00_introduccion_tejidos.md"
+
+  metricas:
+    H_org:
+      id: "H_org"
+      nombre: "Health organizacional"
+      definicion: "Métrica integrada de salud organizacional sobre D1-D4."
+      fuente_oficial: "00_fundamentos_teoricos/05_dominios.md"
+    eta_org:
+      id: "eta_org"
+      nombre: "η_org"
+      definicion: "Eficiencia global derivada de la ecuación maestra de valor organizacional V_org."
+      fuente_oficial: "00_fundamentos_teoricos/07_ecuacion_maestra.md"
+    ROI_Habilitacion:
+      id: "ROI_Habilitacion"
+      nombre: "ROI Habilitación"
+      definicion: "Retorno de inversión asociado a flujos y capacidades de habilitación."
+      fuente_oficial: "00_fundamentos_teoricos/07_ecuacion_maestra.md"
+
+  delegation_modes:
+    M1:
+      id: "M1"
+      nombre: "Modo de delegación M1"
+      notas: "Modo de delegación asociado al invariante I5_HAIC. Ver documentación HAIC."
+      fuente_oficial: "00_fundamentos_teoricos/03_invariantes.md"
+    M2:
+      id: "M2"
+      nombre: "Modo de delegación M2"
+      notas: "Modo de delegación asociado al invariante I5_HAIC. Ver documentación HAIC."
+      fuente_oficial: "00_fundamentos_teoricos/03_invariantes.md"
+    M3:
+      id: "M3"
+      nombre: "Modo de delegación M3"
+      notas: "Modo de delegación asociado al invariante I5_HAIC. Ver documentación HAIC."
+      fuente_oficial: "00_fundamentos_teoricos/03_invariantes.md"
+    M4:
+      id: "M4"
+      nombre: "Modo de delegación M4"
+      notas: "Modo de delegación asociado al invariante I5_HAIC. Ver documentación HAIC."
+      fuente_oficial: "00_fundamentos_teoricos/03_invariantes.md"
+    M5:
+      id: "M5"
+      nombre: "Modo de delegación M5"
+      notas: "Modo de delegación asociado al invariante I5_HAIC. Ver documentación HAIC."
+      fuente_oficial: "00_fundamentos_teoricos/03_invariantes.md"
+    M6:
+      id: "M6"
+      nombre: "Modo de delegación M6"
+      notas: "Modo de delegación asociado al invariante I5_HAIC. Ver documentación HAIC."
+      fuente_oficial: "00_fundamentos_teoricos/03_invariantes.md"
+
+# ================================================================
+# LAYER 2: TEJIDOS (TF1-TF3)
+# ================================================================
+# Capacity, Flow, Information Fabrics
+# Source: out/20_tejidos.md
+# ================================================================
+
+layer_2:
+
+  tejidos:
+
+    TF1_Capacity:
+      id: "TF1"
+      nombre: "Tejido Capacity"
+      primitivo_base: "P1_Capacidad"
+      definicion: "Actores (humanos, algorítmicos, mecánicos) que ejecutan transformaciones."
+      fuente_oficial: "20_tejidos/01_TF1_capacity.md"
+
+    TF2_Flow:
+      id: "TF2"
+      nombre: "Tejido Flow"
+      primitivo_base: "P2_Flujo"
+      definicion: "Orquestación de capacidades en secuencias de transformación (DAGs)."
+      fuente_oficial: "20_tejidos/02_TF2_flow.md"
+
+    TF3_Information:
+      id: "TF3"
+      nombre: "Tejido Information"
+      primitivo_base: "P3_Informacion"
+      definicion: "Ciclo de vida de la información: ingestion → storage → analytics → semantics."
+      fuente_oficial: "20_tejidos/03_TF3_information.md"
+
+# ================================================================
+# LAYER 3: METODOLOGÍA
+# ================================================================
+# WSLC Phases, Playbooks, Trayectorias
+# Source: 30_metodologia_orko
+# ================================================================
+
+layer_3:
+
+  wslc_phases:
+    F1:
+      id: "F1"
+      nombre: "Context Assessment"
+      definicion: "Evalúa el contexto organizacional y establece un perfil de contexto e H_org baseline."
+      fuente_oficial:
+        - "30_metodologia_orko/01_fases_initiation/F1_context_assessment.md"
+        - "30_metodologia_orko/00b_mapeo_dominios_fases.md"
+    F2:
+      id: "F2"
+      nombre: "Vision Definition"
+      definicion: "Define la visión y el propósito organizacional de alto nivel."
+      fuente_oficial: "30_metodologia_orko/01_fases_initiation/F2_vision_definition.md"
+    F3:
+      id: "F3"
+      nombre: "Trajectory Selection"
+      definicion: "Selecciona la trayectoria Survival/Minimal/Avanzada según contexto y constraints."
+      fuente_oficial:
+        - "30_metodologia_orko/01_fases_initiation/F3_trajectory_selection.md"
+        - "30_metodologia_orko/00b_mapeo_dominios_fases.md"
+    F4:
+      id: "F4"
+      nombre: "Capability Mapping"
+      definicion: "Mapea capacidades actuales y requeridas (P1_Capacidad) para la transformación."
+      fuente_oficial: "30_metodologia_orko/02_fases_development/F4_capability_mapping.md"
+    F5:
+      id: "F5"
+      nombre: "Flow Design"
+      definicion: "Diseña flujos de trabajo (P2_Flujo) y reduce handoffs críticos."
+      fuente_oficial: "30_metodologia_orko/02_fases_development/F5_flow_design.md"
+    F6:
+      id: "F6"
+      nombre: "Information Architecture"
+      definicion: "Diseña la arquitectura de información (P3_Informacion, TF3_Information)."
+      fuente_oficial:
+        - "30_metodologia_orko/02_fases_development/F6_information_architecture.md"
+        - "30_metodologia_orko/00b_mapeo_dominios_fases.md"
+    F7:
+      id: "F7"
+      nombre: "Purpose Cascade"
+      definicion: "Cascada de propósito y OKR desde nivel organizacional a equipos e individuos."
+      fuente_oficial: "30_metodologia_orko/02_fases_development/F7_purpose_cascade.md"
+    F8:
+      id: "F8"
+      nombre: "Limits Definition"
+      definicion: "Define límites regulatorios, técnicos, de seguridad y presupuesto (P4_Limite)."
+      fuente_oficial: "30_metodologia_orko/02_fases_development/F8_limits_definition.md"
+    F9:
+      id: "F9"
+      nombre: "Target State Design"
+      definicion: "Diseña el estado arquitectónico objetivo (E6_ArchitecturalState)."
+      fuente_oficial:
+        - "30_metodologia_orko/02_fases_development/F9_target_state_design.md"
+        - "30_metodologia_orko/00b_mapeo_dominios_fases.md"
+    F10:
+      id: "F10"
+      nombre: "Quick Wins"
+      definicion: "Identifica e implementa quick wins de alto impacto y bajo esfuerzo."
+      fuente_oficial: "30_metodologia_orko/03_fases_implementation/F10_quick_wins.md"
+    F11:
+      id: "F11"
+      nombre: "Fabric Deployment"
+      definicion: "Despliega tejidos tecnológicos TF1–TF3 según el diseño arquitectónico."
+      fuente_oficial: "30_metodologia_orko/03_fases_implementation/F11_fabric_deployment.md"
+    F12:
+      id: "F12"
+      nombre: "State Transition"
+      definicion: "Ejecuta la transición controlada desde el estado actual al estado objetivo."
+      fuente_oficial: "30_metodologia_orko/03_fases_implementation/F12_state_transition.md"
+    F13:
+      id: "F13"
+      nombre: "Health Monitoring"
+      definicion: "Monitorea H_org, drifts y métricas clave mediante dashboards y alertas."
+      fuente_oficial:
+        - "30_metodologia_orko/04_fases_operation/F13_health_monitoring.md"
+        - "30_metodologia_orko/00b_mapeo_dominios_fases.md"
+    F14:
+      id: "F14"
+      nombre: "Incident Response"
+      definicion: "Gestiona incidentes críticos usando playbooks de recuperación."
+      fuente_oficial: "30_metodologia_orko/04_fases_operation/F14_incident_response.md"
+    F15:
+      id: "F15"
+      nombre: "Continuous Execution"
+      definicion: "Implementa ejecución continua basada en Xanpan y cadencias estables."
+      fuente_oficial: "30_metodologia_orko/04_fases_operation/F15_continuous_execution.md"
+    F16:
+      id: "F16"
+      nombre: "Learning Loops"
+      definicion: "Cierra loops de aprendizaje mediante retros, post-mortems y ajustes."
+      fuente_oficial: "30_metodologia_orko/05_fases_evolution/F16_learning_loops.md"
+    F17:
+      id: "F17"
+      nombre: "Adaptation"
+      definicion: "Ajusta la trayectoria y el diseño según evidencias y drifts detectados."
+      fuente_oficial:
+        - "30_metodologia_orko/05_fases_evolution/F17_adaptation.md"
+        - "30_metodologia_orko/00b_mapeo_dominios_fases.md"
+    F18:
+      id: "F18"
+      nombre: "Convergence Check"
+      definicion: "Verifica convergencia entre estado actual, estado objetivo y propósito."
+      fuente_oficial: "30_metodologia_orko/05_fases_evolution/F18_convergence_check.md"
+
+  playbooks:
+    P01:
+      id: "P01"
+      nombre: "Low H_org Recovery"
+      definicion: "Playbook de recuperación cuando H_org cae bajo umbral crítico."
+      archivo: "30_metodologia_orko/06_playbooks_recovery/P01_low_h_org_recovery.md"
+    P02:
+      id: "P02"
+      nombre: "Handoff Reduction"
+      definicion: "Playbook para reducir handoffs y mejorar flow efficiency."
+      archivo: "30_metodologia_orko/06_playbooks_recovery/P02_handoff_reduction.md"
+    P03:
+      id: "P03"
+      nombre: "OKR Alignment"
+      definicion: "Playbook para recuperar alineamiento de OKR entre niveles."
+      archivo: "30_metodologia_orko/06_playbooks_recovery/P03_okr_alignment.md"
+    P04:
+      id: "P04"
+      nombre: "Security Remediation"
+      definicion: "Playbook de remediación ante incidentes de seguridad."
+      archivo: "30_metodologia_orko/06_playbooks_recovery/P04_security_remediation.md"
+    P05:
+      id: "P05"
+      nombre: "Bounded Autonomy M6"
+      definicion: "Playbook para implementar autonomía acotada basada en modos de delegación M1–M6."
+      archivo: "30_metodologia_orko/07_playbooks_transformation/P05_bounded_autonomy_m6.md"
+    P06:
+      id: "P06"
+      nombre: "Pilot Transformation"
+      definicion: "Playbook para ejecutar pilotos de transformación controlados."
+      archivo: "30_metodologia_orko/07_playbooks_transformation/P06_pilot_transformation.md"
+    P07:
+      id: "P07"
+      nombre: "Scale Transformation"
+      definicion: "Playbook para escalar una transformación probada a más unidades."
+      archivo: "30_metodologia_orko/07_playbooks_transformation/P07_scale_transformation.md"
+    P08:
+      id: "P08"
+      nombre: "Optimization Sustain"
+      definicion: "Playbook para sostener optimizaciones logradas en el tiempo."
+      archivo: "30_metodologia_orko/07_playbooks_transformation/P08_optimization_sustain.md"
+    P09:
+      id: "P09"
+      nombre: "Drift Detection Response"
+      definicion: "Playbook para detección y respuesta a drift en métricas o arquitectura."
+      archivo: "30_metodologia_orko/08_playbooks_operational/P09_drift_detection_response.md"
+    P10:
+      id: "P10"
+      nombre: "Capacity Gap Resolution"
+      definicion: "Playbook para resolver gaps críticos de capacidad."
+      archivo: "30_metodologia_orko/08_playbooks_operational/P10_capacity_gap_resolution.md"
+    P11:
+      id: "P11"
+      nombre: "Flow Optimization"
+      definicion: "Playbook para optimizar flujos con cuellos de botella."
+      archivo: "30_metodologia_orko/08_playbooks_operational/P11_flow_optimization.md"
+    P12:
+      id: "P12"
+      nombre: "Data Quality Recovery"
+      definicion: "Playbook para recuperar la calidad de datos en activos de información."
+      archivo: "30_metodologia_orko/08_playbooks_operational/P12_data_quality_recovery.md"
+    P13:
+      id: "P13"
+      nombre: "Political Alignment"
+      definicion: "Playbook para gestionar desalineamientos políticos y de stakeholders."
+      archivo: "30_metodologia_orko/08_playbooks_operational/P13_political_alignment.md"
+    P14:
+      id: "P14"
+      nombre: "Client Expectation Management"
+      definicion: "Playbook para gestionar expectativas de clientes frente a capacidades reales."
+      archivo: "30_metodologia_orko/08_playbooks_operational/P14_client_expectation_mgmt.md"
+    P15:
+      id: "P15"
+      nombre: "Adaptive Cadence"
+      definicion: "Playbook para ajustar cadencias de trabajo según señales de contexto."
+      archivo: "30_metodologia_orko/08_playbooks_operational/P15_adaptive_cadence.md"
+
+  trayectorias:
+    Minimal:
+      id: "Minimal"
+      nombre: "Trayectoria Minimal 6–12 meses"
+      definicion: "Trayectoria de implementación focalizada con horizonte 6–12 meses."
+      archivo: "30_metodologia_orko/09_trayectorias/01_minimal_6_12_meses.md"
+    Avanzada:
+      id: "Avanzada"
+      nombre: "Trayectoria Avanzada 18–36 meses"
+      definicion: "Trayectoria de transformación profunda con horizonte 18–36 meses."
+      archivo: "30_metodologia_orko/09_trayectorias/02_avanzada_18_36_meses.md"
+    Survival:
+      id: "Survival"
+      nombre: "Trayectoria Survival 0–10K"
+      definicion: "Trayectoria de supervivencia orientada a contextos de alto riesgo o recursos mínimos."
+      archivo: "30_metodologia_orko/09_trayectorias/04_survival_0_10K.md"
+
+# ================================================================
+# TÉRMINOS PROHIBIDOS (Ambiguos/Imprecisos)
+# ================================================================
+# Lista términos NO permitidos + alternativas canónicas
+# ================================================================
+
+terminos_prohibidos:
+  - termino: "recurso"
+    motivo: "Ambiguo: mezcla personas, capacidades, presupuesto y tiempo."
+    usar_en_cambio:
+      - "P1_Capacidad"
+  - termino: "gente"
+    motivo: "No distingue roles ni capacidades; usar términos alineados a P1_Capacidad."
+    usar_en_cambio:
+      - "P1_Capacidad"
+  - termino: "equipo IT"
+    motivo: "Demasiado genérico; no indica dominio ni tipo de capacidad."
+    usar_en_cambio:
+      - "D1_Arquitectura"
+      - "P1_Capacidad"
+  - termino: "iniciativa suelta"
+    motivo: "No distingue entre fase, playbook o trayectoria."
+    usar_en_cambio:
+      - "wslc_phase (F1-F18)"
+      - "playbook (P01-P15)"
+      - "trayectoria (Minimal/Avanzada/Survival)"
+  - termino: "AI genérica"
+    motivo: "No especifica tipo de capacidad ni modo de delegación."
+    usar_en_cambio:
+      - "P1_Capacidad"  # substrate=Algorítmico
+      - "delegation_mode M1-M6"
+  - termino: "proyecto transformación"
+    motivo: "Mezcla concepto de proyecto con trayectoria metodológica."
+    usar_en_cambio:
+      - "trayectoria Minimal/Avanzada/Survival"
+
+# ================================================================
+# QUICK REFERENCE ALIASES
+# ================================================================
+# Mapeo alias → término canónico (auto-generated)
+# ================================================================
+
+quick_reference:
+  "Organization": "A1_Organizacion"
+  "Org": "A1_Organizacion"
+  "Work System": "A1_Organizacion"
+  "Purpose": "A2_Proposito"
+  "Mission": "A2_Proposito"
+  "Raison d'être": "A2_Proposito"
+  "Flow": "A3_Flujo"
+  "Network": "A3_Flujo"
+  "Dynamic System": "A3_Flujo"
+  "Constraint": "A4_Limite"
+  "Limit": "A4_Limite"
+  "Boundary": "A4_Limite"
+  "Evolution": "A5_Cambio"
+  "Change": "A5_Cambio"
+  "Adaptation": "A5_Cambio"
+  "Capacity": "P1_Capacidad"
+  "CapacityAsset": "P1_Capacidad"
+  "Capability": "P1_Capacidad"
+  "Workflow": "P2_Flujo"
+  "FlowAsset": "P2_Flujo"
+  "Information": "P3_Informacion"
+  "InformationAsset": "P3_Informacion"
+  "Data": "P3_Informacion"
+  "Health Score": "H_org"
+
+# ================================================================
+# CHANGELOG
+# ================================================================
+
+changelog:
+  - version: "1.0.0"
+    date: "2024-11-14"
+    author: "Equipo Arquitectura ORKO"
+    changes:
+      - "Creación inicial estructura vocabulario Layer 0-3."
+      - "Documentados A1-A5, P1-P5, I1-I8, D1-D4, C1-C5 y TF1-TF3."
+  - version: "1.0.0-kernel"
+    date: "2024-11-14"
+    author: "Equipo Arquitectura ORKO"
+    changes:
+      - "Congelado contrato semántico kernel para Layers 0-3."
+      - "Marcadas como estables las familias de IDs A*,P*,I*,D*,F*,P01-P15, trayectorias y métricas H_org, eta_org, ROI_Habilitacion para SPRINT 1."
+

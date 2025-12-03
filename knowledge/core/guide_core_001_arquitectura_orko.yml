@@ -1,0 +1,156 @@
+# ORKO Core Guide 001 - Arquitectura ORKO
+# Layer 1 - Contratos, Principios, Relaciones y Vistas
+
+_manifest:
+  urn: "urn:knowledge:orko:core:arquitectura:1.0.0"
+  federation:
+    visibility: public
+    license: "MIT"
+  compatibility:
+    min_consumer_version: "1.0.0"
+    breaking_changes_from: null
+  resolution:
+    canonical_url: "file://knowledge/core/guide_core_001_arquitectura_orko.yml"
+    mirrors: []
+  dependencies:
+    requires:
+      - "urn:knowledge:koda:core:spec:1.0.0"
+      - "urn:knowledge:koda:core:transform:1.0.0"
+  provenance:
+    created_by: "FS"
+    created_at: "2025-12-01"
+    last_modified_by: "FS"
+    last_modified_at: "2025-12-01"
+    signature: null
+
+ID: ORKO-CORE-ARQ-01
+Version: 1.0.0
+Status: Draft
+Human-Creator: FS
+Human-Editor: FS
+Model-Collaborator: IA-CLAUDE
+Creation-Date: 2025-12-01
+Modification-Date: 2025-12-01
+Version-Notes: "v1.0.0 - Esqueleto inicial de la arquitectura ORKO en formato KODA/Spec."
+Ctx: "Arquitectura ORKO: contratos, principios de diseño, relaciones estructurales y vistas, referenciando markdown legacy en sources/orko_knowledge/10_arquitectura_orko/."
+
+LLM_Parsing_Instructions:
+  ID: KODA-LLM-PARSER-ORKO-ARQ-01
+  Req: "Mandatory block following Metadata."
+  Prohib: "Inventar nuevos contratos o principios; la fuente de verdad son los markdown."
+  Content: |
+    BEGIN_LLM_INSTRUCTIONS
+    You are an AI agent consuming a KODA/Spec artifact for ORKO architecture.
+    Your job is to preserve the structural index and links to markdown sources.
+
+    REFERENCE POLICY:
+    - Src: fields point to legacy markdown files under sources/orko_knowledge/10_arquitectura_orko/.
+    - Do NOT inline full content; this guide is an index and summary layer.
+
+    LANGUAGE POLICY:
+    - Keywords in English; content in es.
+    END_LLM_INSTRUCTIONS
+
+Purp: "Describir la arquitectura ORKO a nivel de contratos, principios, relaciones y vistas, actuando como índice estructural."
+Obj:
+  - "Registrar contratos C1-C5 y su propósito general."
+  - "Indexar principios de diseño (PD1-PD76)."
+  - "Describir tipos de relaciones (R1-R15) y vistas (D1-D4)."
+
+Overview:
+  ID: ORKO-ARQ-OV-01
+  Ctx: "Visión general de la arquitectura ORKO."
+  Src: "sources/orko_knowledge/10_arquitectura_orko/00_introduccion.md"
+
+Contracts_Index:
+  ID: ORKO-ARQ-CONTRACTS-01
+  Ctx: "Contratos principales de la arquitectura (C1-C5)."
+  Src: "sources/orko_knowledge/10_arquitectura_orko/01_contratos.md"
+  Note: "Este artifact solo indexa los contratos; el detalle se mantiene en el markdown."
+
+Contracts_Detailed:
+  ID: ORKO-ARQ-CONTRACTS-DETAIL
+  Ctx: "Resumen estructurado de los contratos C1–C5 a partir de 01_contratos.md."
+
+  C1_Capacidad:
+    ID: ORKO-C-C1
+    Def: "Contrato canónico que operacionaliza el primitivo CAPACIDAD: quién puede hacer qué, con qué sustrato y lifecycle asociado."
+    Purp: "Dar un esquema único para todas las capacidades (humanas, algorítmicas, mecánicas o mixtas) asegurando trazabilidad, clasificación contextual (producción/habilitación) y lifecycle controlado."
+    Scope: "Se aplica a cualquier unidad que ejecuta trabajo (personas, equipos, servicios, agentes IA, máquinas)."
+    Key_Points:
+      - "Incluye substrate, capacity_type (C0–C3), role (Producción/Habilitación) y arquetipo AOC como dimensiones principales de clasificación."
+      - "Integra principios de HAIC (I5): ownership y delegation_mode para capacidades algorítmicas con accountable humano único."
+      - "Modela lifecycle detallado (G11) y golden rule de Meyer (autoridad = accountability) mediante invariantes explícitos."
+    Src: "sources/orko_knowledge/10_arquitectura_orko/01_contratos.md"
+
+  C2_Flujo:
+    ID: ORKO-C-C2
+    Def: "Contrato canónico que operacionaliza el primitivo FLUJO como DAG de pasos con capacidades requeridas, entradas y salidas de información."
+    Purp: "Proveer un modelo uniforme para procesos, pipelines y workflows, permitiendo medir eficiencia de flujo, handoffs y métricas DORA."
+    Scope: "Se aplica a cualquier secuencia de transformaciones (proceso de negocio, pipeline técnico, flujo operativo)."
+    Key_Points:
+      - "Define pasos, dependencias y métricas (cycle time, flow efficiency, handoff_ratio) sobre un DAG sin ciclos."
+      - "Incluye definición formal de handoff y su cálculo, clave para reducir fricción organizacional."
+      - "Conecta cada flujo con un Propósito (A5) y una Capacidad owner (mínimo C2), asegurando alineamiento y responsabilidad."
+    Src: "sources/orko_knowledge/10_arquitectura_orko/01_contratos.md"
+
+  C3_Informacion:
+    ID: ORKO-C-C3
+    Def: "Contrato canónico que operacionaliza el primitivo INFORMACIÓN unificando dato, señal y estado bajo un mismo esquema."
+    Purp: "Asegurar que toda información relevante tenga estructura, lineage, semántica y calidad explícitas para soportar decisión y auditoría."
+    Scope: "Se aplica a cualquier unidad de información manejada por la organización (registros, eventos, métricas, observables)."
+    Key_Points:
+      - "Distingue tipos de información (Persistente, Transitoria, Agregada) y captura payload, temporalidad y semántica."
+      - "Integra data lineage completo (flows, capacities, parents) en coherencia con I3 Trazabilidad."
+      - "Define observables estándar (EX1–EX8, IN1–IN8) y métricas de calidad (completitud, exactitud, frescura) como base de gobierno de datos."
+    Src: "sources/orko_knowledge/10_arquitectura_orko/01_contratos.md"
+
+  C4_Limite:
+    ID: ORKO-C-C4
+    Def: "Contrato canónico que operacionaliza el primitivo LÍMITE como restricción explícita sobre capacidades, flujos, información o propósitos."
+    Purp: "Hacer operables las restricciones físicas, regulatorias, organizacionales, económicas y técnicas, con métricas de cumplimiento y severidad."
+    Scope: "Se aplica a cualquier constraint que acote el espacio de posibilidades del sistema."
+    Key_Points:
+      - "Tipifica límites (Físico, Regulatorio, Organizacional, Económico, Técnico) y su severidad (Info–Critical)."
+      - "Incluye estructura detallada para compliance y violaciones, con severidad ponderada y planes de remediación."
+      - "Conecta directamente con I4 (Clasificación Contextual), I3 (Trazabilidad) e I1 (Minimalidad) al modelar explícitamente los límites del diseño."
+    Src: "sources/orko_knowledge/10_arquitectura_orko/01_contratos.md"
+
+  C5_Proposito:
+    ID: ORKO-C-C5
+    Def: "Contrato canónico que operacionaliza el primitivo PROPÓSITO mediante objetivos cualitativos y Key Results cuantificables."
+    Purp: "Vincular la transformación organizacional con outcomes medibles y jerarquías de propósito (OKR tree) alineadas."
+    Scope: "Se aplica a propósitos en distintos niveles (individual, equipo, unidad, organización) y horizontes (inmediato, táctico, estratégico)."
+    Key_Points:
+      - "Modela Key Results con métricas, unidades, criterios de logro y pesos, en línea con prácticas OKR."
+      - "Incluye jerarquía de propósito, fórmula de alineamiento y restricciones de ownership humano (I5)."
+      - "Permite evaluar progreso, detectar riesgos y priorizar iniciativas según su contribución a propósitos superiores."
+    Src: "sources/orko_knowledge/10_arquitectura_orko/01_contratos.md"
+
+Design_Principles_Index:
+  ID: ORKO-ARQ-PD-01
+  Ctx: "Principios de diseño PD1-PD76."
+  Src: "sources/orko_knowledge/10_arquitectura_orko/02_diseño.md"
+
+Relations_Index:
+  ID: ORKO-ARQ-REL-01
+  Ctx: "Relaciones estructurales R1-R15."
+  Src: "sources/orko_knowledge/10_arquitectura_orko/03_relaciones.md"
+
+Views_Index:
+  ID: ORKO-ARQ-VIEWS-01
+  Ctx: "Vistas arquitectónicas D1-D4 (Structural, Behavioral, Decisional, Operational)."
+  Src: "sources/orko_knowledge/10_arquitectura_orko/04_vistas.md"
+
+Patterns_Index:
+  ID: ORKO-ARQ-PATTERNS-01
+  Ctx: "Patrones de arquitectura definidos para ORKO."
+  Src: "sources/orko_knowledge/10_arquitectura_orko/05_patrones.md"
+
+Cross_References:
+  ID: ORKO-ARQ-XREF-01
+  Links:
+    - XRef: "urn:knowledge:orko:core:fundamentos:1.0.0"
+      Ctx: "Los contratos y principios deben respetar invariantes definidos en Fundamentos."
+    - XRef: "urn:knowledge:orko:core:tejidos:1.0.0"
+      Ctx: "Los tejidos instancian decisiones arquitectónicas definidas aquí."

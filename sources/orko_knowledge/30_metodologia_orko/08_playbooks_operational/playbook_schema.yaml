@@ -1,0 +1,108 @@
+
+# PLAYBOOK SCHEMA (v0.2)
+# Basado en SPEC_ARQUITECTURA_DEFINITIVA §5 y PLAN_ETAPA_3_PLAYBOOKS.
+
+schema_id: "Schema_3_Playbook"
+schema_type: "playbook"
+schema_version: "0.2.0"
+description: "Schema unificado para describir playbooks P01–P15 (Recovery, Transformation, Operational) alineados con VOCAB y playbooks_triggers_catalog.md."
+
+fields:
+  - id: "id"
+    type: "string"
+    required: true
+    description: "ID canónico del playbook (P01–P15)."
+  - id: "nombre"
+    type: "string"
+    required: true
+    description: "Nombre corto del playbook."
+  - id: "tipo"
+    type: "string"
+    required: true
+    enum: ["Recovery", "Transformation", "Operational"]
+    description: "Tipo principal del playbook según su propósito."
+  - id: "metricas_canonicas"
+    type: "list[string]"
+    required: true
+    description: "Métricas canónicas usadas en los triggers (subconjunto de {H_org, eta_org, ROI_Habilitacion})."
+  - id: "condicion_trigger"
+    type: "string"
+    required: true
+    description: "Descripción corta de la condición de activación, consistente con playbooks_triggers_catalog.md."
+  - id: "triggers_examples"
+    type: "list[string]"
+    required: false
+    description: "Ejemplos concretos de señales que activan el playbook (alineado a F13 dashboards)."
+  - id: "fases_relacionadas"
+    type: "list[string]"
+    required: true
+    description: "IDs de fases WSLC (F1–F18) donde se detecta/ejecuta el playbook."
+  - id: "entidades_relacionadas"
+    type: "list[string]"
+    required: false
+    description: "Entidades/primitivos relevantes (E6, E7, P1_Capacidad, C3_Informacion, etc.)."
+  - id: "trayectorias_relacionadas"
+    type: "list[string]"
+    required: false
+    description: "Trayectorias que se ven afectadas o que activan este playbook (Survival, Minimal, Avanzada)."
+  - id: "health_gates_relacionados"
+    type: "list[string]"
+    required: false
+    description: "Health gates (G1–G4) que pueden disparar o consumir este playbook."
+  - id: "duracion_estimada"
+    type: "string"
+    required: false
+    description: "Duración estimada en formato ISO-8601 (ej. P1D, P2W)."
+  - id: "raci"
+    type: "map[string,string]"
+    required: false
+    description: "RACI simplificado: {R:role, A:role, C:[role], I:[role]}"
+  - id: "acceptance_criteria"
+    type: "string"
+    required: false
+    description: "Criterios medibles para considerar playbook exitoso (SLOs, KPIs)"
+  - id: "estado"
+    type: "string"
+    required: true
+    enum: ["draft", "mvo", "stable"]
+    description: "Estado de madurez del playbook en la metodología."
+  - id: "notas"
+    type: "string"
+    required: false
+    description: "Notas adicionales relevantes para implementación o governance."
+
+dimensions:
+  - tipo
+  - metricas_canonicas
+  - fases_relacionadas
+  - trayectorias_relacionadas
+  - health_gates_relacionados
+  - estado
+  - raci
+
+examples:
+  - id: "P01"
+    nombre: "Low H_org Recovery"
+    tipo: "Recovery"
+    metricas_canonicas: ["H_org"]
+    condicion_trigger: "H_org cae por debajo de umbral crítico confirmado por F13."
+    fases_relacionadas: ["F13", "F14", "F16", "F17"]
+    entidades_relacionadas: ["E6_ArchitecturalState"]
+    trayectorias_relacionadas: ["Survival", "Minimal"]
+    health_gates_relacionados: ["G1_H_org_Critico", "G2_H_org_Bajo_Riesgo"]
+    duracion_estimada: "P1D"
+    estado: "mvo"
+    notas: "Playbook principal de respuesta rápida ante caída de H_org."
+  - id: "P05"
+    nombre: "Bounded Autonomy M6"
+    tipo: "Transformation"
+    metricas_canonicas: ["eta_org", "ROI_Habilitacion"]
+    condicion_trigger: "H_org suficiente, pero eta_org/ROI_Habilitacion subóptimos; se busca aumentar autonomía mediante M6."
+    fases_relacionadas: ["F3", "F7", "F11", "F15", "F17"]
+    entidades_relacionadas: ["P1_Capacidad", "E7_FlowExecution"]
+    trayectorias_relacionadas: ["Minimal", "Avanzada"]
+    health_gates_relacionados: []
+    duracion_estimada: "P4W"
+    estado: "draft"
+    notas: "Usado para diseñar/ajustar bounded autonomy basado en métricas de eficiencia."
+

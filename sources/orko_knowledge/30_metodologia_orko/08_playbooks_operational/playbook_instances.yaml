@@ -1,0 +1,197 @@
+
+instances:
+  - id: "P01"
+    nombre: "Low H_org Recovery"
+    tipo: "Recovery"
+    metricas_canonicas: ["H_org"]
+    condicion_trigger: "H_org < umbral de recuperación acordado y descenso confirmado por F13."
+    fases_relacionadas: ["F13", "F14", "F16", "F17"]
+    entidades_relacionadas: ["E6_ArchitecturalState"]
+    trayectorias_relacionadas: ["Survival", "Minimal"]
+    health_gates_relacionados: ["G1_H_org_Critico", "G2_H_org_Bajo_Riesgo"]
+    duracion_estimada: "P1D"
+    estado: "mvo"
+    notas: "Ver P01_low_h_org_recovery.md."
+
+  - id: "P02"
+    nombre: "Handoff Reduction"
+    tipo: "Recovery"
+    metricas_canonicas: ["H_org", "ROI_Habilitacion"]
+    condicion_trigger: "Deterioro de H_org o ROI_Habilitacion atribuible a ineficiencias de flujo en F5/F11."
+    fases_relacionadas: ["F5", "F11", "F13", "F14", "F16"]
+    entidades_relacionadas: ["P2_Flujo", "E7_FlowExecution"]
+    trayectorias_relacionadas: ["Survival", "Minimal"]
+    health_gates_relacionados: ["G1_H_org_Critico", "G2_H_org_Bajo_Riesgo"]
+    duracion_estimada: "P2D"
+    estado: "draft"
+    notas: "Ver P02_handoff_reduction.md."
+
+  - id: "P03"
+    nombre: "OKR Alignment"
+    tipo: "Recovery"
+    metricas_canonicas: ["H_org", "eta_org"]
+    condicion_trigger: "H_org/eta_org por debajo de objetivos a pesar de propósito (F7) y arquitectura objetivo (F9)."
+    fases_relacionadas: ["F7", "F9", "F13", "F16", "F17"]
+    entidades_relacionadas: ["P5_Proposito", "E6_ArchitecturalState"]
+    trayectorias_relacionadas: ["Minimal", "Avanzada"]
+    health_gates_relacionados: ["G3_H_org_Bueno_Eficiencia_Baja"]
+    duracion_estimada: "P3D"
+    estado: "draft"
+    notas: "Ver P03_okr_alignment.md."
+
+  - id: "P04"
+    nombre: "Security Remediation"
+    tipo: "Recovery"
+    metricas_canonicas: ["H_org", "ROI_Habilitacion"]
+    condicion_trigger: "Incidentes de seguridad o gaps de compliance detectados en F8/TF3 que amenazan H_org/ROI_Habilitacion."
+    fases_relacionadas: ["F8", "F11", "F13", "F14", "F16"]
+    entidades_relacionadas: ["P4_Limite", "C3_Informacion", "E6_ArchitecturalState"]
+    trayectorias_relacionadas: ["Survival", "Minimal"]
+    health_gates_relacionados: ["G1_H_org_Critico", "G2_H_org_Bajo_Riesgo"]
+    duracion_estimada: "P2D"
+    estado: "draft"
+    notas: "Ver P04_security_remediation.md."
+
+  - id: "P05"
+    nombre: "Bounded Autonomy M6"
+    tipo: "Transformation"
+    metricas_canonicas: ["eta_org", "ROI_Habilitacion"]
+    condicion_trigger: "H_org >= 70 y eta_org/ROI_Habilitacion por debajo de potencial; se busca aumentar autonomía (M6)."
+    fases_relacionadas: ["F3", "F7", "F11", "F15", "F16", "F17"]
+    entidades_relacionadas: ["P1_Capacidad", "E7_FlowExecution"]
+    trayectorias_relacionadas: ["Minimal", "Avanzada"]
+    health_gates_relacionados: []
+    duracion_estimada: "P4W"
+    estado: "draft"
+    notas: "Ver P05_bounded_autonomy_m6.md."
+
+  - id: "P06"
+    nombre: "Pilot Transformation"
+    tipo: "Transformation"
+    metricas_canonicas: ["H_org", "eta_org", "ROI_Habilitacion"]
+    condicion_trigger: "Decisión de ejecutar piloto controlado de transformación para mejorar H_org/eta_org en dominio acotado."
+    fases_relacionadas: ["F3", "F9", "F11", "F15", "F16"]
+    entidades_relacionadas: ["E6_ArchitecturalState", "E7_FlowExecution"]
+    trayectorias_relacionadas: ["Minimal", "Avanzada"]
+    health_gates_relacionados: []
+    duracion_estimada: "P4W"
+    estado: "draft"
+    notas: "Ver P06_pilot_transformation.md."
+
+  - id: "P07"
+    nombre: "Scale Transformation"
+    tipo: "Transformation"
+    metricas_canonicas: ["H_org", "eta_org", "ROI_Habilitacion"]
+    condicion_trigger: "Piloto (P06) exitoso con mejoras sostenidas en H_org/eta_org; decisión de escalar a más dominios."
+    fases_relacionadas: ["F9", "F11", "F12", "F15", "F16", "F17"]
+    entidades_relacionadas: ["E6_ArchitecturalState", "E7_FlowExecution"]
+    trayectorias_relacionadas: ["Minimal", "Avanzada"]
+    health_gates_relacionados: []
+    duracion_estimada: "P8W"
+    estado: "draft"
+    notas: "Ver P07_scale_transformation.md."
+
+  - id: "P08"
+    nombre: "Optimization Sustain"
+    tipo: "Transformation"
+    metricas_canonicas: ["H_org", "eta_org", "ROI_Habilitacion"]
+    condicion_trigger: "Transformación ya escalada; se requiere sostener/optimizar H_org/eta_org evitando drift operativo."
+    fases_relacionadas: ["F13", "F15", "F16", "F18"]
+    entidades_relacionadas: ["E6_ArchitecturalState", "E7_FlowExecution"]
+    trayectorias_relacionadas: ["Minimal", "Avanzada"]
+    health_gates_relacionados: []
+    duracion_estimada: "P4W"
+    estado: "draft"
+    notas: "Ver P08_optimization_sustain.md."
+
+  - id: "P09"
+    nombre: "Drift Detection Response"
+    tipo: "Recovery"
+    metricas_canonicas: ["H_org", "eta_org"]
+    condicion_trigger: "Drift relevante detectado por F13 respecto a valores esperados por trayectoria."
+    fases_relacionadas: ["F13", "F14", "F16", "F17"]
+    entidades_relacionadas: ["E6_ArchitecturalState", "E7_FlowExecution"]
+    trayectorias_relacionadas: ["Minimal", "Avanzada"]
+    health_gates_relacionados: []
+    duracion_estimada: "P3D"
+    estado: "draft"
+    notas: "Definición detallada pendiente (CAP-07 futura)."
+
+  - id: "P10"
+    nombre: "Capacity Gap Resolution"
+    tipo: "Transformation"
+    metricas_canonicas: ["H_org", "eta_org", "ROI_Habilitacion"]
+    condicion_trigger: "Gaps críticos de capacidad en F4/F10 que explican baja H_org/eta_org o bajo ROI_Habilitacion."
+    fases_relacionadas: ["F4", "F10", "F13", "F17"]
+    entidades_relacionadas: ["P1_Capacidad", "C1_Capacidad", "E6_ArchitecturalState"]
+    trayectorias_relacionadas: ["Minimal", "Avanzada"]
+    health_gates_relacionados: []
+    duracion_estimada: "P4W"
+    estado: "draft"
+    notas: "Detalles a completar cuando P10 se redacte."
+
+  - id: "P11"
+    nombre: "Flow Optimization"
+    tipo: "Transformation"
+    metricas_canonicas: ["eta_org", "ROI_Habilitacion"]
+    condicion_trigger: "Eficiencia de flujos degradada; cuellos de botella localizables en E7_FlowExecution."
+    fases_relacionadas: ["F5", "F11", "F13", "F16"]
+    entidades_relacionadas: ["P2_Flujo", "E7_FlowExecution"]
+    trayectorias_relacionadas: ["Minimal", "Avanzada"]
+    health_gates_relacionados: []
+    duracion_estimada: "P3W"
+    estado: "draft"
+    notas: "Pendiente redacción detallada de P11."
+
+  - id: "P12"
+    nombre: "Data Quality Recovery"
+    tipo: "Recovery"
+    metricas_canonicas: ["H_org", "eta_org", "ROI_Habilitacion"]
+    condicion_trigger: "Problemas de calidad de datos en F6/TF3 que afectan métricas H_org/eta_org/ROI_Habilitacion."
+    fases_relacionadas: ["F6", "F11", "F13", "F16"]
+    entidades_relacionadas: ["P3_Informacion", "C3_Informacion", "E6_ArchitecturalState"]
+    trayectorias_relacionadas: ["Minimal", "Avanzada"]
+    health_gates_relacionados: []
+    duracion_estimada: "P2W"
+    estado: "draft"
+    notas: "Pendiente redacción detallada de P12."
+
+  - id: "P13"
+    nombre: "Political Alignment"
+    tipo: "Recovery"
+    metricas_canonicas: ["H_org"]
+    condicion_trigger: "Conflictos entre stakeholders o decisiones políticas degradan H_org sin causas técnicas evidentes."
+    fases_relacionadas: ["F1", "F3", "F7", "F13", "F17"]
+    entidades_relacionadas: ["trayectorias", "roles_governance"]
+    trayectorias_relacionadas: ["Survival", "Minimal", "Avanzada"]
+    health_gates_relacionados: []
+    duracion_estimada: "P2W"
+    estado: "draft"
+    notas: "Pendiente P13; usar RACI y decision_matrix como contexto."
+
+  - id: "P14"
+    nombre: "Client Expectation Management"
+    tipo: "Recovery"
+    metricas_canonicas: ["H_org", "eta_org", "ROI_Habilitacion"]
+    condicion_trigger: "Brecha relevante entre expectativas de clientes y resultados percibidos reflejada en métricas."
+    fases_relacionadas: ["F1", "F3", "F13", "F16"]
+    entidades_relacionadas: ["case_instances", "trayectorias"]
+    trayectorias_relacionadas: ["Survival", "Minimal", "Avanzada"]
+    health_gates_relacionados: []
+    duracion_estimada: "P2W"
+    estado: "mvo"
+    notas: "P14: handle client expectation management."
+
+  - id: "P15"
+    nombre: "Adaptive Cadence"
+    tipo: "Transformation"
+    metricas_canonicas: ["H_org"]
+    condicion_trigger: "Cambio abrupto de contexto (crisis/hypergrowth) que pone en riesgo H_org y obliga a ajustar cadencias (F15)."
+    fases_relacionadas: ["F3", "F13", "F15", "F17"]
+    entidades_relacionadas: ["context_pattern_schema", "trayectorias"]
+    trayectorias_relacionadas: ["Survival", "Minimal", "Avanzada"]
+    health_gates_relacionados: []
+    duracion_estimada: "P2W"
+    estado: "mvo"
+    notas: "P15: adaptive cadence policy and plan."
+

@@ -1,0 +1,29 @@
+# T01 - Context Assessment
+# Use this file to capture the initial state of the organization.
+
+organization:
+  name: "Acme Corp"
+  industry: "Technology"
+  size: 50 # Employees
+  age: 3 # Years
+
+context_parameters:
+  complexity: 3 # 1 (Simple) to 5 (Chaotic)
+  volatility: 2 # 1 (Stable) to 5 (Volatile)
+  regulatory_pressure: 1 # 1 (None) to 5 (High)
+
+current_state:
+  h_org_estimated: 0.55
+  pain_points:
+    - "Slow deployment cycles"
+    - "High turnover in engineering"
+    - "Lack of documentation"
+
+resources:
+  budget_tier: "Tier 2" # Tier 1 (<100k), Tier 2 (100k-1M), Tier 3 (>1M)
+  time_horizon: "12 months"
+
+trajectory_recommendation:
+  # To be filled after analysis
+  selected_trajectory: "" # Survival, Minimal, Advanced
+  rationale: ""

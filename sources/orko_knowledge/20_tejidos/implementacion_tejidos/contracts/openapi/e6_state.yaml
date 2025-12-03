@@ -1,0 +1,807 @@
+openapi: 3.1.0
+
+info:
+  title: ORKO E6 Architectural State Management API
+  version: 2.0.0
+  description: |
+    REST API for E6 Architectural State Management - Evolution, planning, and change management.
+    **Primitivo:** Meta-architectural (crosses all primitives)  
+    **Status:** Transversal concern  
+    **Trazabilidad:** ../../../07_architectural_state_management.md
+    
+    **Purpose:**
+    - Evolutionary architecture: Current → Target planning
+    - Change management: Controlled transitions
+    - Compliance: Auditable historical snapshots
+    - Rollback: Ability to return to previous state
+    - Impact analysis: Diff between states
+    
+  contact:
+    name: ORKO Architecture Team
+
+servers:
+  - url: https://api.orko.org/v2
+  - url: http://localhost:8000/v2
+
+tags:
+  - name: States
+  - name: Operations
+  - name: Analysis
+
+components:
+  schemas:
+    
+    ArchitecturalState:
+      type: object
+      required: [id, name, state_type, effective_date, snapshot, metrics, owner_capacity_id, status]
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+          maxLength: 255
+          example: "Q1-2025 Target"
+        description:
+          type: string
+          maxLength: 2000
+        
+        state_type:
+          type: string
+          enum: [Current, Target, Intermediate, Historical]
+          description: |
+            - Current: Current system state (NOW)
+            - Target: Future objective state
+            - Intermediate: Milestone on Current → Target path
+            - Historical: Past snapshot (audit trail)
+        
+        effective_date:
+          type: string
+          format: date
+          description: When this state is/was/will be effective
+        
+        valid_until:
+          type: string
+          format: date
+          nullable: true
+          description: When superseded (null for Current/Target)
+        
+        snapshot:
+          $ref: '#/components/schemas/Snapshot'
+        
+        snapshot_metadata:
+          type: object
+          properties:
+            captured_at:
+              type: string
+              format: date-time
+            captured_by:
+              type: string
+              format: uuid
+              description: Human capacity who captured/defined
+            consistency_validated:
+              type: boolean
+            validation_errors:
+              type: array
+              items:
+                type: string
+              nullable: true
+            validation_report_url:
+              type: string
+              nullable: true
+        
+        evolution:
+          type: object
+          description: Relationship with other states
+          properties:
+            previous_state_id:
+              type: string
+              format: uuid
+              nullable: true
+            next_state_id:
+              type: string
+              format: uuid
+              nullable: true
+            parent_target_id:
+              type: string
+              format: uuid
+              nullable: true
+              description: If Intermediate, reference to Target
+        
+        metrics:
+          $ref: '#/components/schemas/StateMetrics'
+        
+        tags:
+          type: array
+          items:
+            type: string
+        
+        criticality:
+          type: string
+          enum: [Low, Medium, High, Critical]
+        
+        owner_capacity_id:
+          type: string
+          format: uuid
+          description: Human capacity accountable for this state
+        
+        status:
+          type: string
+          enum: [Draft, Approved, Active, Superseded, Archived]
+        
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+    
+    Snapshot:
+      type: object
+      description: Complete system snapshot at a point in time
+      properties:
+        capacities:
+          type: array
+          items:
+            type: object
+            properties:
+              capacity_id:
+                type: string
+                format: uuid
+              name:
+                type: string
+              capacity_type:
+                type: string
+                enum: [C0, C1, C2, C3]
+              substrate:
+                type: string
+                enum: [Humano, Algorítmico, Mecánico, Mixto]
+              lifecycle_state:
+                type: string
+              configuration:
+                type: object
+                description: Key configuration parameters
+        
+        flows:
+          type: array
+          items:
+            type: object
+            properties:
+              flow_id:
+                type: string
+                format: uuid
+              name:
+                type: string
+              cognitive_level:
+                type: string
+                enum: [C0_Mechanical, C1_Decisional, C2_Cognitive, Mixed]
+              status:
+                type: string
+              configuration:
+                type: object
+        
+        information_summary:
+          type: object
+          properties:
+            total_assets:
+              type: integer
+            by_subdomain:
+              type: object
+              properties:
+                foundation:
+                  type: integer
+                analytics:
+                  type: integer
+                semantic:
+                  type: integer
+            storage_size_gb:
+              type: number
+            quality_score_avg:
+              type: number
+        
+        purposes:
+          type: array
+          items:
+            type: object
+            properties:
+              purpose_id:
+                type: string
+                format: uuid
+              objective:
+                type: string
+              status:
+                type: string
+              hierarchy_position:
+                type: string
+              progress_pct:
+                type: number
+        
+        limits:
+          type: array
+          items:
+            type: object
+            properties:
+              limit_id:
+                type: string
+                format: uuid
+              limit_type:
+                type: string
+              active:
+                type: boolean
+              compliance_rate:
+                type: number
+    
+    StateMetrics:
+      type: object
+      properties:
+        total_capacities:
+          type: integer
+        active_capacities:
+          type: integer
+        total_flows:
+          type: integer
+        active_flows:
+          type: integer
+        total_information_assets:
+          type: integer
+        total_okrs:
+          type: integer
+        
+        health_score:
+          type: number
+          minimum: 0
+          maximum: 100
+          description: Aggregated health score
+        tf1_score:
+          type: number
+          minimum: 0
+          maximum: 100
+        tf2_score:
+          type: number
+          minimum: 0
+          maximum: 100
+        tf3_score:
+          type: number
+          minimum: 0
+          maximum: 100
+        security_score:
+          type: number
+          minimum: 0
+          maximum: 100
+        
+        convergence_pct:
+          type: number
+          minimum: 0
+          maximum: 100
+          nullable: true
+          description: Progress toward target (Target/Intermediate only)
+    
+    CaptureStateRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        include_retired:
+          type: boolean
+          default: false
+        tags:
+          type: array
+          items:
+            type: string
+    
+    DefineTargetRequest:
+      type: object
+      required: [name, target_date, changes]
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        target_date:
+          type: string
+          format: date
+        changes:
+          type: object
+          properties:
+            capacities_to_add:
+              type: array
+              items:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  capacity_type:
+                    type: string
+                  substrate:
+                    type: string
+                  configuration:
+                    type: object
+            capacities_to_remove:
+              type: array
+              items:
+                type: string
+                format: uuid
+            flows_to_add:
+              type: array
+              items:
+                type: object
+            flows_to_modify:
+              type: array
+              items:
+                type: object
+                properties:
+                  flow_id:
+                    type: string
+                    format: uuid
+                  changes:
+                    type: object
+            okrs_target:
+              type: array
+              items:
+                type: object
+                properties:
+                  okr_id:
+                    type: string
+                    format: uuid
+                  target_progress:
+                    type: number
+            quality_targets:
+              type: object
+              properties:
+                tf1_score:
+                  type: number
+                tf2_score:
+                  type: number
+                tf3_score:
+                  type: number
+        tags:
+          type: array
+          items:
+            type: string
+    
+    PlanIntermediatesRequest:
+      type: object
+      required: [current_id, target_id, milestones]
+      properties:
+        current_id:
+          type: string
+          format: uuid
+        target_id:
+          type: string
+          format: uuid
+        milestones:
+          type: array
+          items:
+            type: object
+            required: [date, name]
+            properties:
+              date:
+                type: string
+                format: date
+              name:
+                type: string
+              priorities:
+                type: array
+                items:
+                  type: string
+    
+    ConvergenceResponse:
+      type: object
+      properties:
+        convergence_pct:
+          type: number
+          minimum: 0
+          maximum: 100
+        components:
+          type: object
+          properties:
+            capacities_conv:
+              type: number
+            flows_conv:
+              type: number
+            quality_conv:
+              type: number
+            okr_conv:
+              type: number
+        interpretation:
+          type: string
+        details:
+          type: object
+          properties:
+            capacities_implemented:
+              type: integer
+            capacities_planned:
+              type: integer
+            flows_implemented:
+              type: integer
+            flows_planned:
+              type: integer
+    
+    TransitionRequest:
+      type: object
+      properties:
+        dry_run:
+          type: boolean
+          default: false
+          description: Simulate without applying changes
+        validation_only:
+          type: boolean
+          default: false
+    
+    TransitionResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        convergence_achieved:
+          type: number
+        changes_applied:
+          type: integer
+        changes_failed:
+          type: integer
+        issues:
+          type: array
+          items:
+            type: string
+        dry_run:
+          type: boolean
+        change_plan:
+          type: object
+          description: Detailed change plan (if dry_run)
+    
+    DiffResponse:
+      type: object
+      properties:
+        from_state_id:
+          type: string
+          format: uuid
+        to_state_id:
+          type: string
+          format: uuid
+        differences:
+          type: object
+          properties:
+            capacities_added:
+              type: array
+              items:
+                type: object
+            capacities_removed:
+              type: array
+              items:
+                type: string
+                format: uuid
+            capacities_modified:
+              type: array
+              items:
+                type: object
+            flows_added:
+              type: array
+              items:
+                type: object
+            flows_removed:
+              type: array
+              items:
+                type: string
+                format: uuid
+            flows_modified:
+              type: array
+              items:
+                type: object
+            metrics_delta:
+              type: object
+        summary:
+          type: string
+    
+    StateListResponse:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/ArchitecturalState'
+        total:
+          type: integer
+        page:
+          type: integer
+    
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+        message:
+          type: string
+        timestamp:
+          type: string
+          format: date-time
+
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+security:
+  - bearerAuth: []
+
+paths:
+  /states:
+    get:
+      tags: [States]
+      summary: List architectural states
+      parameters:
+        - name: state_type
+          in: query
+          schema:
+            type: string
+            enum: [Current, Target, Intermediate, Historical]
+        - name: status
+          in: query
+          schema:
+            type: string
+        - name: from_date
+          in: query
+          schema:
+            type: string
+            format: date
+        - name: to_date
+          in: query
+          schema:
+            type: string
+            format: date
+        - name: page
+          in: query
+          schema:
+            type: integer
+            default: 1
+      responses:
+        '200':
+          description: List of states
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StateListResponse'
+    
+    post:
+      tags: [States]
+      summary: Create state manually
+      description: Create state with explicit snapshot (advanced use)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ArchitecturalState'
+      responses:
+        '201':
+          description: State created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ArchitecturalState'
+  
+  /states/{state_id}:
+    parameters:
+      - name: state_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+    
+    get:
+      tags: [States]
+      summary: Get state details
+      responses:
+        '200':
+          description: State details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ArchitecturalState'
+    
+    put:
+      tags: [States]
+      summary: Update state
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ArchitecturalState'
+      responses:
+        '200':
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ArchitecturalState'
+    
+    delete:
+      tags: [States]
+      summary: Delete state
+      responses:
+        '204':
+          description: Deleted
+  
+  /states/capture:
+    post:
+      tags: [Operations]
+      summary: Capture current state
+      description: Capture snapshot of current system state (E6 §3.1)
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CaptureStateRequest'
+      responses:
+        '201':
+          description: Current state captured
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ArchitecturalState'
+  
+  /states/define-target:
+    post:
+      tags: [Operations]
+      summary: Define target state
+      description: Define future objective state (E6 §3.2)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DefineTargetRequest'
+      responses:
+        '201':
+          description: Target state defined
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ArchitecturalState'
+  
+  /states/plan-intermediates:
+    post:
+      tags: [Operations]
+      summary: Plan intermediate states
+      description: Create milestone states on path to target (E6 §3.3)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlanIntermediatesRequest'
+      responses:
+        '201':
+          description: Intermediate states created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  intermediate_states:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ArchitecturalState'
+  
+  /states/{state_id}/convergence:
+    get:
+      tags: [Analysis]
+      summary: Calculate convergence
+      description: Measure progress toward target state (E6 §3.4)
+      parameters:
+        - name: state_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: compared_to
+          in: query
+          schema:
+            type: string
+            format: uuid
+          description: Target state ID to compare against
+      responses:
+        '200':
+          description: Convergence metrics
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConvergenceResponse'
+  
+  /states/{state_id}/transition:
+    post:
+      tags: [Operations]
+      summary: Transition to state
+      description: Execute transition to target/intermediate state (E6 §3.5)
+      parameters:
+        - name: state_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransitionRequest'
+      responses:
+        '200':
+          description: Transition executed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransitionResponse'
+  
+  /states/{state_id}/diff:
+    get:
+      tags: [Analysis]
+      summary: Diff between states
+      description: Calculate differences between two states
+      parameters:
+        - name: state_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+          description: From state
+        - name: compared_to
+          in: query
+          required: true
+          schema:
+            type: string
+            format: uuid
+          description: To state
+      responses:
+        '200':
+          description: State differences
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DiffResponse'
+  
+  /states/{state_id}/approve:
+    post:
+      tags: [Operations]
+      summary: Approve state
+      description: Change status from Draft to Approved
+      parameters:
+        - name: state_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                approval_notes:
+                  type: string
+      responses:
+        '200':
+          description: State approved
+  
+  /states/{state_id}/activate:
+    post:
+      tags: [Operations]
+      summary: Activate state
+      description: Set state as Active (make it current)
+      parameters:
+        - name: state_id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: State activated

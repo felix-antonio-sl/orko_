@@ -1,0 +1,20 @@
+id: "startup_saas_50p_minimal"
+nombre: "Startup SaaS 50p (Minimal)"
+tipo_contexto: "startup"
+jurisdiction_ids:
+  - "us"
+default_trajectory: "Minimal"
+team_size_range: "40-60"
+funding_stage: "series_a"
+risk_profile: "Alta incertidumbre de producto/mercado con runway limitado; riesgo regulatorio bajo-medio."
+industry_sector: "SaaS_B2B"
+regulatory_context: "Contexto regulatorio estándar para SaaS B2B, con foco en privacidad y seguridad básica."
+maturity_level: "startup_early"
+crisis_flags:
+  cash_crunch: false
+  incidentes_recurrentes: false
+hypergrowth_flags:
+  contratacion_rapida: true
+  expansion_geografica: false
+tech_stack_maturity: "mid"
+cultural_context: "Equipo pequeño, altamente cross-funcional, con fuerte presión por lanzamientos rápidos y aprendizaje acelerado."

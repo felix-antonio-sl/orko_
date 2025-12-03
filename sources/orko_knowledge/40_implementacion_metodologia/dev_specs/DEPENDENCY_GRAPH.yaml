@@ -1,0 +1,532 @@
+# ================================================================
+# DEPENDENCY GRAPH ORKO - KERNEL SUBSET
+# ================================================================
+#
+# Propósito: Modelar dependencias núcleo F1,F3,F7,F9,F13
+# Scope: Kernel F1, F3, F7, F9, F13 (MVP validable)
+# Expansion: F2,F4-F6,F8,F10-F12,F14-F18 + P01-P15 + trayectorias
+#
+# Version: 1.0.0-kernel
+# Date: 2024-11-14
+# Status: KERNEL_ONLY
+#
+# Nota: todas las referencias usan IDs canónicos del
+#       VOCABULARIO_CONTROLADO.yaml (no alias).
+# ================================================================
+
+metadata:
+  version: "1.0.0-kernel"
+  date: "2024-11-14"
+  status: "kernel_only"
+  scope: ["F1", "F3", "F7", "F9", "F13"]
+  purpose: "Dependency graph kernel metodología ORKO"
+
+  expansion_plan:
+    etapa_2_fases: ["F2", "F4", "F5", "F6", "F8", "F10", "F11", "F12"]
+    etapa_3_fases: ["F14", "F15", "F16", "F17", "F18"]
+    playbooks: ["P01", "P02", "P03", "P04", "P05", "P06", "P07", "P08", "P09", "P10", "P11", "P12", "P13", "P14", "P15"]
+    trayectorias: ["Survival", "Minimal", "Avanzada"]
+
+  validation:
+    - "dependency_closure_script.py"
+    - "No ciclos (excepto feedback_loops anotados)"
+    - "DAG válido"
+    - "Sin outputs huérfanos"
+    - "Coherencia con VOCABULARIO_CONTROLADO.yaml"
+
+# ================================================================
+# KERNEL DEFINITION
+# ================================================================
+
+kernel:
+  phases: ["F1", "F3", "F7", "F9", "F13"]
+  dependency_flow: "F1 → F3 → F7,F9 → F13"
+
+  rationale:
+    kernel_first: "Desarrollar núcleo mínimo funcional PRIMERO"
+    mvp_validable: "5 fases suficientes para caso startup_50p"
+    dependency_closure: "F1 sin prereqs, F13 cierra health loop"
+
+  completeness:
+    con_kernel_puedo:
+      - "F1: Diagnosticar organización (context + H_org baseline)"
+      - "F3: Seleccionar trayectoria (Survival/Minimal/Avanzada)"
+      - "F7: Definir propósito y OKR cascade"
+      - "F9: Diseñar estado objetivo E6_target"
+      - "F13: Monitorear salud y drift vs target"
+    sin_expansion_postponable:
+      - "Diseño detallado capacidades/flows/data (F4-F6,F8)"
+      - "Implementación completa (F10-F12)"
+      - "Operación completa + evolución avanzada (F14-F18)"
+
+# ================================================================
+# FASES KERNEL (F1,F3,F7,F9,F13)
+# ================================================================
+
+fases:
+
+  F1:
+    type: "Fase_WSLC"
+    id: "F1"
+    nombre: "Context Assessment"
+    wslc_stage: "Initiation"
+
+    layer_0:
+      axiomas: ["A1", "A2", "A4"]
+      primitivos: ["P1", "P2", "P3", "P4", "P5"]
+      invariantes: ["I8"]
+
+    layer_1:
+      dominios:
+        - id: "D2"
+          rol: "PRIMARY"
+          rationale: "Percepción (sensing organizacional)"
+        - id: "D3"
+          rol: "SECONDARY"
+          rationale: "Assessment informa decisiones downstream"
+      entidades: []
+      metricas: ["H_org"]
+
+    layer_2: []  # F1 no usa TF1–TF3 directamente
+
+    dependencies:
+      reads_from: []  # F1 es fase inicial
+      writes_to:
+        - "F2"   # Vision Definition (expansión)
+        - "F3"   # Trajectory Selection (kernel)
+        - "F4"   # Capability Mapping (expansión)
+        - "F5"   # Flow Design (expansión)
+        - "F6"   # Information Architecture (expansión)
+        - "F7"   # Purpose Cascade (kernel)
+        - "F8"   # Limits Definition (expansión)
+      coordinates_with: []
+      feedback_loops:
+        - phase: "F13"
+          direction: "F13→F1"
+          tipo: "re_assessment_trigger"
+
+  F3:
+    type: "Fase_WSLC"
+    id: "F3"
+    nombre: "Trajectory Selection"
+    wslc_stage: "Initiation"
+
+    layer_0:
+      axiomas: ["A4"]
+      primitivos: ["P4"]
+      invariantes: ["I8"]
+
+    layer_1:
+      dominios:
+        - id: "D3"
+          rol: "PRIMARY"
+          rationale: "Decisión de trayectoria bajo constraints"
+        - id: "D2"
+          rol: "SECONDARY"
+          rationale: "Usa sensing F1 para informar decisión"
+      entidades: []
+      metricas: []
+
+    layer_2: []
+
+    dependencies:
+      reads_from:
+        - phase: "F1"
+          artifacts: ["context_profile_36_params", "h_org_baseline"]
+          criticality: "BLOCKER"
+      writes_to:
+        - "F4"
+        - "F5"
+        - "F6"
+        - "F7"
+        - "F8"
+        - "F9"
+        - "F10"
+        - "F11"
+        - "F12"
+      coordinates_with: []
+      feedback_loops:
+        - phase: "F17"
+          direction: "F17→F3"
+          tipo: "trajectory_adjustment"
+
+    consumers:
+      fases:
+        - "F4"
+        - "F5"
+        - "F6"
+        - "F7"
+        - "F8"
+        - "F9"
+        - "F10"
+        - "F11"
+        - "F12"
+      playbooks:
+        - "P06"  # Pilot Transformation
+        - "P15"  # Adaptive Cadence
+      trayectorias:
+        - "Survival"
+        - "Minimal"
+        - "Avanzada"
+
+  F7:
+    type: "Fase_WSLC"
+    id: "F7"
+    nombre: "Purpose Cascade"
+    wslc_stage: "Development"
+
+    layer_0:
+      axiomas: ["A2"]
+      primitivos: ["P5"]
+      invariantes: ["I3"]
+
+    layer_1:
+      dominios:
+        - id: "D3"
+          rol: "PRIMARY"
+          rationale: "Decisión y priorización de OKRs"
+        - id: "D2"
+          rol: "SECONDARY"
+          rationale: "Observa alignment actual"
+      entidades: []
+      metricas: []  # En SPRINT 1 F7 se apoya en métricas canónicas (H_org, eta_org, ROI_Habilitacion) pero no introduce metric_id nuevo
+
+    layer_2: []
+
+    dependencies:
+      reads_from:
+        - phase: "F2"
+          artifacts: ["okr_L4", "north_star_metrics"]
+          criticality: "BLOCKER"
+          nota_kernel: "F2 no está en kernel → F7 usa OKR L4 simplificado"
+        - phase: "F4"
+          artifacts: ["p1_inventory", "skills_matrix"]
+          criticality: "MEDIUM"
+          nota_kernel: "F4 expansión → en kernel se usan roles genéricos"
+      writes_to:
+        - "F9"
+        - "F13"
+        - "F15"
+      coordinates_with:
+        - "F3"  # Coherencia timeline/trajectory
+      feedback_loops: []
+
+    consumers:
+      fases:
+        - "F9"
+        - "F13"
+        - "F15"
+      playbooks:
+        - "P03"  # OKR Alignment
+        - "P13"  # Political Alignment
+      trayectorias:
+        - "Minimal"
+        - "Avanzada"
+
+  F9:
+    type: "Fase_WSLC"
+    id: "F9"
+    nombre: "Target State Design"
+    wslc_stage: "Development"
+
+    layer_0:
+      axiomas: ["A1", "A2"]
+      primitivos: ["P1", "P2", "P3", "P4", "P5"]
+      invariantes: ["I1", "I2", "I3"]
+
+    layer_1:
+      dominios:
+        - id: "D1"
+          rol: "PRIMARY"
+          rationale: "Diseño arquitectónico central"
+        - id: "D3"
+          rol: "SECONDARY"
+          rationale: "Decisiones arquitectónicas (ADRs)"
+      entidades: ["E6"]  # E6_ArchitecturalState
+      metricas: ["H_org"]
+
+    layer_2:
+      note: "Referencia condicional a TF1–TF3 según trayectoria"
+      conditional:
+        - "Si Minimal → arquitectura tool-agnostic (sin TF1–TF3 explícitos)"
+        - "Si Avanzada → arquitectura con TF1–TF3 desplegados"
+
+    dependencies:
+      reads_from:
+        - phase: "F2"
+          artifacts: ["okr_L4", "north_star"]
+          criticality: "MEDIUM"
+          nota_kernel: "En kernel se usa F7.okr_L4"
+        - phase: "F3"
+          artifacts: ["trajectory_selected", "timeline_commitment", "budget_allocation"]
+          criticality: "BLOCKER"
+        - phase: "F4"
+          artifacts: ["p1_inventory", "capacity_gaps"]
+          criticality: "MEDIUM"
+        - phase: "F5"
+          artifacts: ["vsm_maps", "handoff_ratio"]
+          criticality: "MEDIUM"
+        - phase: "F6"
+          artifacts: ["data_catalog", "architecture_blueprint"]
+          criticality: "MEDIUM"
+        - phase: "F7"
+          artifacts: ["okr_cascade", "alignment_score"]
+          criticality: "BLOCKER"
+        - phase: "F8"
+          artifacts: ["p4_limit_catalog"]
+          criticality: "MEDIUM"
+      writes_to:
+        - "F10"
+        - "F11"
+        - "F12"
+        - "F18"
+      coordinates_with:
+        - "F3"
+        - "F7"
+      feedback_loops: []
+
+    consumers:
+      fases:
+        - "F10"
+        - "F11"
+        - "F12"
+        - "F18"
+      playbooks:
+        - "P06"  # Pilot Transformation
+        - "P07"  # Scale Transformation
+      trayectorias:
+        - "Minimal"
+        - "Avanzada"
+
+  F13:
+    type: "Fase_WSLC"
+    id: "F13"
+    nombre: "Health Monitoring"
+    wslc_stage: "Operation"
+
+    layer_0:
+      axiomas: ["A5"]
+      primitivos: []
+      invariantes: ["I6"]
+
+    layer_1:
+      dominios:
+        - id: "D2"
+          rol: "PRIMARY"
+          rationale: "Observability continua de H_org"
+        - id: "D4"
+          rol: "SECONDARY"
+          rationale: "Operación continua y monitoreo"
+      entidades: []
+      metricas: ["H_org", "eta_org", "ROI_Habilitacion"]
+
+    layer_2: []
+
+    dependencies:
+      reads_from:
+        - phase: "F1"
+          artifacts: ["h_org_baseline"]
+          criticality: "BLOCKER"
+        - phase: "F7"
+          artifacts: ["okr_cascade", "alignment_score"]
+          criticality: "BLOCKER"
+        - phase: "F9"
+          artifacts: ["e6_target", "H_org_target"]
+          criticality: "BLOCKER"
+        - phase: "F10"
+          artifacts: ["quick_wins_executed"]
+          criticality: "MEDIUM"
+        - phase: "F11"
+          artifacts: ["fabric_status"]
+          criticality: "MEDIUM"
+        - phase: "F12"
+          artifacts: ["transition_status"]
+          criticality: "MEDIUM"
+      writes_to:
+        - "F14"
+        - "F16"
+        - "F17"
+        - "F18"
+      coordinates_with:
+        - "F15"  # Dashboards compartidos con Continuous Execution
+      feedback_loops:
+        - phase: "F1"
+          direction: "F13→F1"
+          tipo: "re_assessment_if_drift_gt_30pct"
+
+    consumers:
+      fases:
+        - "F14"
+        - "F16"
+        - "F17"
+        - "F18"
+      playbooks:
+        - "P01"  # Low H_org Recovery
+        - "P02"  # Handoff Reduction
+        - "P03"  # OKR Alignment
+        - "P09"  # Drift Detection Response
+      trayectorias:
+        - "Survival"
+        - "Minimal"
+        - "Avanzada"
+
+# ================================================================
+# PLAYBOOKS (VISTA DESDE EL KERNEL)
+# ================================================================
+
+playbooks:
+
+  P01:
+    id: "P01"
+    nombre: "Low H_org Recovery"
+    triggered_by:
+      - metric: "H_org"
+        condition: "<70"
+        source_phase: "F13"
+    acts_on_phases: ["F10", "F14", "F16", "F17"]
+
+  P02:
+    id: "P02"
+    nombre: "Handoff Reduction"
+    triggered_by:
+      - metric: "H_org"
+        condition: "deterioro atribuible a ineficiencias de flujo/handoffs"
+        source_phase: "F13"
+      - metric: "ROI_Habilitacion"
+        condition: "deterioro atribuible a ineficiencias de flujo/handoffs"
+        source_phase: "F13"
+    acts_on_phases: ["F4", "F5", "F15"]
+
+  P03:
+    id: "P03"
+    nombre: "OKR Alignment"
+    triggered_by:
+      - metric: "H_org"
+        condition: "por debajo de objetivos con propósito/arquitectura definidos (desalineamiento OKR)"
+        source_phase: "F7"
+      - metric: "eta_org"
+        condition: "por debajo de objetivos con propósito/arquitectura definidos (desalineamiento OKR)"
+        source_phase: "F13"
+    acts_on_phases: ["F7", "F15"]
+
+  P06:
+    id: "P06"
+    nombre: "Pilot Transformation"
+    triggered_by:
+      - event: "trajectory_change_or_risk_high"
+        source_phase: "F3"
+    acts_on_phases: ["F9", "F10", "F11"]
+
+  P07:
+    id: "P07"
+    nombre: "Scale Transformation"
+    triggered_by:
+      - event: "pilot_successful"
+        source_phase: "F9"
+    acts_on_phases: ["F10", "F11", "F12"]
+
+  P09:
+    id: "P09"
+    nombre: "Drift Detection Response"
+    triggered_by:
+      - event: "drift_gt_30pct"
+        source_phase: "F13"
+    acts_on_phases: ["F16", "F17"]
+
+  P10:
+    id: "P10"
+    nombre: "Capacity Gap Resolution"
+    triggered_by:
+      - event: "critical_capacity_gap"
+        source_phase: "F4"
+    acts_on_phases: ["F4", "F10"]
+
+  P11:
+    id: "P11"
+    nombre: "Flow Optimization"
+    triggered_by:
+      - event: "flow_bottlenecks"
+        source_phase: "F5"
+    acts_on_phases: ["F5", "F11"]
+
+  P12:
+    id: "P12"
+    nombre: "Data Quality Recovery"
+    triggered_by:
+      - event: "data_quality_drop"
+        source_phase: "F6"
+    acts_on_phases: ["F6", "F11"]
+
+  P13:
+    id: "P13"
+    nombre: "Political Alignment"
+    triggered_by:
+      - event: "okr_conflicts_or_political_blockers"
+        source_phase: "F7"
+    acts_on_phases: ["F7", "F3", "F9"]
+
+  P14:
+    id: "P14"
+    nombre: "Client Expectation Management"
+    triggered_by:
+      - event: "mismatch_between_client_expectations_and_trajectory"
+        source_phase: "F3"
+    acts_on_phases: ["F3", "F9", "F13"]
+
+  P15:
+    id: "P15"
+    nombre: "Adaptive Cadence"
+    triggered_by:
+      - event: "cadence_mismatch_vs_context_or_trajectory"
+        source_phase: "F3"
+      - event: "sustained_alert_noise_or_overload"
+        source_phase: "F13"
+    acts_on_phases: ["F15", "F13"]
+
+# ================================================================
+# TRAYECTORIAS (CHAINING KERNEL → EXPANSIÓN)
+# ================================================================
+
+trayectorias:
+
+  Survival:
+    id: "Survival"
+    horizonte: "8-12 semanas"
+    fases_core: ["F1", "F3", "F13"]
+    fases_expansion: ["F10"]
+    playbooks_clave: ["P01", "P02", "P03", "P09"]
+
+  Minimal:
+    id: "Minimal"
+    horizonte: "6-12 meses"
+    fases_core: ["F1", "F3", "F7", "F9", "F13"]
+    fases_expansion: ["F2", "F4", "F5", "F6", "F8", "F10", "F11", "F12", "F14", "F15", "F16", "F17", "F18"]
+    playbooks_clave: ["P01", "P02", "P03", "P06", "P07", "P09", "P10", "P11", "P12", "P13", "P14", "P15"]
+
+  Avanzada:
+    id: "Avanzada"
+    horizonte: "18-36 meses"
+    fases_core: ["F1", "F3", "F7", "F9", "F13"]
+    fases_expansion: ["F2", "F4", "F5", "F6", "F8", "F10", "F11", "F12", "F14", "F15", "F16", "F17", "F18"]
+    playbooks_clave: ["P01", "P02", "P03", "P06", "P07", "P08", "P09", "P10", "P11", "P12", "P13", "P14", "P15"]
+
+# ================================================================
+# VALIDATION RULES (KERNEL)
+# ================================================================
+
+validation_rules:
+
+  no_orphan_outputs:
+    rule: "Todo output relevante de F1,F3,F7,F9,F13 tiene ≥1 consumer"
+    exception: "Outputs que alimentan solo fases expansión Etapa 2/3"
+    validation: "dependency_closure_script.py --check-orphans"
+
+  no_invalid_references:
+    rule: "Todos reads_from/writes_to/consumers referencian IDs válidos"
+    validation: "dependency_closure_script.py --check-refs"
+
+  dag_structure:
+    rule: "Grafo es DAG (sin ciclos)"
+    exception: "feedback_loops explícitos (F17→F3, F13→F1)"
+    validation: "NetworkX topological_sort"
+
