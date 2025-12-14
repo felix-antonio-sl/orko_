@@ -1,82 +1,228 @@
-# ORKO Core Guide 002 - Tejidos Tecnológicos ORKO
-# Layer 2 - Capacity, Flow, Information
+# ORKO Tejidos Tecnológicos - Layer 2
+# Operacionalización tecnológica de contratos arquitectónicos
 
 _manifest:
   urn: "urn:knowledge:orko:core:tejidos:1.0.0"
   federation:
     visibility: public
     license: "MIT"
-  compatibility:
-    min_consumer_version: "1.0.0"
-    breaking_changes_from: null
-  resolution:
-    canonical_url: "file://knowledge/core/guide_core_002_tejidos_orko.yml"
-    mirrors: []
-  dependencies:
-    requires:
-      - "urn:knowledge:koda:core:spec:1.0.0"
-      - "urn:knowledge:koda:core:transform:1.0.0"
   provenance:
     created_by: "FS"
-    created_at: "2025-12-01"
-    last_modified_by: "FS"
-    last_modified_at: "2025-12-01"
-    signature: null
+    created_at: "2025-12-13"
+    last_modified_at: "2025-12-13"
 
-ID: ORKO-CORE-TEJ-01
-Version: 1.0.0
-Status: Draft
-Human-Creator: FS
-Human-Editor: FS
-Model-Collaborator: IA-CLAUDE
-Creation-Date: 2025-12-01
-Modification-Date: 2025-12-01
-Version-Notes: "v1.0.0 - Esqueleto inicial de los tejidos ORKO (TF1/TF2/TF3)."
-Ctx: "Tejidos técnicos ORKO: TF1 (Capacity), TF2 (Flow), TF3 (Information), referenciando markdown legacy en sources/orko_knowledge/20_tejidos/."
+Metadata:
+  ID: "ORKO-CORE-TEJ-01"
+  Version: "1.0.0"
+  Status: "Published"
+  Human-Creator: "FS"
+  Human-Editor: "FS"
+  Model-Collaborator: "Claude"
+  Creation-Date: "2025-12-13"
+  Modification-Date: "2025-12-13"
+  Ctx: "Tejidos Tecnológicos ORKO - Puente Arquitectura→Metodología"
 
 LLM_Parsing_Instructions:
-  ID: KODA-LLM-PARSER-ORKO-TEJ-01
-  Req: "Mandatory block following Metadata."
-  Prohib: "Introducir detalles de implementación no presentes en los markdown."
-  Content: |
-    BEGIN_LLM_INSTRUCTIONS
-    You are an AI agent consuming a KODA/Spec artifact for ORKO fabrics.
-    Treat this document as a structural map over TF1/TF2/TF3.
+  Purp: "Guía parsing artefacto KODA/Spec ORKO Layer 2"
+  Format: "YAML jerárquico keyword-driven"
+  Lexicon_Tier2_ORKO:
+    - "Fabric, Asset, Substrate"
+    - "Guardrail, Trajectory, Lakehouse"
+  XRef_Required:
+    - "urn:knowledge:orko:core:fundamentos:1.0.0"
+    - "urn:knowledge:orko:core:arquitectura:1.0.0"
 
-    Use Src paths to locate detailed descriptions in markdown.
-    END_LLM_INSTRUCTIONS
+# =============================================================================
+# INTRODUCCIÓN
+# =============================================================================
 
-Purp: "Mapear los tejidos TF1/TF2/TF3 y sus relaciones, sirviendo de puente entre arquitectura y implementación."
-Obj:
-  - "Describir brevemente qué cubre cada tejido."
-  - "Apuntar a los documentos markdown correspondientes."
+Introduccion:
+  ID: "ORKO-TEJ-INTRO-01"
+  Def: "Capa operacionalización contratos → implementaciones tecnológicas"
+  Derivacion:
+    P1: "→ TF1_Capacity"
+    P2: "→ TF2_Flow"
+    P3: "→ TF3_Information"
+    P4: "→ Security (transversal)"
+    P5: "→ Purpose_Governance (transversal)"
+  Validacion:
+    Minimalidad: "3 tejidos irreducibles ✓"
+    Suficiencia: "Cobertura P1-P5 completa ✓"
+    Ortogonalidad: "TF1 ⊥ TF2 ⊥ TF3 ✓"
 
-Overview:
-  ID: ORKO-TEJ-OV-01
-  Ctx: "Introducción general a los tejidos ORKO."
-  Src: "sources/orko_knowledge/20_tejidos/00_introduccion_tejidos.md"
+# =============================================================================
+# TF1: CAPACITY FABRIC
+# =============================================================================
 
-TF1_Capacity_Fabric:
-  ID: ORKO-TEJ-TF1-01
-  Ctx: "Tejido de Capacidad (agentes, humanos, máquinas)."
-  Src: "sources/orko_knowledge/20_tejidos/01_TF1_capacity.md"
+TF1_Capacity:
+  ID: "ORKO-TF1-01"
+  Primitivo: "P1_Capacidad"
+  Axioma: "A2"
+  Scope: "Diseño, desarrollo, despliegue capacidades"
 
-TF2_Flow_Fabric:
-  ID: ORKO-TEJ-TF2-01
-  Ctx: "Tejido de Flujo (orquestación, workflows, pipelines)."
-  Src: "sources/orko_knowledge/20_tejidos/02_TF2_flow.md"
+  Schema:
+    Core:
+      id: "UUID"
+      capacity_type: "{C0 | C1 | C2 | C3}"
+      substrate: "{Humano | Algorítmico | Mecánico | Mixto}"
+      role: "{Producción | Habilitación}"
+    Ownership_HAIC:
+      accountable_id: "UUID (Humano/Mixto)"
+      delegated_from: "UUID | null"
+      delegation_mode: "M1..M6"
+    Algorithmic_Specs:
+      guardrails:
+        input_validation: "{pii_detection, injection, max_length}"
+        output_validation: "{schema, toxicity, faithfulness}"
+        limits: "{max_cost, max_time, rate_limit}"
+      trajectory:
+        total_executions: "Integer"
+        drift_detected: "Boolean"
+        performance_trend: "{Improving | Stable | Degrading}"
 
-TF3_Information_Fabric:
-  ID: ORKO-TEJ-TF3-01
-  Ctx: "Tejido de Información (datos, conocimiento, lakehouse)."
-  Src: "sources/orko_knowledge/20_tejidos/03_TF3_information.md"
+  Patterns:
+    Humano: "Define → Hire/Upskill → Onboard → Monitor → Optimize"
+    ML: "Define → Data_Prep → Train → Evaluate → Serve → Monitor"
+    LLM: "Define → Prompt → Tools → Guardrails → HITL → Deploy"
+    Mecanico: "Select → Procure → Configure → Maintain → Monitor"
 
-Cross_Fabric_Concerns:
-  ID: ORKO-TEJ-CONCERNS-01
-  Ctx: "Seguridad, observabilidad y otros concerns transversales."
-  Src: "sources/orko_knowledge/20_tejidos/04_concerns_transversales.md"
+  Tools_Fenotipo:
+    Humano: "HR platforms, LMS"
+    ML: "MLflow, Kubeflow, SageMaker"
+    LLM: "LangChain, vLLM, LangGraph"
+    Mecanico: "CMMS, IoT platforms"
 
-Integration_Patterns:
-  ID: ORKO-TEJ-INTEG-01
-  Ctx: "Patrones de integración entre tejidos."
-  Src: "sources/orko_knowledge/20_tejidos/05_integracion_tejidos.md"
+  Metricas:
+    Formula: "TF1_Score = Coverage×0.25 + Quality×0.30 + Availability×0.25 + Governance×0.10 + Efficiency×0.10"
+    Threshold: "≥70"
+
+# =============================================================================
+# TF2: FLOW FABRIC
+# =============================================================================
+
+TF2_Flow:
+  ID: "ORKO-TF2-01"
+  Primitivo: "P2_Flujo"
+  Axioma: "A1"
+  Scope: "Orquestación capacidades en DAGs"
+
+  Schema:
+    Core:
+      id: "UUID"
+      flow_type: "{Producción | Habilitación}"
+      cognitive_level: "{C0_Mechanical | C1_Decisional | C2_Cognitive | Mixed}"
+    Structure:
+      steps: "List<{step_id, capacity_id, inputs, outputs}>"
+      dependencies: "DAG"
+    Autonomy_HAIC:
+      delegation_mode: "M1..M6"
+      hitl_checkpoints: "List<step_id>"
+      bounded_autonomy: "{max_iterations, max_cost, max_time}"
+    Guardrails:
+      operational: "{rate_limit, concurrency}"
+      quality: "{output_validation, faithfulness}"
+      safety: "{escalation_triggers, circuit_breaker}"
+
+  Patterns:
+    C0_RPA: "Trigger → Extract → Transform → Load → Notify"
+    C1_ML_Routing: "Input → Classify → Route → Execute → Log"
+    C2_MultiAgent: "Receive → Plan → Delegate → Execute → Synthesize → Review"
+
+  Tools_Fenotipo:
+    C0: "Airflow, dbt, UiPath, Cron"
+    C1: "Airflow + ML, Drools"
+    C2: "LangGraph, CrewAI, AutoGen, Temporal"
+
+  Metricas:
+    Formula: "TF2_Score = Coverage×0.20 + Reliability×0.25 + Efficiency×0.25 + Safety×0.20 + STP×0.10"
+    Threshold: "≥70"
+
+# =============================================================================
+# TF3: INFORMATION FABRIC
+# =============================================================================
+
+TF3_Information:
+  ID: "ORKO-TF3-01"
+  Primitivo: "P3_Información"
+  Axioma: "A3"
+  Scope: "Ciclo vida información"
+
+  Schema:
+    Core:
+      id: "UUID"
+      information_type: "{Persistente | Transitoria | Agregada}"
+      structure: "{Structured | Semi_Structured | Unstructured}"
+      sub_domain: "{Foundation | Analytics | Semantic}"
+      lakehouse_layer: "{Bronze | Silver | Gold | Semantic}"
+    Lineage:
+      produced_by: "UUID | null"
+      parent_ids: "List<UUID>"
+      origin: "{Internal | External}"
+    Quality:
+      completeness: "Float[0..1]"
+      accuracy: "Float[0..1]"
+      timeliness: "Float[0..1]"
+    Governance:
+      classification: "{Public | Internal | Confidential | Secret}"
+      contains_pii: "Boolean"
+      compliance: "List<{GDPR | HIPAA | SOC2}>"
+
+  Lakehouse:
+    Bronze: "Raw ingestion"
+    Silver: "Cleaned, validated"
+    Gold: "Business-ready, curated"
+    Semantic: "Indexed, RAG-ready"
+
+  Patterns:
+    Ingestion: "Extract → Validate → Load_Bronze → Quality → Promote"
+    Governance: "Classify → Tag_PII → Apply_Policy → Audit"
+    BI: "Curate_Gold → Model → Dashboard → Refresh"
+    RAG: "Curate → Chunk → Embed → Index → Retrieve"
+
+  Tools_Fenotipo:
+    Foundation: "Airbyte, Kafka, dbt, Snowflake, Databricks"
+    Analytics: "Tableau, Looker, MLflow, Feast"
+    Semantic: "Pinecone, Weaviate, Neo4j, LlamaIndex"
+
+  Metricas:
+    Formula: "TF3_Score = Coverage×0.20 + Quality×0.30 + Freshness×0.20 + Governance×0.20 + Adoption×0.10"
+    Threshold: "≥70"
+
+# =============================================================================
+# TRANSVERSALES
+# =============================================================================
+
+Transversales:
+  ID: "ORKO-TRANSV-01"
+
+  Security_P4:
+    Scope: "Límites aplicados a TF1, TF2, TF3"
+    Dominios:
+      IAM: "Identity and Access Management"
+      Guardrails: "Límites algorítmicos"
+      Data_Protection: "Encryption, PII, anonymization"
+      Compliance: "GDPR, HIPAA, SOC2"
+
+  Purpose_P5:
+    Scope: "Dirección estratégica sobre tejidos"
+    Dominios:
+      OKR_System: "Gestión objetivos"
+      Portfolio: "Priorización iniciativas"
+      Value_Tracking: "V_org measurement"
+
+# =============================================================================
+# INTEGRACIÓN
+# =============================================================================
+
+Integracion:
+  TF1_TF2: "Capacidades ejecutan flujos"
+  TF1_TF3: "Capacidades consumen/producen información"
+  TF2_TF3: "Flujos transforman información"
+
+  Composite_Health:
+    Formula: "Tejidos_Score = TF1×0.35 + TF2×0.35 + TF3×0.30"
+    Threshold: "≥70"
+
+# =============================================================================
+# FIN guide_core_002_tejidos_orko.yml
+# =============================================================================

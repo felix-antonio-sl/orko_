@@ -1,156 +1,296 @@
-# ORKO Core Guide 001 - Arquitectura ORKO
-# Layer 1 - Contratos, Principios, Relaciones y Vistas
+# ORKO Arquitectura - Layer 1
+# Operacionalización de fundamentos: Contratos, Principios, Relaciones, Vistas, Patterns
 
 _manifest:
   urn: "urn:knowledge:orko:core:arquitectura:1.0.0"
   federation:
     visibility: public
     license: "MIT"
-  compatibility:
-    min_consumer_version: "1.0.0"
-    breaking_changes_from: null
-  resolution:
-    canonical_url: "file://knowledge/core/guide_core_001_arquitectura_orko.yml"
-    mirrors: []
-  dependencies:
-    requires:
-      - "urn:knowledge:koda:core:spec:1.0.0"
-      - "urn:knowledge:koda:core:transform:1.0.0"
   provenance:
     created_by: "FS"
-    created_at: "2025-12-01"
-    last_modified_by: "FS"
-    last_modified_at: "2025-12-01"
-    signature: null
+    created_at: "2025-12-13"
+    last_modified_at: "2025-12-13"
 
-ID: ORKO-CORE-ARQ-01
-Version: 1.0.0
-Status: Draft
-Human-Creator: FS
-Human-Editor: FS
-Model-Collaborator: IA-CLAUDE
-Creation-Date: 2025-12-01
-Modification-Date: 2025-12-01
-Version-Notes: "v1.0.0 - Esqueleto inicial de la arquitectura ORKO en formato KODA/Spec."
-Ctx: "Arquitectura ORKO: contratos, principios de diseño, relaciones estructurales y vistas, referenciando markdown legacy en sources/orko_knowledge/10_arquitectura_orko/."
+Metadata:
+  ID: "ORKO-CORE-ARQ-01"
+  Version: "1.0.0"
+  Status: "Published"
+  Human-Creator: "FS"
+  Human-Editor: "FS"
+  Model-Collaborator: "Claude"
+  Creation-Date: "2025-12-13"
+  Modification-Date: "2025-12-13"
+  Ctx: "Arquitectura ORKO - Puente entre Teoría (Layer 0) y Práctica (Layer 3)"
 
 LLM_Parsing_Instructions:
-  ID: KODA-LLM-PARSER-ORKO-ARQ-01
-  Req: "Mandatory block following Metadata."
-  Prohib: "Inventar nuevos contratos o principios; la fuente de verdad son los markdown."
-  Content: |
-    BEGIN_LLM_INSTRUCTIONS
-    You are an AI agent consuming a KODA/Spec artifact for ORKO architecture.
-    Your job is to preserve the structural index and links to markdown sources.
+  Purp: "Guía parsing artefacto KODA/Spec ORKO Layer 1"
+  Format: "YAML jerárquico keyword-driven"
+  Lexicon_Tier2_ORKO:
+    - "Contract, Schema, Invariant, Interface"
+    - "Principle, Pattern, AntiPattern"
+    - "Relation, Query, Metric"
+    - "View, Artifact"
+  XRef_Required:
+    - "urn:knowledge:orko:core:fundamentos:1.0.0"
 
-    REFERENCE POLICY:
-    - Src: fields point to legacy markdown files under sources/orko_knowledge/10_arquitectura_orko/.
-    - Do NOT inline full content; this guide is an index and summary layer.
+# =============================================================================
+# CONTRATOS CANÓNICOS (C1-C5)
+# =============================================================================
 
-    LANGUAGE POLICY:
-    - Keywords in English; content in es.
-    END_LLM_INSTRUCTIONS
-
-Purp: "Describir la arquitectura ORKO a nivel de contratos, principios, relaciones y vistas, actuando como índice estructural."
-Obj:
-  - "Registrar contratos C1-C5 y su propósito general."
-  - "Indexar principios de diseño (PD1-PD76)."
-  - "Describir tipos de relaciones (R1-R15) y vistas (D1-D4)."
-
-Overview:
-  ID: ORKO-ARQ-OV-01
-  Ctx: "Visión general de la arquitectura ORKO."
-  Src: "sources/orko_knowledge/10_arquitectura_orko/00_introduccion.md"
-
-Contracts_Index:
-  ID: ORKO-ARQ-CONTRACTS-01
-  Ctx: "Contratos principales de la arquitectura (C1-C5)."
-  Src: "sources/orko_knowledge/10_arquitectura_orko/01_contratos.md"
-  Note: "Este artifact solo indexa los contratos; el detalle se mantiene en el markdown."
-
-Contracts_Detailed:
-  ID: ORKO-ARQ-CONTRACTS-DETAIL
-  Ctx: "Resumen estructurado de los contratos C1–C5 a partir de 01_contratos.md."
+Contratos:
+  ID: "ORKO-CONTRATOS-01"
+  Purp: "Especificación OPERABLE de primitivos P1-P5"
 
   C1_Capacidad:
-    ID: ORKO-C-C1
-    Def: "Contrato canónico que operacionaliza el primitivo CAPACIDAD: quién puede hacer qué, con qué sustrato y lifecycle asociado."
-    Purp: "Dar un esquema único para todas las capacidades (humanas, algorítmicas, mecánicas o mixtas) asegurando trazabilidad, clasificación contextual (producción/habilitación) y lifecycle controlado."
-    Scope: "Se aplica a cualquier unidad que ejecuta trabajo (personas, equipos, servicios, agentes IA, máquinas)."
-    Key_Points:
-      - "Incluye substrate, capacity_type (C0–C3), role (Producción/Habilitación) y arquetipo AOC como dimensiones principales de clasificación."
-      - "Integra principios de HAIC (I5): ownership y delegation_mode para capacidades algorítmicas con accountable humano único."
-      - "Modela lifecycle detallado (G11) y golden rule de Meyer (autoridad = accountability) mediante invariantes explícitos."
-    Src: "sources/orko_knowledge/10_arquitectura_orko/01_contratos.md"
+    ID: "ORKO-C-C1"
+    Derivacion: "P1, A2"
+    Schema:
+      id: "UUID"
+      name: "String"
+      substrate: "{Humano | Algorítmico | Mecánico | Mixto}"
+      capacity_type: "{C0 | C1 | C2 | C3}"
+      role: "{Producción | Habilitación}"
+      ownership:
+        accountable_id: "UUID (Humano/Mixto)"
+        delegated_from: "UUID | null"
+        delegation_mode: "M1..M6 | null"
+      lifecycle:
+        current_state: "{Planning | Development | Active | Idle | Deprecated | Retired}"
+      algorithmic_specs:
+        guardrails: "{input_validation, output_validation, limits}"
+        trajectory: "{total_executions, drift_detected, performance_trend}"
+    Invariantes:
+      INV_C1: "accountable_id.substrate ∈ {Humano, Mixto}"
+      INV_C2: "substrate=Algorítmico → delegated_from NOT NULL"
+      INV_C3: "substrate=Mixto → ∃ componente Humano"
 
   C2_Flujo:
-    ID: ORKO-C-C2
-    Def: "Contrato canónico que operacionaliza el primitivo FLUJO como DAG de pasos con capacidades requeridas, entradas y salidas de información."
-    Purp: "Proveer un modelo uniforme para procesos, pipelines y workflows, permitiendo medir eficiencia de flujo, handoffs y métricas DORA."
-    Scope: "Se aplica a cualquier secuencia de transformaciones (proceso de negocio, pipeline técnico, flujo operativo)."
-    Key_Points:
-      - "Define pasos, dependencias y métricas (cycle time, flow efficiency, handoff_ratio) sobre un DAG sin ciclos."
-      - "Incluye definición formal de handoff y su cálculo, clave para reducir fricción organizacional."
-      - "Conecta cada flujo con un Propósito (A5) y una Capacidad owner (mínimo C2), asegurando alineamiento y responsabilidad."
-    Src: "sources/orko_knowledge/10_arquitectura_orko/01_contratos.md"
+    ID: "ORKO-C-C2"
+    Derivacion: "P2, A1"
+    Schema:
+      id: "UUID"
+      name: "String"
+      type: "{Producción | Habilitación}"
+      cognitive_level: "{C0_Mechanical | C1_Decisional | C2_Cognitive | Mixed}"
+      steps: "List<{step_id, capacity_id, inputs, outputs}>"
+      dependencies: "DAG"
+      metrics: "{cycle_time, throughput, handoff_ratio}"
+      purpose_id: "UUID NOT NULL"
+    Invariantes:
+      INV_F1: "dependencies forman DAG"
+      INV_F2: "purpose_id NOT NULL"
+      INV_F3: "handoff_ratio target < 0.20"
 
   C3_Informacion:
-    ID: ORKO-C-C3
-    Def: "Contrato canónico que operacionaliza el primitivo INFORMACIÓN unificando dato, señal y estado bajo un mismo esquema."
-    Purp: "Asegurar que toda información relevante tenga estructura, lineage, semántica y calidad explícitas para soportar decisión y auditoría."
-    Scope: "Se aplica a cualquier unidad de información manejada por la organización (registros, eventos, métricas, observables)."
-    Key_Points:
-      - "Distingue tipos de información (Persistente, Transitoria, Agregada) y captura payload, temporalidad y semántica."
-      - "Integra data lineage completo (flows, capacities, parents) en coherencia con I3 Trazabilidad."
-      - "Define observables estándar (EX1–EX8, IN1–IN8) y métricas de calidad (completitud, exactitud, frescura) como base de gobierno de datos."
-    Src: "sources/orko_knowledge/10_arquitectura_orko/01_contratos.md"
+    ID: "ORKO-C-C3"
+    Derivacion: "P3, A3"
+    Schema:
+      id: "UUID"
+      name: "String"
+      information_type: "{Persistente | Transitoria | Agregada}"
+      structure: "{Structured | Semi_Structured | Unstructured}"
+      lineage: "{produced_by, parent_ids, origin}"
+      quality: "{completeness, accuracy, timeliness}"
+      observable_id: "{EX1..EX8 | IN1..IN8} | null"
+    Invariantes:
+      INV_I1: "type=Agregada → parent_ids.length > 1"
+      INV_I2: "lineage forma DAG"
 
   C4_Limite:
-    ID: ORKO-C-C4
-    Def: "Contrato canónico que operacionaliza el primitivo LÍMITE como restricción explícita sobre capacidades, flujos, información o propósitos."
-    Purp: "Hacer operables las restricciones físicas, regulatorias, organizacionales, económicas y técnicas, con métricas de cumplimiento y severidad."
-    Scope: "Se aplica a cualquier constraint que acote el espacio de posibilidades del sistema."
-    Key_Points:
-      - "Tipifica límites (Físico, Regulatorio, Organizacional, Económico, Técnico) y su severidad (Info–Critical)."
-      - "Incluye estructura detallada para compliance y violaciones, con severidad ponderada y planes de remediación."
-      - "Conecta directamente con I4 (Clasificación Contextual), I3 (Trazabilidad) e I1 (Minimalidad) al modelar explícitamente los límites del diseño."
-    Src: "sources/orko_knowledge/10_arquitectura_orko/01_contratos.md"
+    ID: "ORKO-C-C4"
+    Derivacion: "P4, A4"
+    Schema:
+      id: "UUID"
+      limit_type: "{Físico | Regulatorio | Organizacional | Económico | Técnico}"
+      constraint: "{target_entity, expression, enforcement}"
+      compliance: "{violations, severity_score}"
+    Invariantes:
+      INV_L1: "enforcement ≠ NULL"
+      INV_L2: "severity=Critical → enforcement=Preventivo"
 
   C5_Proposito:
-    ID: ORKO-C-C5
-    Def: "Contrato canónico que operacionaliza el primitivo PROPÓSITO mediante objetivos cualitativos y Key Results cuantificables."
-    Purp: "Vincular la transformación organizacional con outcomes medibles y jerarquías de propósito (OKR tree) alineadas."
-    Scope: "Se aplica a propósitos en distintos niveles (individual, equipo, unidad, organización) y horizontes (inmediato, táctico, estratégico)."
-    Key_Points:
-      - "Modela Key Results con métricas, unidades, criterios de logro y pesos, en línea con prácticas OKR."
-      - "Incluye jerarquía de propósito, fórmula de alineamiento y restricciones de ownership humano (I5)."
-      - "Permite evaluar progreso, detectar riesgos y priorizar iniciativas según su contribución a propósitos superiores."
-    Src: "sources/orko_knowledge/10_arquitectura_orko/01_contratos.md"
+    ID: "ORKO-C-C5"
+    Derivacion: "P5, A5"
+    Schema:
+      id: "UUID"
+      objective: "String"
+      key_results: "List<{metric, baseline, target}>"
+      hierarchy: "{scope, parent_id, children}"
+      owner_capacity_id: "UUID (Humano/Mixto)"
+    Invariantes:
+      INV_P1: "owner.substrate ∈ {Humano, Mixto}"
+      INV_P2: "key_results.length ≥ 1"
 
-Design_Principles_Index:
-  ID: ORKO-ARQ-PD-01
-  Ctx: "Principios de diseño PD1-PD76."
-  Src: "sources/orko_knowledge/10_arquitectura_orko/02_diseño.md"
+  E6_Estado_Arquitectonico:
+    ID: "ORKO-E-E6"
+    Def: "Snapshot coherente del sistema en tiempo t"
+    Schema:
+      id: "UUID"
+      version: "Integer"
+      timestamp: "Timestamp"
+      snapshot: "{capacities, flows, purposes, limits}"
+      health: "{H_org, A_Score, P_Score, D_Score, O_Score}"
 
-Relations_Index:
-  ID: ORKO-ARQ-REL-01
-  Ctx: "Relaciones estructurales R1-R15."
-  Src: "sources/orko_knowledge/10_arquitectura_orko/03_relaciones.md"
+  E7_Ejecucion_Flujo:
+    ID: "ORKO-E-E7"
+    Def: "Runtime instance de E2_Flujo con DORA metrics"
+    Schema:
+      id: "UUID"
+      flow_id: "UUID"
+      execution_status: "{Pending | Running | Completed | Failed}"
+      metrics: "{lead_time, cycle_time, handoff_count}"
+      dora: "{deployment_frequency, change_failure_rate, mttr}"
 
-Views_Index:
-  ID: ORKO-ARQ-VIEWS-01
-  Ctx: "Vistas arquitectónicas D1-D4 (Structural, Behavioral, Decisional, Operational)."
-  Src: "sources/orko_knowledge/10_arquitectura_orko/04_vistas.md"
+# =============================================================================
+# PRINCIPIOS DE DISEÑO (PD1-PD76)
+# =============================================================================
 
-Patterns_Index:
-  ID: ORKO-ARQ-PATTERNS-01
-  Ctx: "Patrones de arquitectura definidos para ORKO."
-  Src: "sources/orko_knowledge/10_arquitectura_orko/05_patrones.md"
+Principios:
+  ID: "ORKO-PRINCIPIOS-01"
+  Estructura: "40 genoma (I1-I8) + 36 fenotipo"
 
-Cross_References:
-  ID: ORKO-ARQ-XREF-01
-  Links:
-    - XRef: "urn:knowledge:orko:core:fundamentos:1.0.0"
-      Ctx: "Los contratos y principios deben respetar invariantes definidos en Fundamentos."
-    - XRef: "urn:knowledge:orko:core:tejidos:1.0.0"
-      Ctx: "Los tejidos instancian decisiones arquitectónicas definidas aquí."
+  I1_Minimalidad:
+    PD1: "Justificación existencia obligatoria"
+    PD2: "Composición preferida sobre creación"
+    PD3: "Eliminación redundancia"
+
+  I2_Ortogonalidad:
+    PD6: "Separación concerns D1-D4"
+    PD7: "Relaciones explícitas vía R1-R15"
+
+  I3_Trazabilidad:
+    PD10: "Metadata obligatoria"
+    PD11: "Lineage información completo"
+    PD12: "Audit trail inmutable"
+
+  I4_Clasificacion:
+    PD14: "Test cliente externo"
+    PD15: "Amplificación interna"
+
+  I5_HAIC:
+    PD18: "Accountability humana obligatoria"
+    PD19: "Delegación gradual M1→M6"
+    PD20: "Override disponible"
+    PD21: "Explainability requerida"
+
+  I6_Trajectory:
+    PD22: "Trajectory log obligatorio"
+    PD23: "Progresión evidenciada"
+    PD24: "Drift detection"
+
+  I7_Emergencia:
+    PD26: "Nivel apropiado"
+    PD27: "No saltar niveles"
+    PD29: "H_org ≥ 70 para transformación"
+
+  I8_Adaptacion:
+    PD36: "Context declaration"
+    PD37: "Genoma/Fenotipo separation"
+
+  AOC_Metricas:
+    PD41: "Coherencia gate ≥ 0.7"
+    PD42: "Resonancia gate ≥ 0.6"
+    PD43: "Flujo gate ≥ 0.65"
+
+  DORA:
+    PD60: "Deployment frequency"
+    PD61: "Lead time < 14 días"
+    PD62: "MTTR < 1 día"
+    PD63: "Change failure rate < 15%"
+
+# =============================================================================
+# MODELO RELACIONAL (R1-R15)
+# =============================================================================
+
+Relaciones:
+  ID: "ORKO-RELACIONES-01"
+
+  Fundamentales:
+    R1: "Capacidad ↔ Flujo (N:M) - ejecuta"
+    R2: "Flujo → Información (1:N) - produce"
+    R3: "Capacidad → Información (1:N) - produce"
+    R4: "Capacidad ↔ Información (N:M) - consume"
+    R5: "Información ↔ Información (DAG) - deriva"
+    R6: "Límite ↔ Capacidad (N:M) - restringe"
+    R7: "Límite ↔ Flujo (N:M) - restringe"
+    R8: "Límite ↔ Información (N:M) - restringe"
+    R9: "Propósito → Flujo (1:N) - direcciona"
+    R10: "Propósito → Capacidad (N:1) - asigna"
+    R11: "Propósito ↔ Propósito (Tree) - jerarquía"
+    R12: "Capacidad ↔ Capacidad (1:N) - composición"
+    R13: "Capacidad → Capacidad (HAIC) - delegación"
+
+  Derivadas:
+    R14: "E6 → E6 (DAG) - transitions"
+    R15: "Transition → E7 (1:N) - ejecutada por"
+
+  Constraints:
+    C1: "Referential integrity"
+    C2: "Acyclicity (R5, R11, R12, R14)"
+    C3: "Type consistency"
+    C4: "Mandatory (R9, R10, R13)"
+
+# =============================================================================
+# VISTAS ARQUITECTÓNICAS (D1-D4)
+# =============================================================================
+
+Vistas:
+  ID: "ORKO-VISTAS-01"
+
+  D1_Arquitectura:
+    Artefactos: "Org Chart, RACI Matrix, Purpose Cascade"
+    Metrica: "A_Score (25% H_org)"
+
+  D2_Percepcion:
+    Artefactos: "Dashboard 16 Observables, Anomaly Log"
+    Metrica: "P_Score (20% H_org)"
+
+  D3_Decision:
+    Artefactos: "OKR Canvas, Portfolio Board, Decision Log"
+    Metrica: "D_Score (25% H_org)"
+
+  D4_Operacion:
+    Artefactos: "Value Stream Map, DORA Dashboard, Incident Log"
+    Metrica: "O_Score (30% H_org)"
+
+  H_org:
+    Formula: "A×0.25 + D×0.25 + O×0.30 + P×0.20"
+    Threshold: "≥70 saludable"
+
+# =============================================================================
+# PATTERNS & ANTI-PATTERNS
+# =============================================================================
+
+Patterns:
+  D1:
+    Team_Topology_Aligned: "Equipos por value stream"
+    Delegation_Ladder: "M1→M6 progresivo"
+    Purpose_Cascade: "OKRs org→individual"
+
+  D2:
+    Observable_Instrumentation: "16 observables cubiertos"
+    Anomaly_Detection: "Capture → Detect → Alert → Triage"
+
+  D3:
+    RICE_Prioritization: "(Reach × Impact × Confidence) / Effort"
+    WIP_Limits: "Límites por columna"
+
+  D4:
+    Continuous_Deployment: "Deploy automático con quality gates"
+    Blameless_Postmortem: "RCA sistemático"
+
+AntiPatterns:
+  AP01: "Matrix Organization - dual reporting"
+  AP02: "Process Owners Separados"
+  AP03: "Rainbow Groups - arquetipos incompatibles"
+  AP04: "Algorítmico sin accountability"
+  AP05: "M1→M6 jump sin evidencia"
+  AP06: "Purpose sin metrics"
+  AP07: "Flow sin purpose"
+  AP08: "Information sin lineage"
+  AP09: "Premature EA"
+  AP10: "Transformación con H_org < 70"
+
+# =============================================================================
+# FIN guide_core_001_arquitectura_orko.yml
+# =============================================================================
