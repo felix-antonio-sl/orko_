@@ -41,7 +41,7 @@ Catalog:
         - "ORKO-INV-I8"
       status: draft
       layer: 0
-      
+
     - urn: "urn:knowledge:orko:core:arquitectura:1.0.0"
       title: "Arquitectura ORKO (Layer 1)"
       description: "Diseño del sistema: Contratos, relaciones, principios de diseño (PD1-PD76)"
@@ -55,13 +55,27 @@ Catalog:
         - "ORKO-C-C5"
       status: draft
       layer: 1
-      
+
     - urn: "urn:knowledge:orko:core:tejidos:1.0.0"
       title: "Tejidos Tecnológicos ORKO (Layer 2)"
       description: "Especificación de Tejidos (TF1-TF3) que instancian los primitivos"
       file: "knowledge/core/guide_core_002_tejidos_orko.yml"
       status: draft
       layer: 2
+
+    - urn: "urn:knowledge:orko:core:metodologia:1.0.0"
+      title: "Metodología ORKO (Layer 3)"
+      description: "Fases de transformación, templates y guías de implementación"
+      file: "knowledge/core/guide_core_003_metodologia_orko.yml"
+      status: draft
+      layer: 3
+
+    - urn: "urn:knowledge:orko:core:toolkit:1.0.0"
+      title: "ORKO Toolkit (Layer 4-5)"
+      description: "Calculadoras, scripts y herramientas para usuario final"
+      file: "knowledge/core/guide_core_004_toolkit_orko.yml"
+      status: draft
+      layer: 4
 
   # Layer 3-4: Methodology & Implementation
   Domains:
@@ -71,14 +85,14 @@ Catalog:
       file: "knowledge/domains/metodologia/kb_metodologia_001_fases_orko.yml"
       status: draft
       layer: 3
-      
+
     - urn: "urn:knowledge:orko:metodologia:playbooks:1.0.0"
       title: "Playbooks ORKO"
       description: "Playbooks por nivel de salud: Survival, Minimal, Advanced"
       file: "knowledge/domains/metodologia/kb_metodologia_002_playbooks_orko.yml"
       status: draft
       layer: 3
-      
+
     - urn: "urn:knowledge:orko:implementacion:toolkit:1.0.0"
       title: "ORKO Toolkit (Layer 4-5)"
       description: "Calculadoras, scripts, herramientas compiladas para usuario final"
@@ -98,55 +112,56 @@ Catalog:
       title: "Director ORKO"
       description: "Higher-Order Agent que orquesta la cuadrilla de 6 especialistas ORKO"
       file: "agents/orko-director/agent_orko_director.yaml"
-      status: published
+      status: deprecated
       higher_order: true
 
     - urn: "urn:knowledge:orko:agents:orko-theorist:1.0.0"
       title: "ORKO Theorist"
       description: "Especialista en Fundamentos Teóricos: Genoma, axiomas, primitivos, invariantes y teoremas (Layer 0)"
       file: "agents/orko-theorist/agent_orko_theorist.yaml"
-      status: published
+      status: deprecated
 
     - urn: "urn:knowledge:orko:agents:orko-sage:1.0.0"
       title: "ORKO Sage"
       description: "Guardián de referencias fundacionales (WST, AOC, IA, eGov) que dan sustento teórico a ORKO"
       file: "agents/orko-sage/agent_orko_sage.yaml"
-      status: published
+      status: deprecated
 
     - urn: "urn:knowledge:orko:agents:orko-architect:1.0.0"
       title: "ORKO Architect"
       description: "Arquitecto de sistemas organizacionales basado en contratos, principios, relaciones y vistas (Layer 1)"
       file: "agents/orko-architect/agent_orko_architect.yaml"
-      status: published
+      status: deprecated
 
     - urn: "urn:knowledge:orko:agents:orko-guide:1.0.0"
       title: "ORKO Guide"
       description: "Especialista metodológico en fases, playbooks y trayectorias de transformación (Layer 3)"
       file: "agents/orko-guide/agent_orko_guide.yaml"
-      status: published
+      status: deprecated
 
     - urn: "urn:knowledge:orko:agents:orko-weaver:1.0.0"
       title: "ORKO Weaver"
       description: "Ingeniero de tejidos técnicos TF1/TF2/TF3 para llevar la arquitectura a implementación (Layer 2)"
       file: "agents/orko-weaver/agent_orko_weaver.yaml"
-      status: published
+      status: deprecated
 
     - urn: "urn:knowledge:orko:agents:orko-builder:1.0.0"
       title: "ORKO Builder"
       description: "Especialista en Toolkit, calculadoras, templates y ejemplos prácticos (Layer 4-5)"
       file: "agents/orko-builder/agent_orko_builder.yaml"
-      status: published
+      status: deprecated
 
   Schemas: []
     # Future: JSON schemas for ORKO primitives validation
 
 Statistics:
-  total_artifacts: 14
-  core_guides: 3
+  total_artifacts: 16
+  core_guides: 5
   domains: 3
   agents: 8
   schemas: 0
-  last_updated: "2025-12-01"
+  last_updated: "2025-12-15"
+  notes: "Registered guide_core_003 (metodologia) and guide_core_004 (toolkit)"
 
 # ORKO Layer Architecture Reference
 Layer_Architecture:
