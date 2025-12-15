@@ -1,0 +1,837 @@
+_manifest:
+  urn: "urn:knowledge:orko:metodologia:playbooks:1.0.0"
+  federation:
+    visibility: public
+    license: "MIT"
+  provenance:
+    created_by: "FS"
+    created_at: "2025-12-14"
+    last_modified_at: "2025-12-14"
+
+Metadata:
+  ID: "ORKO-MET-PLAYBOOKS-01"
+  Version: "1.0.0"
+  Status: "Draft"
+  Human-Creator: "FS"
+  Human-Editor: "FS"
+  Model-Collaborator: "Cascade"
+  Creation-Date: "2025-12-14"
+  Modification-Date: "2025-12-14"
+  Ctx: "Metodología ORKO - Playbooks P01-P15 (Recovery, Transformation, Operational)"
+
+LLM_Parsing_Instructions:
+  Purp: "Guía parsing artefacto KODA/Spec ORKO - Catálogo Playbooks P01-P15"
+  Format: "YAML jerárquico keyword-driven"
+  Lexicon_Tier2_ORKO:
+    - "Playbook"
+    - "Trigger"
+    - "RACI"
+    - "HealthGate"
+  XRef_Required:
+    - "urn:knowledge:orko:core:fundamentos:1.0.0"
+    - "urn:knowledge:orko:core:arquitectura:1.0.0"
+    - "urn:knowledge:orko:core:tejidos:1.0.0"
+
+Src:
+  Playbooks_Recovery:
+    P01: "sources/orko_knowledge/30_metodologia_orko/06_playbooks_recovery/P01_low_h_org_recovery.md"
+    P02: "sources/orko_knowledge/30_metodologia_orko/06_playbooks_recovery/P02_handoff_reduction.md"
+    P03: "sources/orko_knowledge/30_metodologia_orko/06_playbooks_recovery/P03_okr_alignment.md"
+    P04: "sources/orko_knowledge/30_metodologia_orko/06_playbooks_recovery/P04_security_remediation.md"
+  Playbooks_Transformation:
+    P05: "sources/orko_knowledge/30_metodologia_orko/07_playbooks_transformation/P05_bounded_autonomy_m6.md"
+    P06: "sources/orko_knowledge/30_metodologia_orko/07_playbooks_transformation/P06_pilot_transformation.md"
+    P07: "sources/orko_knowledge/30_metodologia_orko/07_playbooks_transformation/P07_scale_transformation.md"
+    P08: "sources/orko_knowledge/30_metodologia_orko/07_playbooks_transformation/P08_optimization_sustain.md"
+  Playbooks_Operational:
+    P09: "sources/orko_knowledge/30_metodologia_orko/08_playbooks_operational/P09_drift_detection_response.md"
+    P10: "sources/orko_knowledge/30_metodologia_orko/08_playbooks_operational/P10_capacity_gap_resolution.md"
+    P11: "sources/orko_knowledge/30_metodologia_orko/08_playbooks_operational/P11_flow_optimization.md"
+    P12: "sources/orko_knowledge/30_metodologia_orko/08_playbooks_operational/P12_data_quality_recovery.md"
+    P13: "sources/orko_knowledge/30_metodologia_orko/08_playbooks_operational/P13_political_alignment.md"
+    P14: "sources/orko_knowledge/30_metodologia_orko/08_playbooks_operational/P14_client_expectation_mgmt.md"
+    P15: "sources/orko_knowledge/30_metodologia_orko/08_playbooks_operational/P15_adaptive_cadence.md"
+  Playbooks_Schema:
+    schema: "sources/orko_knowledge/30_metodologia_orko/08_playbooks_operational/playbook_schema.yaml"
+    instances: "sources/orko_knowledge/30_metodologia_orko/08_playbooks_operational/playbook_instances.yaml"
+  Health_Gates:
+    G1_G4: "sources/orko_knowledge/30_metodologia_orko/13_metricas_validacion/02_health_gates.md"
+
+Contenido:
+  ID: "ORKO-MET-PLAYBOOKS-CONT-01"
+  Ctx: "Se completa por secciones con fidelidad MEAT 100% a cada playbook"
+
+  Playbooks:
+    Recovery:
+      P01_low_h_org_recovery:
+        Tipo: "Playbook Recovery"
+        ID: "P01"
+        Trigger: "`H_org` en zona crítica (G1/G2)"
+        Estimacion_Ejecucion: "P1D"
+        Fundamento:
+          Layer_0: ["A1", "A5", "P1", "P4", "I3", "I6"]
+          Layer_1: ["D2", "D4", "E6"]
+          Layer_2: ["TF1", "TF2"]
+          Justificacion: "Cuando `H_org` cae por debajo de los umbrales definidos en G1/G2, la organización entra en riesgo operativo. Este playbook articula capacidades (`P1`) y límites (`P4`) para ejecutar una respuesta rápida (F14) basada en las señales de `F13` y asegurar trazabilidad (`I3`) y adaptación controlada (`I6`)."
+        Interfaz:
+          Trigger_Conditions:
+            triggers:
+              - condition: "H_org < 60"
+                metric: "H_org"
+                threshold: 60
+                source: "F13.h_org_dashboard"
+              - condition: "H_org cayendo 2 cortes consecutivos"
+                metric: "H_org"
+                threshold: "tendencia negativa"
+                source: "F13.trend_analysis"
+              - condition: "G1 o G2 activados"
+                metric: "H_org"
+                threshold: "G1/G2"
+                source: "13_metricas_validacion/02_health_gates.md"
+          Outputs:
+            outputs:
+              - report: "P01_execution_report.md"
+                consumers: ["F13", "F16", "F17", "E4_governance"]
+              - artifact: "h_org_recovery_plan.yaml"
+                consumers: ["F14", "F16", "trayectorias.Minimal"]
+              - metric_update: "H_org_post_recovery"
+                consumers: ["F13", "G1", "G2"]
+        Ejecucion:
+          Pasos:
+            - "Diagnóstico inmediato (2-4h): Identificar componentes H_org degradados (H1-H4)"
+            - "Priorizar acciones (2h): Top-3 gaps críticos por impacto×urgencia"
+            - "Plan recuperación (4h): Crear h_org_recovery_plan.yaml con timeline"
+            - "Ejecutar quick wins (1-3 días): Acciones inmediatas (P10, P11, P12)"
+            - "Monitoreo recovery (continuo): Track H_org improvement vía F13"
+          Criterios_exito:
+            - "H_org > 65 en 7-14 días"
+            - "Ningún componente H1-H4 < 50"
+            - "Recovery plan aprobado por Sponsor_L1_Human"
+        RACI:
+          raci:
+            responsible: ["Role_HealthOwner", "Role_Delivery_Lead"]
+            accountable: "Sponsor_L1_Human"
+            consulted: ["Role_Captain", "TF1_Lead", "TF2_Lead", "TF3_Lead"]
+            informed: ["Board_Governance", "All_Stakeholders"]
+
+      P02_handoff_reduction:
+        Tipo: "Playbook Recovery"
+        ID: "P02"
+        Trigger: "Deterioro de `H_org` o `ROI_Habilitacion` atribuido a handoffs"
+        Estimacion_Ejecucion: "P2D"
+        Fundamento:
+          Layer_0: ["A1", "A3", "P2", "I2", "I3", "I6"]
+          Layer_1: ["D1", "D4", "E7"]
+          Layer_2: ["TF2"]
+          Justificacion: "Handoffs excesivos elevan el tiempo de ciclo y degradan `H_org`/`ROI_Habilitacion`. Este playbook aplica principios de flujo (`P2`) y ortogonalidad (`I2`) para estabilizar operaciones (`D4`) y recuperar eficiencia, manteniendo trazabilidad (`I3`) y aprendizaje para ajustes de trayectoria (`I6`)."
+        Interfaz:
+          Trigger_Conditions:
+            triggers:
+              - condition: "H_org < 70 con evidencia de handoffs altos en F5/F11"
+                metric: "H_org"
+                threshold: 70
+                source: "F13.h_org_dashboard"
+              - condition: "ROI_Habilitacion < 1.0 por ineficiencias de flujo"
+                metric: "ROI_Habilitacion"
+                threshold: 1.0
+                source: "F13.roi_habilitacion"
+              - condition: "G1 exige contención adicional tras análisis de F5/F11"
+                metric: "H_org"
+                threshold: "G1"
+                source: "13_metricas_validacion/02_health_gates.md"
+          Outputs:
+            outputs:
+              - report: "P02_execution_report.md"
+                consumers: ["F13", "F16", "F17", "E4_governance"]
+              - artifact: "handoff_reduction_plan.yaml"
+                consumers: ["F5", "F11", "F14"]
+              - metric_update: "ROI_Habilitacion_post_P02"
+                consumers: ["F13", "G1"]
+        Ejecucion:
+          Pasos:
+            - "Mapeo flujos (4-6h): Identificar handoffs críticos en TF2"
+            - "Análisis impacto (2h): Cuantificar delay por handoff"
+            - "Rediseño flujos (1 día): Reducir handoffs, aumentar bounded autonomy"
+            - "Implementación (2-3 días): Ejecutar cambios flujo"
+            - "Validación (continuo): Medir ROI_Habilitacion improvement"
+          Criterios_exito:
+            - "Reducción >30% handoffs críticos"
+            - "ROI_Habilitacion > 1.0"
+            - "H_org recovery"
+        RACI:
+          raci:
+            responsible: ["Role_FlowOwner", "TF2_Lead"]
+            accountable: "Role_Captain"
+            consulted: ["Role_Architect", "Delivery_Lead"]
+            informed: ["Sponsor_L1_Human", "Board_Governance"]
+
+      P03_okr_alignment:
+        Tipo: "Playbook Recovery"
+        ID: "P03"
+        Trigger: "Desalineamiento entre propósito/OKR y resultados (`H_org`, `eta_org`)"
+        Estimacion_Ejecucion: "P3D"
+        Fundamento:
+          Layer_0: ["A2", "A5", "P5", "I3", "I5", "I6"]
+          Layer_1: ["D1", "D3", "E6"]
+          Layer_2: "—"
+          Justificacion: "Cuando `H_org` y/o `eta_org` caen por debajo de objetivos pese a contar con propósito y arquitectura definidos (F7, F9), se evidencia una ruptura en la cascada de propósito (`P5`). P03 restablece alineamiento OKR preservando trazabilidad (`I3`), accountability humana (`I5`) y ajustes de trayectoria (`I6`)."
+        Interfaz:
+          Trigger_Conditions:
+            triggers:
+              - condition: "H_org < target definido en F7/F9"
+                metric: "H_org"
+                threshold: "target_fase"
+                source: "F13.h_org_dashboard"
+              - condition: "eta_org < 0.60 con OKR aprobados"
+                metric: "eta_org"
+                threshold: 0.60
+                source: "F13.eta_org_tracking"
+              - condition: "Alertas G2 sobre desalineamiento OKR"
+                metric: "H_org"
+                threshold: "G2"
+                source: "13_metricas_validacion/02_health_gates.md"
+          Outputs:
+            outputs:
+              - report: "P03_alignment_report.md"
+                consumers: ["F7", "F9", "F13", "F17"]
+              - artifact: "okr_alignment_plan.yaml"
+                consumers: ["F7", "trayectorias.Avanzada", "E4_governance"]
+              - metric_update: "H_org_alignment_delta"
+                consumers: ["F13", "G2"]
+        Ejecucion:
+          Pasos:
+            - "Auditoría OKR (4h): Revisar cascade F7 vs resultados actuales"
+            - "Gap analysis (4h): Identificar desconexión propósito-ejecución"
+            - "Realinear OKRs (1 día): Ajustar o refinar OKRs con stakeholders"
+            - "Communication plan (4h): Comunicar cambios a equipos"
+            - "Tracking (continuo): Monitorear alineamiento post-ajuste"
+          Criterios_exito:
+            - "90% OKRs L4-L1 alineados"
+            - "H_org improvement >5 puntos en 30 días"
+            - "Sponsor approval"
+        RACI:
+          raci:
+            responsible: ["Role_Captain", "Role_PurposeOwner"]
+            accountable: "Sponsor_L1_Human"
+            consulted: ["Role_Architect", "Area_Leads"]
+            informed: ["All_Stakeholders", "Board_Governance"]
+
+      P04_security_remediation:
+        Tipo: "Playbook Recovery"
+        ID: "P04"
+        Trigger: "Incidente de seguridad o gap de cumplimiento que amenaza `H_org`/`ROI_Habilitacion`"
+        Estimacion_Ejecucion: "P2D"
+        Fundamento:
+          Layer_0: ["A1", "A4", "P3", "P4", "I3", "I5", "I6"]
+          Layer_1: ["D2", "D4", "E6"]
+          Layer_2: ["TF3"]
+          Justificacion: "Los incidentes de seguridad o gaps regulatorios (`P4`) impactan directamente la salud organizacional (`H_org`) y el retorno de habilitación (`ROI_Habilitacion`). P04 define respuesta inmediata y trazable (`I3`) preservando responsabilidad humana (`I5`) y aprendizaje para ajustes posteriores (`I6`)."
+        Interfaz:
+          Trigger_Conditions:
+            triggers:
+              - condition: "Security incident confirmado por F11"
+                metric: "H_org"
+                threshold: "impacto en H_org"
+                source: "F13.incident_reports"
+              - condition: "Compliance gap crítico detectado en F8"
+                metric: "ROI_Habilitacion"
+                threshold: "impacto en ROI"
+                source: "F13.roi_habilitacion"
+              - condition: "G1/G2 escalado por riesgo de seguridad"
+                metric: "H_org"
+                threshold: "G1/G2"
+                source: "13_metricas_validacion/02_health_gates.md"
+          Outputs:
+            outputs:
+              - report: "P04_security_report.md"
+                consumers: ["F13", "F16", "F17", "E4_governance"]
+              - artifact: "remediation_plan_security.yaml"
+                consumers: ["F8", "F11", "F14"]
+              - metric_update: "H_org_security_delta"
+                consumers: ["F13", "G1", "G2"]
+        Ejecucion:
+          Pasos:
+            - "Contención (inmediato): Mitigar riesgo security/compliance"
+            - "Análisis impacto (4h): Evaluar impacto H_org y ROI_Habilitacion"
+            - "Plan remediación (1 día): Definir acciones correctivas"
+            - "Implementación (2-5 días): Ejecutar remediation plan"
+            - "Post-mortem (4h): Documentar learnings y prevención"
+          Criterios_exito:
+            - "Incident cerrado"
+            - "Compliance gap remediado"
+            - "H_org recovery"
+            - "Post-mortem publicado"
+        RACI:
+          raci:
+            responsible: ["Role_SecurityOwner", "Role_ComplianceOfficer"]
+            accountable: "Role_Captain"
+            consulted: ["TF3_Lead", "Legal", "Infosec_Team"]
+            informed: ["Sponsor_L1_Human", "Board_Governance", "Regulators"]
+
+      P09_drift_detection_response:
+        Tipo: "Playbook Recovery"
+        ID: "P09"
+        Trigger: "Drift relevante en `H_org`/`eta_org` detectado por F13 respecto a valores esperados por trayectoria"
+        Estimacion_Ejecucion: "P3D"
+        Fundamento:
+          Layer_0: ["A1", "A3", "A5", "P1", "P2", "P5", "I3", "I6", "I8"]
+          Layer_1: ["D2", "D4", "E6", "E7"]
+          Layer_2: ["TF1", "TF2"]
+          Justificacion: "P09 aborda situaciones donde el estado actual (`E6_ArchitecturalState`) se aleja del estado objetivo y las métricas `H_org`/`eta_org` se degradan respecto a lo esperado para la trayectoria activa (`Survival`/`Minimal`/`Avanzada`). Su rol es diagnosticar y contener el drift, generando hipótesis y acciones correctivas que luego se ejecutan vía P01, P02, P08, P10, P11 o P12 según el caso."
+        Interfaz:
+          Trigger_Conditions:
+            triggers:
+              - condition: "F13 detecta degradación sostenida de H_org/eta_org respecto a baseline esperado por trayectoria"
+                metric: "H_org"
+                threshold: "por_debajo_rango_esperado"
+                source: "F13.h_org_dashboard"
+              - condition: "Alertas de drift arquitectónico/operativo sobre E6/E7"
+                metric: "eta_org"
+                threshold: "tendencia_negativa"
+                source: "F13.eta_org_dashboard"
+              - condition: "Transición prolongada en G2/G3 sin mejora pese a playbooks activos"
+                metric: "H_org"
+                threshold: "G2/G3_persistente"
+                source: "02_health_gates.md"
+          Outputs:
+            outputs:
+              - report: "P09_drift_analysis_report.md"
+                consumers: ["F13", "F16", "F17", "E4_governance"]
+              - artifact: "drift_correction_backlog.yaml"
+                consumers: ["P01", "P02", "P08", "P10", "P11", "P12", "F16"]
+              - metric_update: "H_org_eta_org_post_drift_response"
+                consumers: ["F13", "G1", "G2", "G3"]
+        Ejecucion:
+          Pasos:
+            - "Detectar drift E6_current vs E6_target"
+            - "Clasificar severidad"
+            - "Plan corrección"
+            - "Ejecutar"
+            - "Validar convergencia"
+        RACI:
+          raci:
+            responsible: ["Role_Architect", "Role_HealthOwner"]
+            accountable: "Role_Captain"
+            consulted: ["TF1_Lead", "TF2_Lead", "TF3_Lead"]
+            informed: ["Sponsor_L1_Human"]
+
+      P12_data_quality_recovery:
+        Tipo: "Playbook Recovery"
+        ID: "P12"
+        Trigger: "Problemas de calidad de datos en TF3/F6 que afectan `H_org`/`eta_org`/`ROI_Habilitacion`"
+        Estimacion_Ejecucion: "P2W"
+        Fundamento:
+          Layer_0: ["A1", "A3", "A5", "P3", "P5", "I3", "I6", "I8"]
+          Layer_1: ["D2", "D4", "E6", "C3"]
+          Layer_2: ["TF3"]
+          Justificacion: "Sin datos confiables, ningún playbook puede operar correctamente. P12 se activa cuando problemas en activos `C3_Informacion` (completitud, consistencia, frescura) degradan `H_org`, `eta_org` o `ROI_Habilitacion`. Su objetivo es restaurar la calidad de datos que soporta decisiones en F6/F11/F13 y evitar que otros playbooks tomen decisiones basadas en señales corruptas."
+        Interfaz:
+          Trigger_Conditions:
+            triggers:
+              - condition: "F6/F11 reportan problemas de calidad de datos que impactan métricas de resultado"
+                metric: "H_org"
+                threshold: "impacto_en_H_org"
+                source: "F13.h_org_dashboard"
+              - condition: "Indicadores de eta_org/ROI_Habilitacion se vuelven poco confiables por issues de datos en TF3"
+                metric: "eta_org"
+                threshold: "inconsistencia_datos"
+                source: "F13.eta_org_dashboard"
+          Outputs:
+            outputs:
+              - report: "P12_data_quality_recovery_report.md"
+                consumers: ["F6", "F11", "F13", "F16", "E4_governance"]
+              - artifact: "data_quality_recovery_plan.yaml"
+                consumers: ["F6", "F11", "P09", "P10"]
+        Ejecucion:
+          Pasos:
+            - "Auditar calidad datos TF3"
+            - "Priorizar gaps críticos"
+            - "Plan remediación"
+            - "Ejecutar"
+            - "Validar quality improvement"
+        RACI:
+          raci:
+            responsible: ["Data_Quality_Owner", "TF3_Lead"]
+            accountable: "Role_Captain"
+            consulted: ["Data_Engineers", "Business_Analysts"]
+            informed: ["Sponsor_L1_Human", "Data_Consumers"]
+
+      P13_political_alignment:
+        Tipo: "Playbook Recovery"
+        ID: "P13"
+        Trigger: "Conflictos entre stakeholders o decisiones políticas degradan `H_org` sin causas técnicas evidentes"
+        Estimacion_Ejecucion: "P2W"
+        Fundamento:
+          Layer_0: ["A1", "A3", "A5", "P5", "I3", "I5", "I6"]
+          Layer_1: ["D1", "D3", "E6"]
+          Layer_2: ["TF1", "TF2"]
+          Justificacion: "Muchas caídas de `H_org` provienen de conflictos políticos, decisiones contradictorias o falta de alineamiento entre actores clave, no de problemas puramente técnicos. P13 busca restaurar alineamiento político/organizacional en torno a propósito, trayectorias y compromisos, usando como marco `03_decision_matrix.md` y el RACI de `12_roles_governance`."
+        Interfaz:
+          Trigger_Conditions:
+            triggers:
+              - condition: "H_org cae y análisis técnico (P01–P04, P09–P12) no explica completamente la degradación"
+                metric: "H_org"
+                threshold: "por_debajo_baseline"
+                source: "F13.h_org_dashboard"
+              - condition: "Conflictos explícitos entre stakeholders o decisiones políticas divergentes documentadas en governance"
+                metric: "H_org"
+                threshold: "impacto_politico"
+                source: "12_roles_governance/01_team_structure_raci.md"
+          Outputs:
+            outputs:
+              - report: "P13_political_alignment_report.md"
+                consumers: ["F1", "F3", "F7", "F13", "F17", "E4_governance"]
+              - artifact: "political_alignment_actions.yaml"
+                consumers: ["F3", "F7", "F17", "trayectorias.Survival", "trayectorias.Minimal", "trayectorias.Avanzada"]
+        Ejecucion:
+          Pasos:
+            - "Identificar stakeholders clave"
+            - "Mapear intereses y resistencias"
+            - "Plan influencia"
+            - "Ejecutar engagements"
+            - "Validar alignment"
+        RACI:
+          raci:
+            responsible: ["Role_Captain", "Stakeholder_Manager"]
+            accountable: "Sponsor_L1_Human"
+            consulted: ["Communications", "Change_Management"]
+            informed: ["Board_Governance", "Key_Stakeholders"]
+
+    Transformation:
+      P05_bounded_autonomy_m6:
+        Tipo: "Playbook Transformation"
+        ID: "P05"
+        Trigger: "`eta_org` y/o `ROI_Habilitacion` subóptimos con `H_org` suficiente para aumentar autonomía (M6)"
+        Estimacion_Ejecucion: "P4W"
+        Fundamento:
+          Layer_0: ["A1", "A3", "A5", "P1", "P2", "P5", "I3", "I5", "I6"]
+          Layer_1: ["D1", "D2", "D4", "E6", "E7"]
+          Layer_2: ["TF1", "TF2"]
+          Justificacion: "Cuando `H_org` es suficientemente alto pero `eta_org` y/o `ROI_Habilitacion` no alcanzan el potencial esperado, una causa recurrente es un modelo de autonomía/decisión pobremente diseñado. P05 define cómo pasar a modos de autonomía más avanzados (en especial `M6_BoundedAutonomy`) articulando capacidades (`P1`), flujos (`P2`) y propósito (`P5`) sin romper límites (`P4`) ni invariantes de trazabilidad (`I3`), accountability (`I5`) y adaptación (`I6`)."
+        Interfaz:
+          Trigger_Conditions:
+            triggers:
+              - condition: "H_org >= 70 AND eta_org < target_minimal"
+                metric: "eta_org"
+                threshold: "target_minimal"
+                source: "F13.eta_org_dashboard"
+              - condition: "H_org >= 70 AND ROI_Habilitacion < 1.2"
+                metric: "ROI_Habilitacion"
+                threshold: 1.2
+                source: "F13.roi_habilitacion"
+              - condition: "Trayectoria Minimal lista para mayor autonomía (decisión F3/F17)"
+                metric: "eta_org"
+                threshold: "Minimal->Avanzada"
+                source: "F3.trayectoria_decision"
+          Outputs:
+            outputs:
+              - report: "P05_autonomy_design_report.md"
+                consumers: ["F3", "F7", "F11", "F17", "E4_governance"]
+              - artifact: "bounded_autonomy_m6_playbook.yaml"
+                consumers: ["F11", "F15", "trayectorias.Avanzada"]
+              - metric_update: "eta_org_autonomy_expected_delta"
+                consumers: ["F13", "F17"]
+        Ejecucion:
+          Pasos:
+            - "Diseñar modelo M6 autonomía"
+            - "Pilotear con 1-2 equipos"
+            - "Escalar"
+            - "Monitorear eta_org"
+        RACI:
+          raci:
+            responsible: ["Role_Architect", "Transformation_Lead"]
+            accountable: "Role_Captain"
+            consulted: ["Team_Leads", "TF1_Lead", "TF2_Lead"]
+            informed: ["Sponsor_L1_Human", "All_Teams"]
+
+      P06_pilot_transformation:
+        Tipo: "Playbook Transformation"
+        ID: "P06"
+        Trigger: "Decisión de ejecutar piloto de transformación para mejorar `H_org`/`eta_org` en dominio acotado"
+        Estimacion_Ejecucion: "P4W"
+        Fundamento:
+          Layer_0: ["A1", "A3", "A5", "P1", "P2", "P5", "I3", "I6"]
+          Layer_1: ["D1", "D2", "D4", "E6", "E7"]
+          Layer_2: ["TF1", "TF2"]
+          Justificacion: "Cuando la organización necesita mejorar `H_org` y `eta_org` pero aún no es seguro escalar cambios a todo el sistema, P06 define cómo ejecutar un piloto controlado en dominios acotados, orquestando capacidades (`P1`) y flujos (`P2`) alineados al propósito (`P5`) y preservando trazabilidad (`I3`) y aprendizaje adaptativo (`I6`)."
+        Interfaz:
+          Trigger_Conditions:
+            triggers:
+              - condition: "Trayectoria Minimal/Avanzada decide ejecutar piloto en dominio específico"
+                metric: "H_org"
+                threshold: "mejora_objetivo"
+                source: "F3.trayectoria_decision"
+              - condition: "Gap de eficiencia identificado en F9/F11 con H_org aceptable"
+                metric: "eta_org"
+                threshold: "por_debajo_target"
+                source: "F13.eta_org_dashboard"
+          Outputs:
+            outputs:
+              - report: "P06_pilot_transformation_report.md"
+                consumers: ["F9", "F11", "F15", "F16", "F17", "E4_governance"]
+              - artifact: "pilot_transformation_plan.yaml"
+                consumers: ["F11", "F15", "P07", "trayectorias.Minimal", "trayectorias.Avanzada"]
+          Casos_tipicos:
+            - "CT1 – Piloto Avanzada (G4 activo): G4 (`Ready_For_Avanzada`) se cumple y se decide un piloto limitado en uno o dos dominios críticos antes de escalar (P07)."
+            - "CT2 – Piloto de recuperación de eficiencia: tras P10/P11, se usa P06 para probar combinaciones de cambios de capacidad/flujo en un dominio antes de extenderlas."
+            - "CT3 – Piloto de contexto nuevo: entrada a un nuevo mercado/unidad donde se requiere validar impacto en `H_org`/`eta_org` con bajo riesgo."
+          Inputs_adicionales:
+            - "F4/F5 – mapas de capacidades y flujos objetivo."
+            - "F9 – arquitectura objetivo del dominio piloto."
+            - "F13 – series históricas de `H_org`, `eta_org`, `ROI_Habilitacion` del dominio."
+            - "F16 – hipótesis y aprendizajes previos relevantes (learning_loops_log)."
+          Riesgos_y_mitigacion:
+            R1_Piloto_mal_acotado:
+              Riesgo: "el dominio piloto es demasiado amplio y el impacto negativo en `H_org` sería alto si falla."
+              Mitigacion: "usar `03_decision_matrix.md` y G4 para acotar alcance y revisar runway/budget."
+            R2_Falta_de_trazabilidad:
+              Riesgo: "cambios del piloto no quedan reflejados en F16/F17, dificultando evaluar `eta_org`/`ROI_Habilitacion`."
+              Mitigacion: "exigir registro en `learning_loops_log` y vincular outputs de P06 a recomendaciones de trayectoria."
+        Ejecucion:
+          Pasos:
+            - "Seleccionar dominio piloto acotado"
+            - "Diseñar intervención"
+            - "Ejecutar piloto (2-4 semanas)"
+            - "Evaluar resultados"
+            - "Decidir escala"
+        RACI:
+          raci:
+            responsible: ["Transformation_Lead", "Pilot_Team_Lead"]
+            accountable: "Role_Captain"
+            consulted: ["Role_Architect", "Role_HealthOwner"]
+            informed: ["Sponsor_L1_Human", "Steering_Committee"]
+
+      P07_scale_transformation:
+        Tipo: "Playbook Transformation"
+        ID: "P07"
+        Trigger: "Piloto (P06) exitoso con mejora sostenida en `H_org`/`eta_org` y decisión de escalar a más dominios"
+        Estimacion_Ejecucion: "P8W"
+        Fundamento:
+          Layer_0: ["A1", "A3", "A5", "P1", "P2", "P5", "I3", "I6"]
+          Layer_1: ["D1", "D2", "D4", "E6", "E7"]
+          Layer_2: ["TF1", "TF2"]
+          Justificacion: "Tras un piloto exitoso (P06) que mejora `H_org` y `eta_org` en un dominio acotado, P07 define cómo escalar la transformación a más unidades/dominos sin perder trazabilidad (`I3`) ni capacidad de adaptación (`I6`), manteniendo el alineamiento con propósito (`P5`) y capacidades (`P1`)."
+        Interfaz:
+          Trigger_Conditions:
+            triggers:
+              - condition: "P06 demuestra mejora sostenida en H_org y eta_org en dominio piloto"
+                metric: "H_org"
+                threshold: "mejora_confirmada"
+                source: "F13.h_org_dashboard"
+              - condition: "Evaluación F9/F11 recomienda escalar el diseño piloto a más dominios"
+                metric: "eta_org"
+                threshold: "por_sobre_target_piloto"
+                source: "F13.eta_org_dashboard"
+          Outputs:
+            outputs:
+              - report: "P07_scale_transformation_report.md"
+                consumers: ["F9", "F11", "F12", "F15", "F17", "E4_governance"]
+              - artifact: "scale_transformation_plan.yaml"
+                consumers: ["F11", "F12", "F15", "trayectorias.Minimal", "trayectorias.Avanzada"]
+          Casos_tipicos:
+            - "CT1 – Escala post‑G4: G4 activo, piloto (P06) exitoso en un dominio core y decisión de ampliar a varias unidades/regiones."
+            - "CT2 – Escala gradual: se decide secuenciar la escala en waves para no comprometer `H_org` mientras se incrementa `eta_org` y `ROI_Habilitacion`."
+          Inputs_adicionales:
+            - "Resultados consolidados de P06 (`P06_pilot_transformation_report.md`)."
+            - "F11 – blueprint de ejecución de flujos a escala."
+            - "F13 – métricas de `H_org`, `eta_org`, `ROI_Habilitacion` pre/post piloto."
+            - "F16 – aprendizajes clave del piloto y riesgos identificados."
+          Riesgos_y_mitigacion:
+            R1_Sobre_escala:
+              Riesgo: "escalar demasiado rápido y degradar `H_org` a pesar de mejoras locales en `eta_org`."
+              Mitigacion: "usar G1–G4 como frenos de seguridad; si G2/G3 se activan, ralentizar escala y activar P01/P09."
+            R2_Heterogeneidad_de_contextos:
+              Riesgo: "dominios adicionales con contexto distinto al piloto (ver `context_pattern_schema`)."
+              Mitigacion: "coordinar con E2 para validar patrones de contexto y ajustar el plan de escala."
+        Ejecucion:
+          Pasos:
+            - "Validar piloto éxitoso"
+            - "Planificar escala multi-dominio"
+            - "Secuenciar rollout"
+            - "Monitorear H_org durante escala"
+            - "Ajustar según feedback"
+        RACI:
+          raci:
+            responsible: ["Transformation_Lead", "Program_Manager"]
+            accountable: "Role_Captain"
+            consulted: ["Domain_Leads", "Role_HealthOwner"]
+            informed: ["Sponsor_L1_Human", "All_Organization"]
+
+      P08_optimization_sustain:
+        Tipo: "Playbook Transformation"
+        ID: "P08"
+        Trigger: "Transformación ya escalada; necesidad de sostener/optimizar `H_org`/`eta_org` evitando drift operativo"
+        Estimacion_Ejecucion: "P4W"
+        Fundamento:
+          Layer_0: ["A1", "A3", "A5", "P1", "P2", "P5", "I3", "I6", "I8"]
+          Layer_1: ["D1", "D2", "D4", "E6", "E7"]
+          Layer_2: ["TF1", "TF2"]
+          Justificacion: "Una vez escalada la transformación (P07), el riesgo principal es el drift entre estado objetivo y ejecución real. P08 establece cómo sostener y optimizar `H_org`, `eta_org` y `ROI_Habilitacion` en el tiempo, apoyándose en monitoreo (`F13`), ejecución continua (`F15`) y ciclos de aprendizaje (`F16`), preservando consistencia temporal (`I8`)."
+        Interfaz:
+          Trigger_Conditions:
+            triggers:
+              - condition: "Transformación escalada completada (P07 cerrado) y H_org/eta_org en rango aceptable"
+                metric: "H_org"
+                threshold: ">= 70"
+                source: "F13.h_org_dashboard"
+              - condition: "Riesgo de drift detectado en tendencias de H_org/eta_org/ROI_Habilitacion tras la escala"
+                metric: "eta_org"
+                threshold: "tendencia_negativa"
+                source: "F13.eta_org_dashboard"
+          Outputs:
+            outputs:
+              - report: "P08_optimization_sustain_report.md"
+                consumers: ["F13", "F15", "F16", "F18", "E4_governance"]
+              - artifact: "optimization_sustain_plan.yaml"
+                consumers: ["F15", "F16", "trayectorias.Minimal", "trayectorias.Avanzada"]
+          Casos_tipicos:
+            - "CT1 – Post‑escala estabilizada: después de P07, la organización quiere asegurar que `H_org`/`eta_org` se mantienen en rangos G3/G4."
+            - "CT2 – Optimización continua: ciclos periódicos de revisión de `eta_org`/`ROI_Habilitacion` para evitar drift arquitectónico/operativo."
+          Inputs_adicionales:
+            - "F13 – series de `H_org`, `eta_org`, `ROI_Habilitacion` post‑escala."
+            - "F16 – learning_loops_log de experimentos anteriores (P05–P08)."
+            - "F18 – checks de convergencia frente a objetivos de trayectoria."
+          Riesgos_y_mitigacion:
+            R1_Fatiga_de_cambio:
+              Riesgo: "mejoras continuas generan desgaste y terminan afectando negativamente `H_org`."
+              Mitigacion: "coordinar con P15 (Adaptive Cadence) para ajustar cadencias en F15."
+            R2_Optimizacion_local_suboptima:
+              Riesgo: "se optimizan partes del sistema a costa de `ROI_Habilitacion` global."
+              Mitigacion: "exigir revisión de impactos a nivel de `E6_ArchitecturalState` y trayectorias antes de cambios mayores."
+        Ejecucion:
+          Pasos:
+            - "Identificar oportunidades optimización"
+            - "Evaluar impacto global (ROI_Habilitacion)"
+            - "Implementar mejoras"
+            - "Monitorear sostenibilidad"
+        RACI:
+          raci:
+            responsible: ["Continuous_Improvement_Lead", "Operations_Lead"]
+            accountable: "Role_Captain"
+            consulted: ["Role_Architect", "Role_HealthOwner"]
+            informed: ["Sponsor_L1_Human"]
+
+      P10_capacity_gap_resolution:
+        Tipo: "Playbook Transformation"
+        ID: "P10"
+        Trigger: "Gaps críticos de capacidad en F4/F10 que explican baja `H_org`/`eta_org` o bajo `ROI_Habilitacion`"
+        Estimacion_Ejecucion: "P4W"
+        Fundamento:
+          Layer_0: ["A1", "A3", "A5", "P1", "P2", "P5", "I3", "I6"]
+          Layer_1: ["D1", "D4", "E6"]
+          Layer_2: ["TF1", "TF2"]
+          Justificacion: "P10 se activa cuando la degradación de `H_org`/`eta_org` o el bajo `ROI_Habilitacion` se explican por gaps de capacidad (skills, FTE, plataformas) identificados en `F4`/`F10`. Su objetivo es diseñar y ejecutar un plan de cierre de gaps que restaure la eficiencia y prepare a la organización para escenarios G3/G4, en coordinación con P05, P06 y P11."
+        Interfaz:
+          Trigger_Conditions:
+            triggers:
+              - condition: "F4/F10 identifican gaps críticos de capacidad que explican baja H_org/eta_org o bajo ROI_Habilitacion"
+                metric: "H_org"
+                threshold: "por_debajo_objetivo_trayectoria"
+                source: "F13.h_org_dashboard"
+              - condition: "G3_H_org_Bueno_Eficiencia_Baja activo con evidencia de falta de capacidades"
+                metric: "eta_org"
+                threshold: "G3_activo"
+                source: "02_health_gates.md"
+          Outputs:
+            outputs:
+              - report: "P10_capacity_gap_resolution_report.md"
+                consumers: ["F4", "F10", "F13", "F17", "E4_governance"]
+              - artifact: "capacity_gap_resolution_plan.yaml"
+                consumers: ["F10", "F17", "P05", "P06"]
+        Ejecucion:
+          Pasos:
+            - "Identificar gap capacidad (TF1)"
+            - "Evaluar opciones (hire/buy/build/borrow)"
+            - "Ejecutar adquisición"
+            - "Onboard"
+            - "Validar gap cerrado"
+        RACI:
+          raci:
+            responsible: ["Role_CapacityOwner", "TF1_Lead", "HR"]
+            accountable: "Role_Captain"
+            consulted: ["Role_Architect", "Finance"]
+            informed: ["Sponsor_L1_Human", "Affected_Teams"]
+
+      P11_flow_optimization:
+        Tipo: "Playbook Transformation"
+        ID: "P11"
+        Trigger: "Eficiencia de flujos degradada; cuellos de botella localizables en `E7_FlowExecution`"
+        Estimacion_Ejecucion: "P3W"
+        Fundamento:
+          Layer_0: ["A1", "A3", "A5", "P2", "P5", "I3", "I6"]
+          Layer_1: ["D2", "D4", "E7"]
+          Layer_2: ["TF1", "TF2"]
+          Justificacion: "P11 se ocupa de optimizar flujos de trabajo cuando `eta_org` y/o `ROI_Habilitacion` se degradan por cuellos de botella en `E7_FlowExecution`. Complementa a P02 (reducción de handoffs) y P10 (gaps de capacidad), enfocándose en rediseñar flujos, load balancing y secuencias de trabajo en F5/F11 sin comprometer `H_org`."
+        Interfaz:
+          Trigger_Conditions:
+            triggers:
+              - condition: "Eficiencia de flujos (eta_org/ROI_Habilitacion) se degrada y cuellos de botella se localizan en E7_FlowExecution"
+                metric: "eta_org"
+                threshold: "por_debajo_target"
+                source: "F13.eta_org_dashboard"
+              - condition: "G3_H_org_Bueno_Eficiencia_Baja activo con evidencia de cuellos de botella de flujo"
+                metric: "ROI_Habilitacion"
+                threshold: "G3_activo"
+                source: "02_health_gates.md"
+          Outputs:
+            outputs:
+              - report: "P11_flow_optimization_report.md"
+                consumers: ["F5", "F11", "F13", "F16", "E4_governance"]
+              - artifact: "flow_optimization_plan.yaml"
+                consumers: ["F11", "F16", "P02", "P08"]
+        Ejecucion:
+          Pasos:
+            - "Analizar flujos TF2"
+            - "Identificar cuellos botella"
+            - "Rediseñar"
+            - "Implementar"
+            - "Medir eta_org improvement"
+        RACI:
+          raci:
+            responsible: ["Role_FlowOwner", "TF2_Lead"]
+            accountable: "Role_Captain"
+            consulted: ["Role_Architect", "Process_Owners"]
+            informed: ["Sponsor_L1_Human", "All_Teams"]
+
+    Operational:
+      P14_client_expectation_mgmt:
+        Fundamento:
+          playbook_id: "P14"
+          nombre_canonico: "Client Expectation Management"
+          familia: "Operational"
+          estado: "stable"
+          vocabulos_referencia:
+            axiomas:
+              - "A1_Organizacion"
+              - "A5_Cambio"
+            primitivos:
+              - "P4_Limite"
+              - "P5_Proposito"
+            invariantes:
+              - "I3_Trazabilidad"
+              - "I5_HAIC"
+              - "I6_Trajectory_Awareness"
+            dominios:
+              - "D2_Percepcion"
+              - "D3_Decision"
+          metricas_canonicas:
+            - "H_org (componente H4_Percepcion)"
+            - "custom: stakeholder_satisfaction"
+          health_gates_asociados:
+            - "G2_H_org_Bajo_Riesgo"
+            - "G3_H_org_Moderado"
+          justificacion: "Mitigar brechas entre expectativas stakeholders y entregables que degradan H4_Percepcion (componente H_org)"
+        Interfaz:
+          triggers:
+            - condition: "H4_Percepcion < 60 AND customer_feedback = degraded"
+              health_gate: "G2"
+              description: "Drop en satisfacción cliente impacta H_org"
+            - condition: "stakeholder_escalation AND expectation_mismatch = true"
+              source: "F13 o manual"
+              description: "Escalamiento stakeholder requiere gestión expectativas"
+          inputs:
+            - "F13.h_org_current (componente H4_Percepcion)"
+            - "F13.stakeholder_feedback"
+            - "customer_satisfaction_metrics"
+            - "case_instances.yaml"
+          outputs:
+            - "client_expectation_action_plan.md"
+            - "communication_pack.zip"
+            - "postmortem_client_expectation.md"
+            - "h4_percepcion_recovery_report.yaml"
+          dependencies:
+            reads_from: ["F13"]
+            writes_to: ["F16"]
+            may_trigger: ["P13"]
+          duracion_estimada: "P3D - P7D"
+        Ejecucion:
+          Pasos:
+            - "Confirmar gap con datos F13 + customer_feedback"
+            - "Preparar runbook comunicación (interno/externo)"
+            - "Alineamiento SAC/PO/Architecture"
+            - "Priorizar acciones correctivas (P10/P11 técnico, P13 político)"
+            - "Ejecutar plan + monitorear H4_Percepcion recovery"
+        RACI:
+          raci:
+            responsible: ["Product_Owner", "Delivery_Lead"]
+            accountable: "Sponsor_L1_Human"
+            consulted: ["Role_Architect", "TF3_Lead", "Communications"]
+            informed: ["Board_Governance"]
+        Acceptance:
+          - "Comunicación confirmada por stakeholder clave"
+          - "Plan acciones priorizado y estimado"
+          - "H4_Percepcion mejora 30-90 días"
+
+      P15_adaptive_cadence:
+        Fundamento:
+          playbook_id: "P15"
+          nombre_canonico: "Adaptive Cadence"
+          familia: "Operational"
+          estado: "stable"
+          vocabulos_referencia:
+            axiomas:
+              - "A4_Contexto"
+              - "A5_Cambio"
+            primitivos:
+              - "P2_Flujo"
+              - "P4_Limite"
+            invariantes:
+              - "I6_Trajectory_Awareness"
+              - "I8_Adaptacion_Contextual"
+            dominios:
+              - "D4_Operacion"
+          metricas_canonicas:
+            - "H_org"
+            - "eta_org"
+            - "custom: handoff_ratio, WIP_level"
+          health_gates_asociados:
+            - "G1_H_org_Critico"
+            - "G2_H_org_Bajo_Riesgo"
+          justificacion: "Ajustar cadencias operativas ante shocks contextuales (hypergrowth, crisis) para mantener continuidad sin colapsar eta_org"
+        Interfaz:
+          triggers:
+            - condition: "context.growth_rate = hypergrowth AND handoff_ratio > 0.20"
+              health_gate: "G2"
+              description: "Crecimiento rápido genera handoffs excesivos"
+            - condition: "H_org < 60 AND context.crisis_mode = true"
+              health_gate: "G1"
+              description: "Crisis requiere reducción WIP inmediata"
+            - condition: "eta_org < 0.60 AND throughput_dropping = true"
+              source: "F13"
+              description: "Eficiencia colapsando requiere ajuste cadencia"
+          inputs:
+            - "F13.h_org_current"
+            - "F13.eta_org"
+            - "F15.execution_log"
+            - "context.growth_rate"
+            - "context.crisis_flag"
+          outputs:
+            - "adaptive_cadence_policy.md"
+            - "cadence_rebalancing_plan.xlsx"
+            - "post_adaptation_review.md"
+            - "wip_reduction_report.yaml"
+          dependencies:
+            reads_from: ["F13", "F15"]
+            writes_to: ["F15", "F17"]
+            may_trigger: ["P10", "P14"]
+          duracion_estimada: "P2W - P8W"
+        Ejecucion:
+          Pasos:
+            - "Immediate cadence freeze: Reducir WIP 40% en 2 semanas"
+            - "Triage: Identificar backlogs críticos continuidad"
+            - "Capacity rebalancing: Invocar P10 si gaps capacidad"
+            - "Communication plan: P14 si impacto clientes"
+            - "Transition roadmap: 4-8 semanas a steady cadence"
+          Modos_adaptacion:
+            - "Crisis mode: Sprint 1→2 semanas, deploy diario→semanal"
+            - "Hypergrowth mode: Aumentar parallelismo pero con handoff control"
+        RACI:
+          raci:
+            responsible: ["Delivery_Lead", "PMO"]
+            accountable: "Sponsor_L1_Human"
+            consulted: ["TF1_Lead", "TF2_Lead", "HR"]
+            informed: ["Board_Governance"]
+        Acceptance:
+          - "WIP reducido >40% en fase inicial (2 semanas)"
+          - "DORA metrics (throughput, lead time) recuperan tendencia 8 semanas"
+          - "eta_org mejora >0.10 puntos post-adaptación"

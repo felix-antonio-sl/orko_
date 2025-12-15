@@ -1,0 +1,2910 @@
+_manifest:
+  urn: "urn:knowledge:orko:metodologia:fases:1.0.0"
+  federation:
+    visibility: public
+    license: "MIT"
+  provenance:
+    created_by: "FS"
+    created_at: "2025-12-14"
+    last_modified_at: "2025-12-14"
+
+Metadata:
+  ID: "ORKO-MET-FASES-01"
+  Version: "1.0.0"
+  Status: "Draft"
+  Human-Creator: "FS"
+  Human-Editor: "FS"
+  Model-Collaborator: "Cascade"
+  Creation-Date: "2025-12-14"
+  Modification-Date: "2025-12-14"
+  Ctx: "Metodología ORKO - Fases WSLC (F1-F18) y contratos de decisión (trayectorias, health gates, protocolo F2↔F3)"
+
+LLM_Parsing_Instructions:
+  Purp: "Guía parsing artefacto KODA/Spec ORKO - Metodología (fases WSLC + lógica de decisión)"
+  Format: "YAML jerárquico keyword-driven"
+  Lexicon_Tier2_ORKO:
+    - "Phase"
+    - "WSLC"
+    - "Trajectory"
+    - "HealthGate"
+    - "DecisionMatrix"
+  XRef_Required:
+    - "urn:knowledge:orko:core:fundamentos:1.0.0"
+    - "urn:knowledge:orko:core:arquitectura:1.0.0"
+    - "urn:knowledge:orko:core:tejidos:1.0.0"
+
+Src:
+  Introduccion_Metodologia: "sources/orko_knowledge/30_metodologia_orko/00_introduccion_metodologia.md"
+  Mapeo_Dominios_Fases: "sources/orko_knowledge/30_metodologia_orko/00b_mapeo_dominios_fases.md"
+  Protocolo_Convergencia_F2_F3: "sources/orko_knowledge/30_metodologia_orko/01_fases_initiation/F2_F3_convergence_protocol.md"
+  Trayectorias:
+    README: "sources/orko_knowledge/30_metodologia_orko/09_trayectorias/README.md"
+    Minimal: "sources/orko_knowledge/30_metodologia_orko/09_trayectorias/01_minimal_6_12_meses.md"
+    Avanzada: "sources/orko_knowledge/30_metodologia_orko/09_trayectorias/02_avanzada_18_36_meses.md"
+    Decision_Matrix: "sources/orko_knowledge/30_metodologia_orko/09_trayectorias/03_decision_matrix.md"
+    Survival: "sources/orko_knowledge/30_metodologia_orko/09_trayectorias/04_survival_0_10K.md"
+  Health_Gates: "sources/orko_knowledge/30_metodologia_orko/13_metricas_validacion/02_health_gates.md"
+  Fases_WSLC:
+    Initiation:
+      F1: "sources/orko_knowledge/30_metodologia_orko/01_fases_initiation/F1_context_assessment.md"
+      F2: "sources/orko_knowledge/30_metodologia_orko/01_fases_initiation/F2_vision_definition.md"
+      F3: "sources/orko_knowledge/30_metodologia_orko/01_fases_initiation/F3_trajectory_selection.md"
+    Development:
+      F4: "sources/orko_knowledge/30_metodologia_orko/02_fases_development/F4_capability_mapping.md"
+      F5: "sources/orko_knowledge/30_metodologia_orko/02_fases_development/F5_flow_design.md"
+      F6: "sources/orko_knowledge/30_metodologia_orko/02_fases_development/F6_information_architecture.md"
+      F7: "sources/orko_knowledge/30_metodologia_orko/02_fases_development/F7_purpose_cascade.md"
+      F8: "sources/orko_knowledge/30_metodologia_orko/02_fases_development/F8_limits_definition.md"
+      F9: "sources/orko_knowledge/30_metodologia_orko/02_fases_development/F9_target_state_design.md"
+    Implementation:
+      F10: "sources/orko_knowledge/30_metodologia_orko/03_fases_implementation/F10_quick_wins.md"
+      F11: "sources/orko_knowledge/30_metodologia_orko/03_fases_implementation/F11_fabric_deployment.md"
+      F12: "sources/orko_knowledge/30_metodologia_orko/03_fases_implementation/F12_state_transition.md"
+    Operation:
+      F13: "sources/orko_knowledge/30_metodologia_orko/04_fases_operation/F13_health_monitoring.md"
+      F14: "sources/orko_knowledge/30_metodologia_orko/04_fases_operation/F14_incident_response.md"
+      F15: "sources/orko_knowledge/30_metodologia_orko/04_fases_operation/F15_continuous_execution.md"
+    Evolution:
+      F16: "sources/orko_knowledge/30_metodologia_orko/05_fases_evolution/F16_learning_loops.md"
+      F17: "sources/orko_knowledge/30_metodologia_orko/05_fases_evolution/F17_adaptation.md"
+      F18: "sources/orko_knowledge/30_metodologia_orko/05_fases_evolution/F18_convergence_check.md"
+
+Contenido:
+  ID: "ORKO-MET-FASES-CONT-01"
+  Ctx: "Se completa por secciones con fidelidad MEAT 100% a cada fuente"
+
+  Introduccion:
+    Src: "sources/orko_knowledge/30_metodologia_orko/00_introduccion_metodologia.md"
+    Title: "Introducción a la Metodología ORKO v1.0.0"
+    Version: "1.0.0 (RELEASE)"
+    Fecha: "2025-11-18"
+    S1_Que_es_ORKO: |-
+      **ORKO (Organizational Kernel Orchestrator)** es una metodología adaptable y formal para guiar transformaciones organizacionales complejas. Su propósito es proporcionar un sistema operativo coherente que permita a las organizaciones navegar la incertidumbre, gestionar el cambio de manera sistemática y alinear la ejecución táctica con la visión estratégica.
+
+      El problema fundamental que ORKO resuelve es la **gestión de la complejidad y el riesgo en entornos dinámicos**. En lugar de ofrecer una receta rígida, ORKO provee un conjunto de primitivos, protocolos y herramientas para que una organización pueda construir y adaptar su propio camino de transformación de manera trazable y gobernada.
+    S2_La_Filosofia_de_ORKO: |-
+      La metodología se sustenta sobre un conjunto de **invariantes** que garantizan su robustez y coherencia. La filosofía de ORKO se puede resumir en los siguientes principios:
+
+      - **Minimalidad y Ortogonalidad (I1, I2)**: ORKO se construye a partir de un "genoma" de conceptos mínimos y ortogonales. Las preocupaciones están separadas en capas claras (arquitectura, tejidos, ciclo de vida, playbooks, gobernanza) para reducir la complejidad y facilitar la evolución.
+
+      - **Contratos Explícitos (I4)**: Toda interacción entre componentes del sistema (Fases, Playbooks) se define a través de interfaces formales (`§1. INTERFAZ`). Esto asegura que las dependencias, inputs, outputs y criterios de aceptación sean explícitos, auditables y verificables.
+
+      - **Accountability Humana (HAIC - I5)**: La automatización y la IA son herramientas de soporte. Las decisiones críticas y la responsabilidad final siempre recaen en roles humanos definidos. Esto se implementa a través de matrices **RACI** en todos los playbooks y en los procesos de gobernanza.
+
+      - **Adaptación Basada en Datos (I6, I8)**: La organización se monitorea a través de métricas canónicas (`H_org`, `eta_org`). Los **Health Gates (G1-G4)** actúan como fusibles que, al activarse, disparan **Playbooks** específicos para corregir desviaciones. La **Trayectoria** de la organización se adapta continuamente según el contexto y el estado de salud medido.
+    S3_Componentes_Principales: |-
+      ORKO se estructura en torno a cuatro componentes principales que trabajan en conjunto:
+
+      1.  **Fases del Ciclo de Vida (WSLC - Work-System Lifecycle)**
+          - Las 18 fases (F1-F18) que definen el ciclo de vida completo de un sistema de trabajo, desde la evaluación del contexto hasta la adaptación continua. Están agrupadas lógicamente (Initiation, Development, Operation, Evolution).
+          - Cada fase tiene un propósito, contratos de interfaz y artefactos de salida definidos.
+
+      2.  **Playbooks (P01-P15)**
+          - Un catálogo de 15 procedimientos estandarizados para responder a eventos específicos, principalmente desviaciones en la salud organizacional detectadas por los Health Gates.
+          - Se dividen en tres categorías: **Recovery**, **Transformation** y **Operational**.
+
+      3.  **Tejidos Tecnológicos (TF1-TF3)**
+          - Representan las capas fundamentales sobre las que opera la organización:
+            - **TF1 (Humano)**: Capacidades, roles y estructura humana.
+            - **TF2 (Información)**: Flujos de datos, arquitectura de la información y semántica.
+            - **TF3 (Automatización)**: Sistemas, software y procesos automatizados.
+
+      4.  **Gobernanza**
+          - Define los roles (`Captain`, `HealthOwner`, `Architect`) y los rituales (`Board de Coordinación`) necesarios para operar la metodología, tomar decisiones de trayectoria y supervisar la salud del sistema.
+    S4_Como_Empezar_a_Usar_ORKO: |-
+      Para un nuevo usuario, la ruta recomendada para navegar y aplicar la metodología es la siguiente:
+
+      1.  **Entender el Contexto (F1)**: El punto de partida es siempre `F1_context_assessment`. Esta fase inicial permite definir el perfil de la organización, sus restricciones y sus objetivos.
+
+      2.  **Seleccionar una Trayectoria (F3)**: Basado en el contexto, `F3_trajectory_selection` ayuda a elegir una de las trayectorias predefinidas (ej. `minimal_6_12_meses`, `avanzada_18_36_meses`), que define el alcance y la secuencia de fases a implementar.
+
+      3.  **Monitorear y Adaptar (F13 y Playbooks)**: Una vez en operación, `F13_health_monitoring` es clave. Cuando las métricas de salud se desvían y activan un Health Gate, se ejecuta el playbook correspondiente para restaurar el equilibrio.
+
+      4.  **Consultar la Validación (Directorio 17)**: Para entender el rigor y el estado de esta versión, el directorio `17_validacion_final` contiene todos los reportes que certifican que ORKO v1.0.0 es una release estable y coherente, incluyendo la documentación de los gaps resueltos y el backlog para futuras versiones.
+    Nota: "*Esta introducción proporciona una visión general. Cada componente referenciado contiene su propia documentación detallada. Bienvenido a ORKO v1.0.0.*"
+
+  Health_Gates:
+    Src: "sources/orko_knowledge/30_metodologia_orko/13_metricas_validacion/02_health_gates.md"
+    ID: "02_health_gates"
+    Status: "draft"
+    S0_Fundamento:
+      - "Layer_0: Axiomas `A1`, `A4`, primitivos `P4`, invariantes `I3`, `I6`, `I8`."
+      - "Layer_1: Métricas canónicas `H_org`, `eta_org`, `ROI_Habilitacion` (ver `VOCABULARIO_CONTROLADO.layer_1.metricas`)."
+      - "Layer_3: Fases `F1`, `F3`, `F13`, `F17` y playbooks `P01`–`P04`, `P09`, `P10`, `P11`, `P15` (ver `VOCABULARIO_CONTROLADO.layer_3`)."
+      - "Trayectorias: `Survival`, `Minimal`, `Avanzada` (ver `VOCABULARIO_CONTROLADO.layer_3.trayectorias`)."
+    Purp:
+      - "Definir health gates mínimos para guiar decisiones sobre activación de playbooks y ajustes de trayectoria."
+      - "Asegurar que todas las referencias usen IDs canónicos desde `VOCABULARIO_CONTROLADO.yaml`."
+      - "Alinear los gates con los triggers canónicos documentados en `40_implementacion_metodologia/dev_specs/playbooks_triggers_catalog.md` (v0.1)."
+    S1_Health_Gates_Bosquejo_SPRINT_1:
+      Nota: "Los valores numéricos de umbrales son propuestas iniciales **v0.1** para SPRINT 1 y pueden ajustarse en VG2–VG4."
+      Health_Gates_Yaml: |-
+        health_gates:
+
+          - gate_id: "G1_H_org_Critico"
+            descripcion: "H_org bajo umbral crítico: activar respuesta de recuperación inmediata."
+            metric_ids:
+              - "H_org"
+            condicion:
+              nivel: "RED"
+              regla: "H_org < 60"  # umbral_critico_v0_1 (por debajo del umbral de recuperación de P01 ~70)
+            fases_relacionadas:
+              - "F13"   # Health Monitoring
+              - "F14"   # Incident Response
+            playbooks_triggered:
+              - "P01"   # Low H_org Recovery
+              - "P02"   # Handoff Reduction (si handoff_ratio contribuye a baja H_org)
+              - "P15"   # Adaptive Cadence (ajuste de cadencias en crisis)
+            trayectoria_recomendada:
+              id: "Survival"
+            notas:
+              - "Cuando F13 detecta H_org < 60 en dos cortes consecutivos, escalar a F14 y ejecutar P01."
+              - "Si el análisis de F5/F11 muestra handoff_ratio alto, incluir P02 en el plan de recuperación."
+
+          - gate_id: "G2_H_org_Bajo_Riesgo"
+            descripcion: "H_org en zona de riesgo pero no crítica; requiere recuperación estructurada."
+            metric_ids:
+              - "H_org"
+            condicion:
+              nivel: "YELLOW"
+              regla: "60 <= H_org < 70"  # banda_riesgo_v0_1 asociada a activación estándar de P01/P09
+            fases_relacionadas:
+              - "F13"   # Health Monitoring
+              - "F16"   # Learning Loops
+              - "F17"   # Adaptation
+            playbooks_triggered:
+              - "P01"   # Low H_org Recovery (en modalidad parcial / focalizada)
+              - "P09"   # Drift Detection Response
+            trayectoria_recomendada:
+              id: "Minimal"
+            notas:
+              - "F13 detecta tendencia descendente de H_org hacia < 70; activar P09 para analizar drift."
+              - "Si el drift se confirma, ejecutar P01 focalizado en dominios con mayor contribución a la caída."
+
+          - gate_id: "G3_H_org_Bueno_Eficiencia_Baja"
+            descripcion: "H_org aceptable, pero eficiencia global y retorno de habilitación insuficientes."
+            metric_ids:
+              - "H_org"
+              - "eta_org"
+              - "ROI_Habilitacion"
+            condicion:
+              nivel: "YELLOW"
+              regla: "H_org >= 70 AND (eta_org < 0.60 OR ROI_Habilitacion < 1.0)"  # umbral_madurez_minima_v0_1
+            fases_relacionadas:
+              - "F13"   # Health Monitoring
+              - "F4"    # Capability Mapping
+              - "F5"    # Flow Design
+            playbooks_triggered:
+              - "P10"   # Capacity Gap Resolution
+              - "P11"   # Flow Optimization
+              - "P03"   # OKR Alignment (si desalineación contribuye a bajo ROI_Habilitacion)
+            trayectoria_recomendada:
+              id: "Minimal"
+            notas:
+              - "Cuando H_org >= 70 pero eta_org y/o ROI_Habilitacion son bajos, la prioridad es optimizar capacidades (P10) y flujos (P11)."
+              - "Si se detecta desalineamiento entre outcomes y esfuerzo (por ejemplo, eta_org por debajo de objetivos de trayectoria según F7/F9), considerar P03 para ajustar OKR."
+
+          - gate_id: "G4_Ready_For_Avanzada"
+            descripcion: "Organización con health y eficiencia suficientes para escalar hacia trayectoria Avanzada."
+            metric_ids:
+              - "H_org"
+              - "eta_org"
+              - "ROI_Habilitacion"
+            condicion:
+              nivel: "GREEN"
+              regla: "H_org >= 70 AND eta_org >= 0.70 AND ROI_Habilitacion >= 1.2"  # umbral_listo_para_Avanzada_v0_1
+            fases_relacionadas:
+              - "F13"   # Health Monitoring
+              - "F17"   # Adaptation
+              - "F3"    # Trajectory Selection (re-evaluación)
+            playbooks_triggered:
+              - "P05"   # Bounded Autonomy M6
+              - "P06"   # Pilot Transformation
+              - "P07"   # Scale Transformation (según resultados de P06)
+            trayectoria_recomendada:
+              id: "Avanzada"
+            notas:
+              - "Cuando se cumplen simultáneamente los umbrales de H_org, eta_org y ROI_Habilitacion, F17 debe evaluar transición desde Minimal hacia Avanzada."
+              - "P05 prepara HAIC (M1–M6); P06 y P07 ejecutan pilotos y escalamiento controlado."
+    S2_Checklist_de_conformidad_con_VOCAB:
+      - "Todas las métricas usadas (`H_org`, `eta_org`, `ROI_Habilitacion`) provienen de `layer_1.metricas`."
+      - "Todas las fases referenciadas (`F1`, `F3`, `F4`, `F5`, `F13`, `F16`, `F17`) corresponden a `layer_3.wslc_phases`."
+      - "Todos los playbooks (`P01`–`P04`, `P09`, `P10`, `P11`, `P15`, `P03`, `P05`, `P06`, `P07`) corresponden a `layer_3.playbooks`."
+      - "Las trayectorias (`Survival`, `Minimal`, `Avanzada`) corresponden a `layer_3.trayectorias`."
+    S3_Puntos_abiertos_v0_1:
+      - "Los umbrales marcados con comentarios `*_v0_1` son propuestas iniciales para SPRINT 1."
+      - "La calibración fina de `H_org`, `eta_org` y `ROI_Habilitacion` por trayectoria (objetivos por `Minimal`/`Avanzada`) queda abierta para etapas posteriores (VG2–VG4) usando datos empíricos."
+      - "Se asume que futuros refinamientos de `VOCABULARIO_CONTROLADO.layer_1.metricas` podrán introducir métricas adicionales de dominio; este archivo deberá actualizarse para referenciar esos nuevos `metric_id` en lugar de crear métricas ad‑hoc."
+
+  Mapeo_Dominios_Fases:
+    Src: "sources/orko_knowledge/30_metodologia_orko/00b_mapeo_dominios_fases.md"
+    Title: "MAPEO DOMINIOS (D1-D4) → FASES METODOLOGÍA"
+    Proposito: "Trazabilidad Layer 1 → Layer 3 (I3)"
+    Tipo: "Mapeo Estructural"
+    ID: "ORKO-L3-MAP-D-F"
+    S0_Fundamento:
+      Layer_0: "A1, A2, A3 | P1-P5 | I2, I3"
+      Layer_1: "D1, D2, D3, D4 | C1-C5"
+      Layer_2: "— (No aplica, mapeo conceptual)"
+      Justificacion: "Este documento operacionaliza I3 (Trazabilidad) al proyectar dominios ortogonales D1-D4 (Layer 1 Arquitectura) sobre fases metodológicas F1-F18 (Layer 3 Metodología). Mapeo auditable preserva I2 (Ortogonalidad) demostrando que dominios cruzan fases independientemente. Es índice estructural, NO duplicación contenido."
+      Definiciones: "../00_fundamentos_teoricos/ | ../10_arquitectura_orko/"
+    S1_Fundamento_Conceptual:
+      Layer_1_Dominios_Ortogonales_Yaml: |-
+        D1_Arquitectura:
+          Definición: "Diseño estructura sistemas trabajo (P1, P2, P3, P4, P5)"
+          Alcance: Modelado, especificación, blueprints
+          Output: Contratos C1-C5, entidades E6-E7
+
+        D2_Percepción:
+          Definición: "Captura información entorno organizacional"
+          Alcance: Sensing, assessment, monitoring, feedback
+          Output: Métricas, context profiles, health scores
+
+        D3_Decisión:
+          Definición: "Elección informada bajo constraints P4"
+          Alcance: Trade-offs, priorización, trajectory selection
+          Output: ADRs, roadmaps, playbook triggers
+
+        D4_Operación:
+          Definición: "Ejecución transformaciones P2 (flows)"
+          Alcance: Implementación, delivery, rituals
+          Output: Artifacts, releases, ceremonies
+      Layer_3_18_Fases_WSLC: |-
+        Fases implementan metodología ejecutable derivada Layer 0→1→2.
+        **Este documento traza D→F explícitamente (I3 compliance).**
+    S2_Matriz_Mapeo_DxF:
+      Tabla: |-
+        | Fase | D1_Arq | D2_Perc | D3_Dec | D4_Oper | Primitivos Primarios |
+        |------|--------|---------|--------|---------|----------------------|
+        | **F1** Context Assessment | ◐ | ●●● | ◐ | ○ | P1-P5 (scan) |
+        | **F2** Vision Definition | ◐ | ◐ | ●● | ○ | P5 (propósito) |
+        | **F3** Trajectory Selection | ○ | ◐ | ●●● | ○ | Decision |
+        | **F4** Capability Mapping | ●● | ◐ | ○ | ○ | P1 (capacidad) |
+        | **F5** Flow Design | ●● | ◐ | ○ | ○ | P2 (flujo) |
+        | **F6** Information Architecture | ●●● | ◐ | ○ | ○ | P3 (información) |
+        | **F7** Purpose Cascade | ● | ○ | ○ | ○ | P5 (OKR) |
+        | **F8** Limits Definition | ● | ◐ | ●● | ○ | P4 (límites) |
+        | **F9** Target State Design | ●●● | ○ | ●● | ○ | E6 (target) |
+        | **F10** Quick Wins | ○ | ○ | ● | ●● | Delivery |
+        | **F11** Fabric Deployment | ●● | ○ | ● | ●● | TF1-TF3 |
+        | **F12** State Transition | ○ | ● | ● | ●● | E6 evolve |
+        | **F13** Health Monitoring | ○ | ●●● | ○ | ●● | H_org sensing |
+        | **F14** Incident Response | ○ | ●● | ●● | ●●● | Remediation |
+        | **F15** Continuous Execution | ○ | ◐ | ● | ●●● | Xanpan |
+        | **F16** Learning Loops | ○ | ●● | ● | ● | Retrospectives |
+        | **F17** Adaptation | ◐ | ●● | ●●● | ○ | I6 trajectory |
+        | **F18** Convergence Check | ○ | ●● | ● | ○ | E6 validation |
+      Leyenda: |-
+        - ●●● Primario (75-100% fase)
+        - ●● Secundario (40-70% fase)
+        - ● Terciario (15-35% fase)
+        - ◐ Implícito (<15%)
+        - ○ No aplica
+    S3_Descripcion_Mapeos_Criticos:
+      F1_Context_Assessment_a_D2_Percepcion: |-
+        ```yaml
+        Relación:
+          F1 implementa D2 Percepción capturando 36 parámetros organizacionales
+          
+        Método:
+          - Workshops stakeholders
+          - Interviews key personas
+          - Metrics analysis (si disponible)
+          - Document review
+          
+        Output:
+          - context_profile_36_params.yaml
+          - h_org_estimation (baseline)
+          - Compliance burden assessment
+          
+        Primitivos:
+          Sensing P1 (capacity inventory)
+          Sensing P2 (flow analysis)
+          Sensing P3, P4, P5 (limits, purpose)
+        ```
+      F3_Trajectory_Selection_a_D3_Decision: |-
+        ```yaml
+        Relación:
+          F3 implementa D3 Decisión eligiendo Survival/Minimal/Avanzada
+          
+        Método:
+          - Decision matrix scoring
+          - Compliance overlay application
+          - Budget-timeline trade-offs
+          
+        Accountability:
+          Sponsor + Transformation Lead (I5 human-accountable)
+          
+        Output:
+          - trajectory_selected.yaml
+          - Roadmap 6-36 months
+          - Quick wins 0-6 months
+          
+        Constraints_P4:
+          Budget, regulatory, timeline, H_org baseline
+        ```
+      F6_Information_Architecture_a_D1_Arquitectura: |-
+        ```yaml
+        Relación:
+          F6 implementa D1 Arquitectura diseñando P3 Information structures
+          
+        Método:
+          - Data modeling (entities, relationships)
+          - Lakehouse architecture (TF3)
+          - MGDE compliance mapping (Chile gov)
+          
+        Output:
+          - information_blueprint.drawio
+          - TF3_schema.yaml
+          - MGDE_compliance_appendix.md
+          
+        Contracts:
+          C3 InformationAsset implementation
+        ```
+      F9_Target_State_Design_a_D1_y_D3: |-
+        ```yaml
+        Relación:
+          F9 implementa D1 diseñando E6 Target + D3 decisiones arquitectónicas
+          
+        Método:
+          - Blueprint completo system
+          - Architecture Decision Records (ADRs)
+          - Tech stack selection
+          
+        Output:
+          - E6_target_state_complete.yaml
+          - ADRs_architecture/
+          - Tech_stack_rationalization.md
+          
+        Primitivos:
+          Integra P1-P5 todos en visión coherente
+        ```
+      F13_Health_Monitoring_a_D2_y_D4: |-
+        ```yaml
+        Relación:
+          F13 implementa D2 sensing continuo + D4 operación dashboard
+          
+        Método:
+          - H_org calculation automática
+          - Drift detection (E6 current vs target)
+          - Alert triggering (thresholds)
+          
+        Output:
+          - health_dashboard.html (live)
+          - alerts_queue.json
+          - Drift_report weekly
+          
+        Triggers:
+          H_org <70 → P01 playbook
+          Handoff >30% → P02 playbook
+          OKR misalignment → P03 playbook
+        ```
+      F14_Incident_Response_a_D4_y_D3: |-
+        ```yaml
+        Relación:
+          F14 implementa D4 ejecución remediation + D3 playbook selection
+          
+        Pattern_OODA:
+          Observe: F13 detecta drop H_org (D2)
+          Orient: F14 analiza causa root (D2+D3)
+          Decide: F14 selecciona playbook (D3)
+          Act: Ejecuta P01-P04 recovery (D4)
+          
+        Output:
+          - incident_log.yaml
+          - Remediation actions ejecutadas
+          - Post-mortem (F16 learning)
+        ```
+      F15_Continuous_Execution_a_D4: |-
+        ```yaml
+        Relación:
+          F15 implementa D4 operación continua vía Xanpan workflows
+          
+        Método:
+          - Sprint planning (2-week cycles)
+          - Daily standups (15min)
+          - Kanban board (WIP limits)
+          - Retrospectives (F16)
+          
+        Output:
+          - Incremental delivery continuo
+          - Velocity metrics
+          - Burndown/burnup charts
+        ```
+      F17_Adaptation_a_D3_y_D2: |-
+        ```yaml
+        Relación:
+          F17 implementa D3 trajectory adjustments + D2 drift sensing
+          
+        Trigger:
+          I6 Trajectory-awareness detecta misalignment
+          
+        Decisiones:
+          - Cambio Minimal → Avanzada (H_org mejora)
+          - Downgrade Avanzada → Minimal (crisis)
+          - Pivot scope (budget cuts)
+          
+        Output:
+          - trajectory_adjustment_ADR.md
+          - Roadmap updated
+        ```
+    S4_Patterns_Trans_Dominio:
+      Pattern_1_OODA_Loop: |-
+        ```yaml
+        Secuencia:
+          D2_Percepción (Observe) → 
+          D2+D3 (Orient) → 
+          D3_Decisión (Decide) → 
+          D4_Operación (Act) → 
+          D2_Feedback (Loop)
+
+        Ejemplo_F14_Incidents:
+          1. Observe: F13 detecta H_org drop a 65 (D2)
+          2. Orient: F14 analiza: handoff ratio 35%, capacity shortage (D2+D3)
+          3. Decide: F14 selecciona P02 Handoff Reduction (D3)
+          4. Act: Ejecuta P02 steps (consolidate teams, refactor) (D4)
+          5. Loop: F13 monitorea H_org recovery → 72 (D2)
+
+        Invariante_Preservado: A3 (flujo red, no jerarquía estática)
+        ```
+      Pattern_2_Architecture_Feedback_Loop: |-
+        ```yaml
+        Secuencia:
+          D1_Arquitectura (F9 design) →
+          D4_Implementación (F11-F12 deploy) →
+          D2_Percepción (F13 monitoring) →
+          D3_Ajuste (F17 adaptation) →
+          D1_Refinamiento (next iteration)
+
+        Ejemplo_TF3_Lakehouse:
+          1. F9: Diseña TF3 Lakehouse (D1)
+          2. F11: Deploy Delta Lake + Spark (D4)
+          3. F13: Monitorea query performance (D2)
+          4. F17: Detecta bottleneck en transformations (D3)
+          5. F9 (next): Re-arquitectura partitioning strategy (D1)
+
+        Invariante_Preservado: I6 (mejora continua trajectory-aware)
+        ```
+      Pattern_3_Percepcion_Decision_Coupling: |-
+        ```yaml
+        Principio:
+          D3_Decisión SIEMPRE requiere D2_Percepción antecedente
+          NO existe decisión sin sensing previo
+
+        Ejemplos:
+          F3 Trajectory: D2 (F1 context) → D3 (selection)
+          F8 Limits: D2 (compliance scan) → D3 (threshold definition)
+          F17 Adaptation: D2 (drift detection) → D3 (trajectory change)
+
+        Anti-Pattern:
+          Decisión sin percepción = Blind decision (violación A2, propósito sin fundamento)
+        ```
+    S5_Validacion_I3_Trazabilidad:
+      Checklist_Completitud_Yaml: |-
+        Coverage_Dominios:
+          D1_Arquitectura: [F4, F5, F6, F7, F8, F9, F11]
+          D2_Percepción: [F1, F12, F13, F14, F16, F17, F18]
+          D3_Decisión: [F2, F3, F8, F9, F14, F17]
+          D4_Operación: [F10, F11, F12, F13, F14, F15]
+
+        Coverage_Fases:
+          Todas F1-F18 cubiertas por al menos un dominio
+
+        Ortogonalidad_I2:
+          Test: ¿Dominios cruzan fases independientemente?
+          Resultado: Verificado
+          Ejemplo: F14 usa D2+D3+D4 simultáneamente (OODA loop)
+
+        Bidireccionalidad:
+          Layer 1 → Layer 3: D{N} navegable a F{M} vía matriz
+          Layer 3 → Layer 1: F{M} §0.Fundamento traza D{N}
+
+        Validación_Completitud:
+          - Todos los dominios mapeados a fases
+          - Todas las fases mapeadas a dominios
+          - Matriz auditable
+          - Patterns documentados
+          - Ortogonalidad I2 implica que NO todas las combinaciones son aplicables
+          - Ejemplo: F7 Purpose Cascade NO requiere D4 Operación
+    S6_Navegacion:
+      Anterior: "00_introduccion_metodologia.md"
+      Siguiente: "01_fases_initiation/README.md"
+      Indice: "README.md"
+      Relacionados:
+        - "../10_arquitectura_orko/01_contratos.md (D1-D4 definiciones)"
+        - "../10_arquitectura_orko/02_diseño.md (Patterns arquitectura)"
+        - "dependency_graph.yaml (mapeo F↔F complementario)"
+    Changelog:
+      - "[2025-11-13]: Creación inicial post gap I3 identificado"
+      - "[Descripción]: Mapeo explícito D→F para completar trazabilidad Layer 1→Layer 3"
+
+  Protocolo_Convergencia_F2_F3:
+    Src: "sources/orko_knowledge/30_metodologia_orko/01_fases_initiation/F2_F3_convergence_protocol.md"
+    Title: "PROTOCOLO DE CONVERGENCIA F2 ↔ F3"
+    Version: "v1.0.0"
+    Fecha: "2025-11-17"
+    Estado: "ACTIVO"
+    Proposito: "Resolver formalmente la dependencia circular entre F2 (Vision Definition) y F3 (Trajectory Selection)"
+    S0_Fundamento:
+      Layer_0_Axiomas:
+        - "A4 (Restricción): Trajectory actúa como restricción a Vision"
+        - "A5 (Intencionalidad): Vision guía selección de Trajectory"
+      Primitivos:
+        - "P4 (Restricción Asimétrica): \"Constraints shape freedom\" - Budget y timeline delimitan ambición"
+      Invariantes:
+        - "I3 (Trazabilidad): Decisión F2↔F3 debe ser auditable"
+        - "I6 (Trajectory-Awareness): Toda decisión debe considerar capacidades contexto"
+      Justificacion_Ontologica: |-
+        El chicken-and-egg F2↔F3 es una dependencia REAL, no un defecto:
+        - Vision determina qué trajectory es necesaria
+        - Trajectory determina qué vision es factible
+
+        La solución no es eliminar la circularidad, sino **formalizarla con protocolo de convergencia**.
+    S1_Algoritmo_de_Convergencia:
+      S1_1_Inputs_Requeridos_Yaml: |-
+        inputs_protocolo:
+          - F1.context_profile (COMPLETO)
+          - context.yaml (validado)
+          - Sponsor disponible para decisión
+          - context_decision_matrix.xlsx (operativa)
+      S1_2_Fases_del_Protocolo_Yaml: |-
+        protocolo_convergencia:
+          
+          # ============================================
+          # PASO 0: VALIDACIÓN PREVIA
+          # ============================================
+          
+          paso_0_prerequisites:
+            validar:
+              - F1_completed: true
+              - context_yaml_valid: true
+              - H_org_baseline_calculated: true
+              - budget_runway_defined: true
+            
+            si_falla:
+              acción: "STOP - Completar F1 antes de iniciar F2↔F3"
+              escalate_to: Role_Captain
+          
+          # ============================================
+          # PASO 1: TRAJECTORY DRAFT (F3 PROVISIONAL)
+          # ============================================
+          
+          paso_1_trajectory_draft:
+            descripción: "Selección provisional de trajectory usando SOLO context, sin vision"
+            
+            ejecuta: F3_trajectory_selection (modo provisional)
+            
+            inputs:
+              - F1.context_profile
+              - context.yaml:
+                  - H_org_baseline
+                  - budget_usd
+                  - runway_months
+                  - team_size
+                  - sponsor_commitment
+            
+            herramienta: context_decision_matrix.xlsx
+            
+            decision_rules:
+              DM1: "IF H_org < 60 THEN Survival"
+              DM2: "IF runway < 3 AND H_org < 70 THEN Survival"
+              DM3: "IF budget < 10K AND H_org >= 60 THEN Minimal"
+              DM4: "IF H_org >= 70 AND budget >= 100K THEN Avanzada"
+              DM5: "ELSE Minimal (default)"
+            
+            output:
+              trajectory_draft: "Survival | Minimal | Avanzada"
+              confidence_score: float [0, 1]
+              rationale: "Justificación decision matrix"
+            
+            artefacto: "trajectory_draft_report.yaml"
+            
+            owner: Role_TrajectoryOwner
+            duration: 2-4 horas
+          
+          # ============================================
+          # PASO 2: VISION WITH CONSTRAINTS (F2)
+          # ============================================
+          
+          paso_2_vision_with_constraints:
+            descripción: "Definir vision CON trajectory_draft como restricción"
+            
+            ejecuta: F2_vision_definition
+            
+            inputs:
+              - F1.context_profile
+              - paso_1.trajectory_draft (como constraint)
+              - trajectory_specifications:
+                  Survival: "2-3 meses, quick wins, recovery focus"
+                  Minimal: "6-12 meses, fases F1-F12, stabilization"
+                  Avanzada: "18-36 meses, F1-F18 completo, transformación"
+            
+            constraints_by_trajectory:
+              Survival:
+                - vision_horizon: "2-3 meses"
+                - okr_L4_limit: "2-3 objetivos (survival-focused)"
+                - scope: "Recovery only, no transformación"
+                - budget_alert: "Minimal investment"
+              
+              Minimal:
+                - vision_horizon: "6-12 meses"
+                - okr_L4_limit: "3-5 objetivos (stabilization + growth)"
+                - scope: "Initiation + Development + Implementation parcial"
+                - budget_alert: "Inversión moderada"
+              
+              Avanzada:
+                - vision_horizon: "18-36 meses"
+                - okr_L4_limit: "5-8 objetivos (transformación completa)"
+                - scope: "WSLC completo F1-F18"
+                - budget_alert: "Inversión significativa"
+            
+            proceso:
+              1. "Definir vision_statement compatible con trajectory_draft"
+              2. "Crear okr_L4 dentro de límites trajectory"
+              3. "Documentar vision_constraints explícitos"
+              4. "Validar feasibility con Sponsor"
+            
+            output:
+              - vision_statement.md
+              - okr_L4.yaml
+              - vision_constraints.yaml
+            
+            artefactos: "vision_package/"
+            
+            owner: Role_Captain + Sponsor_L1_Human
+            duration: 4-6 horas
+          
+          # ============================================
+          # PASO 3: TRAJECTORY VALIDATION (F3 FINAL)
+          # ============================================
+          
+          paso_3_trajectory_validation:
+            descripción: "Validar si trajectory_draft sigue siendo óptima dado vision_statement"
+            
+            ejecuta: F3_trajectory_selection (modo validación)
+            
+            inputs:
+              - F1.context_profile
+              - paso_1.trajectory_draft
+              - paso_2.vision_statement
+              - paso_2.vision_constraints
+            
+            validaciones:
+              
+              vision_trajectory_alignment:
+                question: "¿Vision es compatible con trajectory_draft?"
+                checks:
+                  - vision_horizon <= trajectory_max_timeline
+                  - okr_L4_count <= trajectory_okr_limit
+                  - vision_scope ⊆ trajectory_phases
+                
+              ambition_budget_fit:
+                question: "¿Budget soporta la ambición de vision?"
+                formula: |
+                  budget_required = estimate_budget(vision_statement)
+                  fit_score = min(1.0, budget_actual / budget_required)
+                threshold: fit_score >= 0.80
+              
+              capability_gap_analysis:
+                question: "¿Capacidades actuales pueden soportar vision?"
+                check: |
+                  gaps = vision_requirements - current_capabilities
+                  IF gaps_críticos > 3 THEN feasibility = LOW
+              
+              sponsor_alignment:
+                question: "¿Sponsor committed con vision bajo trajectory?"
+                validation: "Reunión validación sponsor"
+                output: sponsor_approval: bool
+            
+            output:
+              trajectory_validation_report:
+                trajectory_confirmed: bool
+                alignment_score: float [0, 1]
+                gaps_detected: [gap1, gap2, ...]
+                recommendation: "CONFIRM | ADJUST | ESCALATE"
+            
+            artefacto: "trajectory_validation_report.yaml"
+            
+            owner: Role_TrajectoryOwner + Role_Captain
+            duration: 2-3 horas
+
+          # ============================================
+          # PASO 4: COMPATIBILITY CHECK (DECISIÓN)
+          # ============================================
+          
+          paso_4_compatibility_check:
+            descripción: "Evaluar convergencia y decidir siguiente acción"
+            
+            criterios_convergencia:
+              
+              C1_alignment_score:
+                formula: |
+                  alignment = weighted_avg(
+                    vision_trajectory_fit × 0.30,
+                    budget_feasibility × 0.30,
+                    capability_fit × 0.20,
+                    timeline_feasibility × 0.10,
+                    sponsor_commitment × 0.10
+                  )
+                threshold: alignment >= 0.80
+              
+              C2_critical_gaps:
+                condition: "gaps_críticos == 0"
+                nota: "Gaps no críticos son aceptables si alignment >= 0.80"
+              
+              C3_sponsor_approval:
+                condition: "sponsor_approved == true"
+                bloqueante: "Si sponsor rechaza, NO converge (independiente score)"
+            
+            decision_logic:
+              
+              SI_CONVERGE:
+                conditions: "C1 AND C2 AND C3"
+                output:
+                  trajectory_selected: trajectory_draft
+                  estado: "CONVERGED"
+                  siguiente_fase: "F4_capability_mapping"
+                  artefacto: "convergence_success_report.yaml"
+                comunicar: "F2↔F3 convergieron exitosamente"
+              
+              SI_NO_CONVERGE:
+                conditions: "NOT(C1 AND C2 AND C3)"
+                analizar_gap_type:
+                  
+                  gap_vision_muy_ambiciosa:
+                    signal: "budget_fit < 0.70 OR capability_fit < 0.70"
+                    problema: "Vision excede capacidad trajectory"
+                  
+                  gap_trajectory_muy_conservadora:
+                    signal: "alignment_high BUT sponsor_frustrated"
+                    problema: "Trajectory subestima potencial org"
+                  
+                  gap_timeline_incompatible:
+                    signal: "timeline_fit < 0.70"
+                    problema: "Plazos vision vs trajectory no alinean"
+                  
+                  gap_sponsor_uncommitted:
+                    signal: "sponsor_approved == false"
+                    problema: "Sponsor no respalda vision bajo trajectory"
+                
+                siguiente: "paso_5_iteration"
+                artefacto: "convergence_gap_analysis.yaml"
+          
+          # ============================================
+          # PASO 5: ITERATION (MAX 2 CICLOS)
+          # ============================================
+          
+          paso_5_iteration:
+            descripción: "Ajustar F2 o F3 e iterar"
+            
+            max_iterations: 2
+            
+            iteracion_1:
+              trigger: "Primera no convergencia"
+              
+              analizar_gap_root_cause:
+                tools: "convergence_gap_analysis.yaml"
+                reunión: "Role_Captain + Role_TrajectoryOwner + Sponsor"
+                duration: "1-2 horas"
+              
+              opciones_ajuste:
+                
+                A_reducir_vision:
+                  acción: "Ajustar vision_statement y okr_L4 a menor alcance"
+                  ejemplo: "Reducir OKR de 8 a 5, acortar horizon 36→18 meses"
+                  owner: Role_Captain + Sponsor
+                  impacto: "Vision más modesta, mayor feasibility"
+                
+                B_aumentar_trajectory:
+                  acción: "Upgrade trajectory_draft (Minimal→Avanzada)"
+                  condiciones: "Budget/capacidad permiten, solo era conservador"
+                  owner: Role_TrajectoryOwner
+                  impacto: "Trajectory más ambiciosa, mayor inversión"
+                
+                C_ajustar_ambos:
+                  acción: "Compromiso: vision un poco menos + trajectory un poco más"
+                  owner: Role_Captain (mediador)
+                  impacto: "Convergencia en punto medio"
+              
+              ejecutar:
+                - Implementar ajuste elegido
+                - return_to: "paso_2 o paso_3 según ajuste"
+                - Documentar cambios en iteration_log.yaml
+              
+              success_criteria: "alignment >= 0.80 en siguiente vuelta"
+            
+            iteracion_2:
+              trigger: "Segunda no convergencia (iteración_1 falló)"
+              
+              escalation: "MANDATORIO"
+              
+              reunión_decisión:
+                participants:
+                  - Role_Captain (accountable)
+                  - Role_TrajectoryOwner
+                  - Sponsor_L1_Human
+                  - [opcional] Board_Governance
+                
+                agenda:
+                  1. "Revisar historial 2 iteraciones"
+                  2. "Identificar constraint inflexible (budget? vision? timeline?)"
+                  3. "Decisión pragmática forzada"
+                
+                opciones_forzadas:
+                  
+                  A_vision_pragmatica:
+                    acción: "Forzar vision realista para trajectory disponible"
+                    mensaje: "Vision ajustada a capacidad real org"
+                    aprobación: Sponsor (debe aceptar vision menor)
+                  
+                  B_trajectory_pragmatica:
+                    acción: "Forzar trajectory conservadora para vision dada"
+                    mensaje: "Trajectory ajustada a resources disponibles"
+                    aprobación: Captain (puede override trajectory_draft)
+                  
+                  C_survival_forzado:
+                    trigger: "H_org < 60 (siempre) O runway < 3 meses"
+                    acción: "Entrar modo Survival, diferir vision completa"
+                    mensaje: "Contexto crítico, prioridad recovery"
+                    impacto: "Vision se trabaja post-recovery (en F17)"
+                    aprobación: Captain (autoridad unilateral en crisis)
+                
+                output: forced_decision_record.md
+                
+                siguiente: "F4 (convergencia forzada)"
+              
+              nota: "Iteración_2 SIEMPRE resuelve (con decisión pragmática)"
+            
+            si_falla_iteracion_2:
+              # Técnicamente imposible (iteración_2 siempre decide)
+              fallback: "paso_6_escalation"
+          
+          # ============================================
+          # PASO 6: ESCALATION (RARÍSIMO)
+          # ============================================
+          
+          paso_6_escalation:
+            descripción: "Escalation a governance si 2 iteraciones no resuelven"
+            
+            trigger: "Deadlock sponsor-captain O conflicto fundamental"
+            
+            escalation_path:
+              nivel_1:
+                escalate_to: Board_Governance
+                pregunta: "¿Continuar iniciativa ORKO o cancelar?"
+                opciones:
+                  - "Aprobar Survival forzado (mínimo viable)"
+                  - "Aprobar Minimal con vision reducida"
+                  - "Cancelar iniciativa (no hay fit)"
+              
+              nivel_2:
+                si_board_no_decide:
+                  escalate_to: CEO / Autoridad máxima org
+                  mensaje: "Decisión final requerida"
+            
+            output: escalation_resolution_record.md
+            
+            accountable: Role_SteeringCommittee
+            
+            nota: "Escalation es excepcional - solo 1-2% de casos"
+
+    S2_Metricas_y_Observabilidad:
+      S2_1_Metricas_de_Convergencia_Yaml: |-
+        metricas_protocolo:
+          
+          compatibility_score:
+            formula: |
+              compatibility = weighted_avg(
+                vision_trajectory_fit × 0.30,
+                budget_feasibility × 0.30,
+                capability_fit × 0.20,
+                timeline_feasibility × 0.10,
+                sponsor_commitment × 0.10
+              )
+            rango: [0, 1]
+            threshold_convergencia: ">= 0.80"
+            threshold_warning: "[0.70, 0.80)"
+            threshold_crítico: "< 0.70"
+          
+          iterations_count:
+            objetivo: "<= 1 (ideal)"
+            aceptable: "2"
+            crítico: "> 2 (escalation)"
+            actual: "[registrar por caso]"
+          
+          decision_time:
+            objetivo: "<= 3 días (calendario)"
+            aceptable: "3-5 días"
+            crítico: "> 5 días"
+            actual: "[registrar por caso]"
+          
+          convergence_rate:
+            formula: "casos_converged_first_try / casos_total"
+            target: ">= 70%"
+            actual: "[calibrar con casos reales]"
+      S2_2_Observabilidad_Yaml: |-
+        artefactos_trazabilidad:
+          
+          convergence_tracker.xlsx:
+            ubicación: "40_implementacion_metodologia/calculadoras/"
+            tabs:
+              - F2_F3_Convergence: "Cálculos compatibility_score"
+              - Iteration_Log: "Historial iteraciones por caso"
+              - Metrics_Dashboard: "KPIs protocolo"
+          
+          por_caso_generar:
+            - trajectory_draft_report.yaml
+            - vision_package/ (statement, okr, constraints)
+            - trajectory_validation_report.yaml
+            - convergence_success_report.yaml (o gap_analysis.yaml)
+            - [si aplica] iteration_log.yaml
+            - [si aplica] forced_decision_record.md
+
+    S3_Casos_de_Aplicacion:
+      Caso_3_1_Startup_50p_Convergencia_Paso_4_Yaml: |-
+        caso: 01_startup_50p_completo
+
+        paso_1_trajectory_draft:
+          H_org: 54.3
+          budget: 50K USD
+          runway: 4 meses
+          decision_rule: DM1 (H_org < 60)
+          trajectory_draft: Survival
+          confidence: 0.95
+
+        paso_2_vision_with_constraints:
+          vision_statement: "Estabilizar operación en 8 semanas"
+          okr_L4:
+            - "O1: H_org 55→70 en 8 semanas"
+            - "O2: Reducir turnover 15%→5%"
+          constraints: "Recovery focus, no growth"
+          sponsor_approved: true
+
+        paso_3_trajectory_validation:
+          alignment_score: 0.88
+          gaps: []
+          recommendation: CONFIRM
+
+        paso_4_compatibility_check:
+          C1_alignment: 0.88 >= 0.80 ✅
+          C2_gaps: 0 ✅
+          C3_sponsor: true ✅
+          RESULTADO: CONVERGED
+          iterations: 1
+          tiempo: 2 días
+      Caso_3_2_Scaleup_200p_Convergencia_con_Iteracion_Yaml: |-
+        caso: 02_scaleup_200p_completo
+
+        paso_1_trajectory_draft:
+          H_org: 67.8
+          budget: 150K USD
+          runway: 9 meses
+          decision_rule: DM5 (default)
+          trajectory_draft: Minimal
+          confidence: 0.75
+
+        paso_2_vision_with_constraints:
+          vision_statement: "Escalar a 500p en 18 meses"
+          okr_L4: [8 objetivos ambiciosos]
+          constraints: "Ambiciosa para Minimal"
+          sponsor_approved: true (inicialmente)
+
+        paso_3_trajectory_validation:
+          alignment_score: 0.65  # BAJO
+          gaps:
+            - "Vision requiere Avanzada"
+            - "Budget 150K insuficiente para 500p"
+          recommendation: ADJUST
+
+        paso_4_compatibility_check:
+          C1_alignment: 0.65 < 0.80 ❌
+          RESULTADO: NO_CONVERGE
+          gap_type: vision_muy_ambiciosa
+
+        paso_5_iteration_1:
+          analisis: "Vision 18 meses demasiado ambiciosa para Minimal"
+          ajuste: A_reducir_vision
+          nueva_vision: "Escalar a 300p en 12 meses"
+          nuevo_okr_L4: [5 objetivos moderados]
+          
+          # Re-ejecutar paso_3
+          nuevo_alignment: 0.82 ✅
+          RESULTADO: CONVERGED (en iteración 1)
+          iterations: 2
+          tiempo: 4 días
+
+    S4_Validacion_y_Ownership:
+      S4_1_Criterios_de_Validacion_Yaml: |-
+        validacion_protocolo:
+          - [ ] Protocolo aplicado a 6 casos ORKO con éxito
+          - [ ] Convergence rate >= 70% (4+ casos convergen sin iteración)
+          - [ ] Ningún caso requiere escalation (paso_6)
+          - [ ] Compatibility_score >= 0.80 en todos los casos finales
+          - [ ] Artefactos trazables generados (YAML + tracker)
+          - [ ] F2 y F3 actualizados con referencia a protocolo
+      S4_2_Ownership_RACI_Yaml: |-
+        raci:
+          responsible:
+            paso_1: Role_TrajectoryOwner
+            paso_2: Role_Captain
+            paso_3: Role_TrajectoryOwner
+            paso_4: Role_Captain
+            paso_5: Role_Captain (mediador)
+            paso_6: Role_SteeringCommittee
+          
+          accountable: Role_Captain
+          
+          consulted:
+            - Sponsor_L1_Human (paso 2, 4, 5)
+            - Role_Architect (validación dependencies)
+          
+          informed:
+            - Board_Governance (si escalation)
+            - PMO (tracking tiempo)
+
+    S5_Changelog_y_Versiones:
+      Changelog_Yaml: |-
+        v1.0.0 (2025-11-17):
+          - Protocolo inicial formal
+          - 6 pasos definidos
+          - Validado contra 6 casos
+          - Estado: ACTIVO
+
+        backlog_mejoras:
+          - Calibrar thresholds con 20+ casos reales
+          - Automatizar compatibility_score en calculadora
+          - Integrar con F13 health monitoring
+      Nota: "FIN DEL PROTOCOLO"
+
+  Fases_WSLC:
+    Initiation:
+      F1_Context_Assessment:
+        Src: "sources/orko_knowledge/30_metodologia_orko/01_fases_initiation/F1_context_assessment.md"
+        S0_Fundamento_Yaml: |-
+          fase_id: F1
+          nombre_canonico: "Context Assessment"
+          vocabulos_referencia:
+            wslc_phase: "VOCABULARIO_CONTROLADO.layer_3.wslc_phases.F1"
+            axiomas:
+              - "VOCABULARIO_CONTROLADO.layer_0.axiomas.A1_Organizacion"
+              - "VOCABULARIO_CONTROLADO.layer_0.axiomas.A4_Contexto"
+            primitivos:
+              - "VOCABULARIO_CONTROLADO.layer_0.primitivos.P1_Capacidad"
+              - "VOCABULARIO_CONTROLADO.layer_0.primitivos.P2_Flujo"
+              - "VOCABULARIO_CONTROLADO.layer_0.primitivos.P3_Informacion"
+            invariantes:
+              - "VOCABULARIO_CONTROLADO.layer_0.invariantes.I1_Continuidad_Operacional"
+              - "VOCABULARIO_CONTROLADO.layer_0.invariantes.I4_Clasificacion_Contextual"
+              - "VOCABULARIO_CONTROLADO.layer_0.invariantes.I6_Metricas_Canonicas"
+            dominios:
+              - "VOCABULARIO_CONTROLADO.layer_1.dominios.D2_Percepcion"
+              - "VOCABULARIO_CONTROLADO.layer_1.dominios.D3_Decision"
+            metricas_canonicas:
+              - "VOCABULARIO_CONTROLADO.layer_1.metricas_canonicas.H_org"
+            tejidos:
+              - "VOCABULARIO_CONTROLADO.layer_2.tejidos.TF1_Capacity"
+              - "VOCABULARIO_CONTROLADO.layer_2.tejidos.TF2_Flow"
+              - "VOCABULARIO_CONTROLADO.layer_2.tejidos.TF3_Information"
+          relacion_kernel:
+            es_kernel: true
+            depende_de: []
+            prepara_a:
+              - "F2"
+              - "F3"
+              - "F4"
+              - "F5"
+              - "F6"
+              - "F7"
+          trayectorias_soportadas:
+            - "Survival"
+            - "Minimal"
+            - "Avanzada"
+          estado_fundamento: "STABLE"
+          justificacion: |
+            F1 es la fase de entrada del WSLC que materializa A1_Organizacion y A4_Contexto mediante 
+            captura de estado organizacional (36 parámetros). Produce H_org baseline y clasificación 
+            contextual (G1-G4) que gobiernan decisiones de F3. Validado en casos startup_50p, gore_nuble, 
+            y unicornio_latam. Templates T01, calculadoras y §1 INTERFAZ completos.
+          backlog_v1_1:
+            - "Profundizar conexión axioma A1 con TF1/TF2/TF3 lifecycles"
+            - "Formalizar fórmula canónica H_org en health_score_calculator.xlsx"
+          referencias_formales:
+            - "SPEC_ARQUITECTURA_DEFINITIVA.§1.2.Kernel.F1_Context_Assessment"
+            - "PLAN_ETAPA_1_KERNEL.SPRINT_1.FASE_1"
+            - "validation_final_report.md.§2.3.F1_PASSED"
+        Proposito: "F1 (Context Assessment) es la fase de entrada del WSLC que captura el estado organizacional actual (E6_current) mediante un perfil de 36 parámetros contextuales alineados con los primitivos P1 (Capacidad), P2 (Flujo) y P3 (Información). Produce una baseline de H_org y permite clasificar el contexto según bandas de salud organizacional (health gates G1–G4), habilitando decisiones informadas de trayectoria en F3."
+        Conexion_con_genoma:
+          - "A1_Organizacion: F1 materializa la lectura del estado organizacional como sistema socio-técnico."
+          - "A4_Contexto: F1 respeta que toda intervención depende del contexto específico (runway, presupuesto, riesgo regulatorio, madurez digital)."
+          - "I1_Continuidad_Operacional: la baseline H_org capturada en F1 se usa como referencia para garantizar que ninguna intervención rompa operaciones críticas."
+          - "I4_Clasificacion_Contextual: F1 entrega la clasificación explícita del contexto que luego gobierna la selección de playbooks y trayectorias."
+          - "I6_Metricas_Canonicas: F1 produce H_org baseline, métrica canónica de referencia para todo el WSLC."
+        S1_Interfaz_Yaml: |-
+          inputs:
+            - id: "stakeholder_interviews"
+              fuente: "external"
+              descripcion: "Entrevistas estructuradas con stakeholders clave de la organización"
+            - id: "org_documentation"
+              fuente: "external"
+              descripcion: "Documentación organizacional existente (organigramas, procesos, tech stack)"
+            - id: "regulatory_context"
+              fuente: "external"
+              descripcion: "Marco regulatorio aplicable y nivel de cumplimiento actual"
+          outputs:
+            - id: "context_profile_36_params"
+              archivo: "context.yaml"
+              descripcion: "Perfil contextual de 36 parámetros (estructura, madurez, presupuesto, runway, etc.)"
+              schema: "T01_context_assessment.yaml"
+            - id: "h_org_baseline"
+              descripcion: "Health Score organizacional baseline (H_org) calculado a partir de TF1/TF2/TF3"
+              metric_id: "H_org"
+            - id: "context_classification"
+              descripcion: "Clasificación del contexto en bandas (ej. G1_critical, G2_low, G3_moderate, G4_healthy)"
+            - id: "regulatory_constraints"
+              archivo: "regulatory_constraints.yaml"
+              descripcion: "Lista de restricciones regulatorias que condicionan F3/F8"
+            - id: "tech_debt_inventory"
+              archivo: "tech_debt_inventory.yaml"
+              descripcion: "Inventario preliminar de deuda técnica relevante para trayectorias"
+          dependencies:
+            reads_from: []
+            writes_to:
+              - "F2"
+              - "F3"
+              - "F4"
+              - "F5"
+              - "F6"
+              - "F7"
+              - "F8"
+              - "F13"
+          artefactos_soporte:
+            templates:
+              - "T01_context_assessment.yaml"
+              - "assessment/organizational_maturity_checklist.md"
+            calculadoras:
+              - "context_decision_matrix.xlsx"
+              - "health_score_calculator.xlsx"
+          health_gates_relacionados:
+            - "G1"
+            - "G2"
+            - "G3"
+            - "G4"
+          playbooks_relacionados:
+            - "P01_low_h_org_recovery"
+            - "P02_handoff_reduction"
+            - "P03_okr_alignment"
+        Notas_de_implementacion_P0:
+          - "El archivo `context.yaml` en casos (`01_startup_50p_completo`, `06_gore_nuble_completo`) ya contiene una estructura de parámetros consistente con F1, aunque sin documentación explícita de su origen en §0/§1."
+          - "La conexión entre `context.yaml` → `context_decision_matrix.xlsx` → `trajectory_selected` debe explicitarse en la aplicación a casos (pending M1.2 de CAP-P0-01)."
+          - "H_org baseline aún no tiene fórmula canónica implementada en `health_score_calculator.xlsx`; eso queda en scope de sq2 bajo P0-COMPLETE."
+
+      F2_Vision_Definition:
+        Src: "sources/orko_knowledge/30_metodologia_orko/01_fases_initiation/F2_vision_definition.md"
+        S0_Fundamento_Yaml: |-
+          fase_id: F2
+          nombre_canonico: "Vision Definition"
+          vocabulos_referencia:
+            wslc_phase: "VOCABULARIO_CONTROLADO.layer_3.wslc_phases.F2"
+            axiomas:
+              - "VOCABULARIO_CONTROLADO.layer_0.axiomas.A2_Proposito"
+            primitivos:
+              - "VOCABULARIO_CONTROLADO.layer_0.primitivos.P5_Proposito"
+            invariantes:
+              - "VOCABULARIO_CONTROLADO.layer_0.invariantes.I3_Trazabilidad"
+              - "VOCABULARIO_CONTROLADO.layer_0.invariantes.I5_HAIC"
+            dominios:
+              - "VOCABULARIO_CONTROLADO.layer_1.dominios.D1_Arquitectura"
+              - "VOCABULARIO_CONTROLADO.layer_1.dominios.D3_Decision"
+          relacion_kernel:
+            depende_de:
+              - "F1"
+              - "F3"
+            prepara_a:
+              - "F7"
+              - "F9"
+          trayectorias_soportadas:
+            - "Minimal"
+            - "Avanzada"
+            - "Survival"
+        S1_Interfaz_Yaml: |-
+          inputs:
+            - id: "F1.context_profile_36_params"
+              fuente: "F1"
+            - id: "F1.h_org_baseline"
+              fuente: "F1"
+            - id: "F3.trajectory_selected"
+              fuente: "F3"
+            - id: "F3.timeline_commitment"
+              fuente: "F3"
+            - id: "F3.budget_allocation"
+              fuente: "F3"
+            - id: "F7.okr_L4"
+              fuente: "F7"
+          outputs:
+            - id: "vision_statement"
+              archivo: "vision_statement.md"
+              descripcion: "Narrativa de vision ligada a F2 (Vision Definition)"
+            - id: "vision_constraints"
+              archivo: "vision_constraints.yaml"
+              descripcion: "Conjunto de limites macro modelados con P4_Limite"
+            - id: "okr_L4"
+              descripcion: "OKR de nivel organizacional consumidos por F7 y F9"
+            - id: "okr_L4_refined"
+              descripcion: "Version refinada de okr_L4 cuando aplique"
+            - id: "north_star"
+              descripcion: "Declaracion North Star alineada a F2 y F9"
+            - id: "north_star_metrics"
+              descripcion: "Conjunto de metricas asociadas a north_star"
+          dependencies:
+            reads_from:
+              - "F1"
+              - "F3"
+              - "F7"
+            writes_to:
+              - "F3"
+              - "F7"
+              - "F9"
+          acceptance_criteria:
+            - criterion: "vision_statement.md completo con secciones: contexto, ambición, constraints, horizonte temporal"
+              verification: "manual"
+              responsible: "Role_Captain"
+            - criterion: "okr_L4.yaml con 3-8 objetivos (según trajectory)"
+              verification: "automated (count okrs)"
+              responsible: "Role_Captain"
+            - criterion: "vision_constraints.yaml alineado con F3.trajectory_selected"
+              verification: "compatibility_score >= 0.80 (ver F2_F3_convergence_protocol.md)"
+              responsible: "Role_TrajectoryOwner"
+            - criterion: "Sponsor_L1_Human aprueba vision_statement"
+              verification: "firma sponsor_approval en artefacto"
+              responsible: "Sponsor_L1_Human"
+              bloqueante: true
+          protocol_ref:
+            convergencia_f2_f3: "01_fases_initiation/F2_F3_convergence_protocol.md"
+            descripcion: "F2 y F3 tienen dependencia circular resuelta por protocolo iterativo"
+          templates:
+            - "T02_vision_statement.md"
+            - "T07_okr_cascade.xlsx (para okr_L4)"
+        S2_Descripcion_Eject: |-
+          F2 transforma el perfil de contexto (F1) en una **declaración de visión** que articula propósito, ambición y límites de la organización bajo la restricción de la trayectoria seleccionada (F3).
+
+          **Actividades principales**:
+          1. Revisar F1.context_profile y F3.trajectory_selected
+          2. Facilitar sesión vision workshop con stakeholders clave
+          3. Redactar vision_statement.md (narrativa inspiracional + pragmática)
+          4. Derivar okr_L4 (objetivos organizacionales nivel 4)
+          5. Documentar vision_constraints explícitos
+          6. Validar con F3 que vision es compatible con trajectory (ver protocolo convergencia)
+
+          **Herramientas**:
+          - Template T02_vision_statement.md
+          - OKR cascade worksheet (T07)
+          - F2_F3_convergence_protocol.md (gestión circularidad)
+
+          **Duración estimada**: 4-6 horas (sin iteraciones), 1-2 días (con iteraciones F2↔F3)
+
+          **Owner**: Role_Captain + Sponsor_L1_Human
+
+      F3_Trajectory_Selection:
+        Src: "sources/orko_knowledge/30_metodologia_orko/01_fases_initiation/F3_trajectory_selection.md"
+        S0_Fundamento_Yaml: |-
+          fase_id: F3
+          nombre_canonico: "Trajectory Selection"
+          vocabulos_referencia:
+            wslc_phase: "VOCABULARIO_CONTROLADO.layer_3.wslc_phases.F3"
+            axiomas:
+              - "VOCABULARIO_CONTROLADO.layer_0.axiomas.A4_Contexto"
+              - "VOCABULARIO_CONTROLADO.layer_0.axiomas.A5_Cambio"
+            primitivos:
+              - "VOCABULARIO_CONTROLADO.layer_0.primitivos.P4_Limite"
+              - "VOCABULARIO_CONTROLADO.layer_0.primitivos.P5_Proposito"
+            invariantes:
+              - "VOCABULARIO_CONTROLADO.layer_0.invariantes.I1_Continuidad_Operacional"
+              - "VOCABULARIO_CONTROLADO.layer_0.invariantes.I3_Trazabilidad"
+              - "VOCABULARIO_CONTROLADO.layer_0.invariantes.I4_Clasificacion_Contextual"
+              - "VOCABULARIO_CONTROLADO.layer_0.invariantes.I8_Adaptacion_Contextual"
+            dominios:
+              - "VOCABULARIO_CONTROLADO.layer_1.dominios.D3_Decision"
+              - "VOCABULARIO_CONTROLADO.layer_1.dominios.D4_Operacion"
+            metricas_canonicas:
+              - "VOCABULARIO_CONTROLADO.layer_1.metricas_canonicas.H_org"
+          relacion_kernel:
+            es_kernel: true
+            depende_de:
+              - "F1"
+            prepara_a:
+              - "F2"
+              - "F4"
+              - "F5"
+              - "F6"
+              - "F7"
+              - "F8"
+              - "F9"
+              - "F10"
+              - "F11"
+              - "F12"
+              - "F17"
+          trayectorias_soportadas:
+            - "Survival"
+            - "Minimal"
+            - "Avanzada"
+          estado_fundamento: "STABLE"
+          justificacion: |
+            F3 es fase kernel de decisión estratégica que materializa A4_Contexto y A5_Cambio mediante 
+            selección de trayectoria óptima basada en F1 (H_org, context_profile) y health gates G1-G4. 
+            Usa matriz de decisión formalizada en 03_decision_matrix.md. Tiene dependencia circular con F2 
+            resuelta por protocolo F2_F3_convergence_protocol.md. Validado en 3 casos con trayectorias distintas.
+          backlog_v1_1:
+            - "Explicitar reglas de decisión DM1-DMx en decision_matrix.md"
+            - "Calibrar thresholds G1-G4 con 10+ casos reales"
+            - "Automatizar trajectory_recommendation en calculadora"
+          referencias_formales:
+            - "SPEC_ARQUITECTURA_DEFINITIVA.§1.2.Kernel.F3_Trajectory_Selection"
+            - "PLAN_ETAPA_1_KERNEL.SPRINT_1.FASE_2"
+            - "validation_final_report.md.§2.3.F3_PASSED"
+            - "30_metodologia_orko/09_trayectorias/03_decision_matrix.md"
+        Proposito: "F3 (Trajectory Selection) es la fase de decisión estratégica que, a partir del contexto capturado en F1 (context_profile, H_org_baseline, regulatory_constraints), selecciona la trayectoria óptima de transformación entre: **Survival** (0–3 meses, H_org crítico), **Minimal** (6–12 meses, mejora incremental) o **Avanzada** (18–36 meses, transformación profunda). La decisión se rige por la matriz de decisión (`03_decision_matrix.md`) que considera H_org, presupuesto, runway, complejidad regulatoria y health gates G1–G4."
+        Conexion_con_genoma:
+          - "A4_Contexto: F3 materializa la dependencia contextual de las decisiones de cambio; la trayectoria seleccionada no es arbitraria sino derivada del perfil F1."
+          - "A5_Cambio: F3 define el alcance y ritmo del cambio organizacional (qué fases ejecutar, en qué orden, con qué restricciones)."
+          - "I1_Continuidad_Operacional: las trayectorias están diseñadas para no romper operaciones críticas; Survival prioriza estabilización, Minimal equilibra mejora y riesgo, Avanzada asume capacidad de transformación profunda."
+          - "I3_Trazabilidad: toda decisión de trayectoria queda registrada en `trajectory.md` con justificación explícita basada en F1 y G1–G4."
+          - "I4_Clasificacion_Contextual: F3 usa la clasificación de contexto de F1 (ej. G1_critical → Survival forzado) para gobernar la selección."
+          - "I8_Adaptacion_Contextual: F3 habilita cambios de trayectoria (F17) si el contexto evoluciona durante la ejecución."
+        S1_Interfaz_Yaml: |-
+          inputs:
+            - id: "F1.context_profile_36_params"
+              fuente: "F1"
+            - id: "F1.h_org_baseline"
+              fuente: "F1"
+            - id: "F1.context_classification"
+              fuente: "F1"
+            - id: "F1.regulatory_constraints"
+              fuente: "F1"
+            - id: "stakeholder_risk_tolerance"
+              fuente: "external"
+              descripcion: "Nivel de tolerancia al riesgo de los stakeholders clave"
+            - id: "budget_commitment"
+              fuente: "external"
+              descripcion: "Presupuesto comprometido para el ciclo de transformación"
+            - id: "timeline_constraints"
+              fuente: "external"
+              descripcion: "Restricciones temporales (runway, deadlines regulatorios, eventos críticos)"
+          outputs:
+            - id: "trajectory_selected"
+              archivo: "trajectory.md"
+              descripcion: "Trayectoria seleccionada (Survival/Minimal/Avanzada) con justificación explícita"
+              valores_posibles: ["Survival", "Minimal", "Avanzada"]
+            - id: "timeline_commitment"
+              descripcion: "Compromiso temporal de la trayectoria (en meses)"
+            - id: "budget_allocation"
+              archivo: "budget_allocation.yaml"
+              descripcion: "Asignación presupuestaria por fase/playbook según trayectoria"
+            - id: "phase_sequence"
+              descripcion: "Secuencia de fases F4–F18 a ejecutar según trayectoria (ej. Survival: F4,F10,F13; Minimal: F4,F5,F7,F10,F11,F13; Avanzada: F4–F18 completo)"
+            - id: "playbook_preselection"
+              descripcion: "Pre-selección de playbooks P01–P15 relevantes según trayectoria y G1–G4"
+            - id: "trajectory_decision_rationale"
+              archivo: "trajectory_decision_rationale.md"
+              descripcion: "Narrativa de justificación de la decisión (por qué Survival/Minimal/Avanzada)"
+          dependencies:
+            reads_from:
+              - "F1"
+            writes_to:
+              - "F2"
+              - "F4"
+              - "F5"
+              - "F6"
+              - "F7"
+              - "F8"
+              - "F9"
+              - "F10"
+              - "F11"
+              - "F12"
+              - "F17"
+          artefactos_soporte:
+            templates:
+              - "assessment/trajectory_decision_worksheet.md"
+            calculadoras:
+              - "context_decision_matrix.xlsx"
+              - "health_score_calculator.xlsx"
+              - "budget_parametric_allocator.xlsx"
+            documentos_referencia:
+              - "30_metodologia_orko/09_trayectorias/01_minimal_6_12_meses.md"
+              - "30_metodologia_orko/09_trayectorias/02_avanzada_18_36_meses.md"
+              - "30_metodologia_orko/09_trayectorias/04_survival_0_10K.md"
+              - "30_metodologia_orko/09_trayectorias/03_decision_matrix.md"
+          health_gates_relacionados:
+            - "G1"
+            - "G2"
+            - "G3"
+            - "G4"
+          playbooks_relacionados:
+            - "P01_low_h_org_recovery"
+            - "P05_bounded_autonomy_m6"
+            - "P06_pilot_transformation"
+            - "P07_scale_transformation"
+          reglas_decision:
+            - id: "DM1_H_org_critical"
+              condicion: "H_org < umbral_G1"
+              resultado: "trajectory_selected = Survival (forzado)"
+            - id: "DM2_runway_short"
+              condicion: "runway < 3 meses AND H_org < umbral_G3"
+              resultado: "trajectory_selected = Survival"
+            - id: "DM3_budget_minimal"
+              condicion: "budget < umbral_minimal AND H_org >= umbral_G2"
+              resultado: "trajectory_selected = Minimal"
+            - id: "DM4_ambition_high"
+              condicion: "H_org >= umbral_G3 AND budget >= umbral_avanzada AND timeline >= 18 meses"
+              resultado: "trajectory_selected = Avanzada"
+            - id: "DM5_regulatory_heavy"
+              condicion: "regulatory_constraints.nivel = alto AND sector = regulado"
+              ajuste: "extender timeline y priorizar compliance playbooks (P04)"
+        Notas_de_implementacion_P0:
+          - "Los casos `01_startup_50p_completo`, `06_gore_nuble_completo` ya tienen `trajectory.md` con decisión explícita (Minimal/Avanzada), pero sin documentación formal de cómo se aplicaron las reglas DM1–DM5."
+          - "La conexión `F1.context` → `context_decision_matrix.xlsx` → `trajectory_selected` debe explicitarse en la aplicación a casos (pending M1.2 de CAP-P0-01)."
+          - "Las reglas DM1–DM5 son propuestas iniciales basadas en `03_decision_matrix.md`; requieren calibración con casos reales y definición de umbrales canónicos (pending backlog post-1.0.0)."
+
+    Development:
+      F4_Capability_Mapping:
+        Src: "sources/orko_knowledge/30_metodologia_orko/02_fases_development/F4_capability_mapping.md"
+        S0_Fundamento_Yaml: |-
+          fase_id: F4
+          nombre_canonico: "Capability Mapping"
+          vocabulos_referencia:
+            wslc_phase: "VOCABULARIO_CONTROLADO.layer_3.wslc_phases.F4"
+            axiomas:
+              - "VOCABULARIO_CONTROLADO.layer_0.axiomas.A1_Organizacion"
+              - "VOCABULARIO_CONTROLADO.layer_0.axiomas.A3_Flujo"
+            primitivos:
+              - "VOCABULARIO_CONTROLADO.layer_0.primitivos.P1_Capacidad"
+            invariantes:
+              - "VOCABULARIO_CONTROLADO.layer_0.invariantes.I4_Clasificacion_Contextual"
+              - "VOCABULARIO_CONTROLADO.layer_0.invariantes.I5_HAIC"
+            dominios:
+              - "VOCABULARIO_CONTROLADO.layer_1.dominios.D1_Arquitectura"
+              - "VOCABULARIO_CONTROLADO.layer_1.dominios.D2_Percepcion"
+          relacion_kernel:
+            depende_de:
+              - "F1"
+              - "F3"
+            prepara_a:
+              - "F5"
+              - "F7"
+              - "F9"
+          trayectorias_soportadas:
+            - "Minimal"
+            - "Avanzada"
+            - "Survival"
+          referencias_formales:
+            - "SPEC_ARQUITECTURA_DEFINITIVA.§1.3.Expansion_Layer_1_Development.F4_Capability_Mapping"
+            - "PLAN_ETAPA_2_EXPANSION.SPRINT_3.FASE_1"
+        S1_Interfaz_Yaml: |-
+          inputs:
+            - id: "F1.context_profile_36_params"
+              fuente: "F1"
+            - id: "F3.trajectory_selected"
+              fuente: "F3"
+            - id: "F2.vision_statement"
+              fuente: "F2"
+          outputs:
+            - id: "p1_inventory"
+              archivo: "capacity_inventory.yaml"
+              descripcion: "Inventario basado en P1_Capacidad (C1_Capacidad)"
+            - id: "skills_matrix"
+              archivo: "skills_matrix.xlsx"
+              descripcion: "Matriz opcional de habilidades ligada a entries de p1_inventory"
+            - id: "capacity_gaps"
+              archivo: "capacity_gaps.yaml"
+              descripcion: "Lista de gaps de P1_Capacidad alineados a trajectory_selected"
+          dependencies:
+            reads_from:
+              - "F1"
+              - "F2"
+              - "F3"
+            writes_to:
+              - "F5"
+              - "F7"
+              - "F9"
+              - "F10"
+
+      F5_Flow_Design:
+        Src: "sources/orko_knowledge/30_metodologia_orko/02_fases_development/F5_flow_design.md"
+        S0_Fundamento_Yaml: |-
+          fase_id: F5
+          nombre_canonico: "Flow Design"
+          vocabulos_referencia:
+            wslc_phase: "VOCABULARIO_CONTROLADO.layer_3.wslc_phases.F5"
+            axiomas:
+              - "VOCABULARIO_CONTROLADO.layer_0.axiomas.A3_Flujo"
+            primitivos:
+              - "VOCABULARIO_CONTROLADO.layer_0.primitivos.P2_Flujo"
+            invariantes:
+              - "VOCABULARIO_CONTROLADO.layer_0.invariantes.I2_Ortogonalidad"
+              - "VOCABULARIO_CONTROLADO.layer_0.invariantes.I7_Emergencia_Complejidad"
+            dominios:
+              - "VOCABULARIO_CONTROLADO.layer_1.dominios.D1_Arquitectura"
+              - "VOCABULARIO_CONTROLADO.layer_1.dominios.D4_Operacion"
+          relacion_kernel:
+            depende_de:
+              - "F1"
+              - "F4"
+            prepara_a:
+              - "F9"
+              - "F10"
+              - "F11"
+          trayectorias_soportadas:
+            - "Minimal"
+            - "Avanzada"
+            - "Survival"
+          referencias_formales:
+            - "SPEC_ARQUITECTURA_DEFINITIVA.§1.3.Expansion_Layer_1_Development.F5_Flow_Design"
+            - "PLAN_ETAPA_2_EXPANSION.SPRINT_3.FASE_2"
+        S1_Interfaz_Yaml: |-
+          inputs:
+            - id: "F4.p1_inventory"
+              fuente: "F4"
+            - id: "F4.capacity_gaps"
+              fuente: "F4"
+            - id: "F1.context_profile_36_params"
+              fuente: "F1"
+            - id: "F3.trajectory_selected"
+              fuente: "F3"
+            - id: "F7.okr_cascade"
+              fuente: "F7"
+          outputs:
+            - id: "vsm_maps"
+              descripcion: "Coleccion de mapas de flujo (Value Stream Mapping) para flujos criticos"
+            - id: "handoff_ratio"
+              descripcion: "Metricas de proporcion de handoffs por flujo, usadas por F9 y F13"
+            - id: "flow_optimization"
+              descripcion: "Conjunto de decisiones de optimizacion de flujo derivadas de vsm_maps"
+          dependencies:
+            reads_from:
+              - "F1"
+              - "F3"
+              - "F4"
+              - "F7"
+            writes_to:
+              - "F9"
+              - "F10"
+              - "F11"
+
+      F6_Information_Architecture:
+        Src: "sources/orko_knowledge/30_metodologia_orko/02_fases_development/F6_information_architecture.md"
+        S0_Fundamento_Yaml: |-
+          fase_id: F6
+          nombre_canonico: "Information Architecture"
+          vocabulos_referencia:
+            wslc_phase: "VOCABULARIO_CONTROLADO.layer_3.wslc_phases.F6"
+            axiomas:
+              - "VOCABULARIO_CONTROLADO.layer_0.axiomas.A3_Flujo"
+              - "VOCABULARIO_CONTROLADO.layer_0.axiomas.A5_Cambio"
+            primitivos:
+              - "VOCABULARIO_CONTROLADO.layer_0.primitivos.P3_Informacion"
+            invariantes:
+              - "VOCABULARIO_CONTROLADO.layer_0.invariantes.I3_Trazabilidad"
+              - "VOCABULARIO_CONTROLADO.layer_0.invariantes.I8_Adaptacion_Contextual"
+            dominios:
+              - "VOCABULARIO_CONTROLADO.layer_1.dominios.D1_Arquitectura"
+              - "VOCABULARIO_CONTROLADO.layer_1.dominios.D2_Percepcion"
+            tejidos:
+              - "VOCABULARIO_CONTROLADO.layer_2.tejidos.TF3_Information"
+          relacion_kernel:
+            depende_de:
+              - "F1"
+              - "F3"
+            prepara_a:
+              - "F9"
+              - "F11"
+          trayectorias_soportadas:
+            - "Minimal"
+            - "Avanzada"
+            - "Survival"
+          referencias_formales:
+            - "SPEC_ARQUITECTURA_DEFINITIVA.§1.3.Expansion_Layer_1_Development.F6_Information_Architecture"
+            - "PLAN_ETAPA_2_EXPANSION.SPRINT_3.FASE_5"
+        S1_Interfaz_Yaml: |-
+          inputs:
+            - id: "F1.context_profile_36_params"
+              fuente: "F1"
+            - id: "F3.trajectory_selected"
+              fuente: "F3"
+            - id: "F7.okr_cascade"
+              fuente: "F7"
+            - id: "F8.p4_limit_catalog"
+              fuente: "F8"
+          outputs:
+            - id: "data_catalog"
+              archivo: "critical_datasets.yaml"
+              descripcion: "Catalogo de datasets clave (p3_catalog) consumido por F9 y F11"
+            - id: "architecture_blueprint"
+              archivo: "data_domain_model.md"
+              descripcion: "Blueprint de dominios de informacion y relaciones clave"
+            - id: "information_governance"
+              archivo: "information_governance.md"
+              descripcion: "Principios y roles de governance de informacion"
+          dependencies:
+            reads_from:
+              - "F1"
+              - "F3"
+              - "F7"
+              - "F8"
+            writes_to:
+              - "F9"
+              - "F11"
+
+      F7_Purpose_Cascade:
+        Src: "sources/orko_knowledge/30_metodologia_orko/02_fases_development/F7_purpose_cascade.md"
+        S0_Fundamento_Yaml: |-
+          fase_id: F7
+          nombre_canonico: "Purpose Cascade"
+          vocabulos_referencia:
+            wslc_phase: "VOCABULARIO_CONTROLADO.layer_3.wslc_phases.F7"
+            axiomas:
+              - "VOCABULARIO_CONTROLADO.layer_0.axiomas.A2_Proposito"
+              - "VOCABULARIO_CONTROLADO.layer_0.axiomas.A5_Cambio"
+            primitivos:
+              - "VOCABULARIO_CONTROLADO.layer_0.primitivos.P5_Proposito"
+              - "VOCABULARIO_CONTROLADO.layer_0.primitivos.P1_Capacidad"
+            invariantes:
+              - "VOCABULARIO_CONTROLADO.layer_0.invariantes.I3_Trazabilidad"
+              - "VOCABULARIO_CONTROLADO.layer_0.invariantes.I5_HAIC"
+              - "VOCABULARIO_CONTROLADO.layer_0.invariantes.I7_Coherencia"
+            dominios:
+              - "VOCABULARIO_CONTROLADO.layer_1.dominios.D1_Arquitectura"
+              - "VOCABULARIO_CONTROLADO.layer_1.dominios.D3_Decision"
+            metricas_canonicas:
+              - "VOCABULARIO_CONTROLADO.layer_1.metricas_canonicas.H_org"
+          relacion_kernel:
+            depende_de:
+              - "F2"
+              - "F3"
+            prepara_a:
+              - "F9"
+              - "F11"
+          trayectorias_soportadas:
+            - "Minimal"
+            - "Avanzada"
+          estado_fundamento: "STABLE"
+          notas_fundamento: |
+            F7 define la cascada de propósito (OKR L4→L3→L2) y su mecanismo de verificación.
+            Entregables: okr_L4_refined, purpose_policy.yaml, okr_alignment_report.
+            Requiere: TEMPLATE_PLAYBOOK.md y T07_okr_cascade.xlsx.
+          referencias_formales:
+            - "SPEC_ARQUITECTURA_DEFINITIVA.§1.3.Purpose_Cascade"
+        S1_Interfaz_Yaml: |-
+          inputs:
+            - id: "vision_statement"
+              source: "F2.vision_statement"
+              schema_ref: "T02_vision_statement.md"
+              required: true
+              description: "Narrativa de visión organizacional"
+            
+            - id: "okr_L4"
+              source: "F2.okr_L4"
+              schema_ref: "okr_schema.yaml"
+              required: true
+              description: "Objetivos organizacionales nivel 4 (3-8 OKRs)"
+            
+            - id: "trajectory_selected"
+              source: "F3.trajectory_selected"
+              required: true
+              description: "Trayectoria define alcance cascade (L4→L3 o L4→L1)"
+          
+          outputs:
+            - id: "okr_cascade_L4_to_L1"
+              artifact: "okr_cascade.yaml"
+              schema_ref: "okr_cascade_schema.yaml"
+              consumers: ["F9", "F11", "F13"]
+              description: "Cascada OKR completa desde org (L4) hasta equipos (L1)"
+              location: "artefactos/f7/"
+            
+            - id: "purpose_policy"
+              artifact: "purpose_policy.yaml"
+              consumers: ["F5", "F6", "F9"]
+              description: "Políticas de alineamiento propósito-capacidad"
+              location: "artefactos/f7/"
+            
+            - id: "alignment_matrix"
+              artifact: "alignment_matrix.xlsx"
+              consumers: ["F13", "P13"]
+              description: "Matriz de alineamiento OKR×Capacidades×Flujos"
+              template: "T07_okr_cascade.xlsx"
+              location: "artefactos/f7/"
+
+          dependencies:
+            reads_from: ["F2", "F3", "F4"]
+            writes_to: ["F5", "F6", "F9", "F11"]
+            informs: ["F13"]
+
+          acceptance_criteria:
+            - criterion: "okr_cascade completa desde L4 hasta nivel requerido por trajectory"
+              verification: |
+                Minimal: L4→L3 (áreas)
+                Avanzada: L4→L1 (equipos individuales)
+              responsible: "Role_Captain"
+            
+            - criterion: "Cada OKR tiene owner HUMANO asignado (I5_HAIC)"
+              verification: "automated (check okr_cascade.yaml field 'owner' != null AND owner.type == 'human')"
+              responsible: "Role_HealthOwner"
+              bloqueante: true
+            
+            - criterion: "Purpose_policy.yaml define criterios alignment capacity→okr"
+              verification: "manual review"
+              responsible: "Role_Architect"
+            
+            - criterion: "Alignment_matrix cubre top-10 capacidades críticas"
+              verification: "count(capacities_mapped) >= 10"
+              responsible: "Role_CapacityOwner"
+
+          templates:
+            - T07_okr_cascade.xlsx
+
+          herramientas:
+            - okr_alignment_calculator.xlsx (en /40_implementacion/calculadoras/)
+        S2_Descripcion_Ejecutiva: |-
+          F7 descompone la visión organizacional (F2) en objetivos cascadeados (OKR L4→L1) y define políticas de alineamiento entre propósito, capacidades y flujos.
+
+          **Actividades principales**:
+          1. Revisar F2.okr_L4 y F3.trajectory_selected
+          2. Facilitar sesión OKR cascade con líderes de área
+          3. Descomponer cada OKR L4 en OKRs L3 (áreas) y L2/L1 (equipos, si Avanzada)
+          4. Asignar owners HUMANOS a cada OKR (obligatorio I5_HAIC)
+          5. Crear purpose_policy.yaml con reglas alineamiento
+          6. Poblar alignment_matrix con mapeo OKR↔Capacidades
+
+          **Herramientas**:
+          - T07_okr_cascade.xlsx (template)
+          - okr_alignment_calculator.xlsx
+
+          **Duración estimada**: 1-2 días (sesiones facilitadas + documentación)
+
+          **Owner**: Role_Captain + líderes de área
+
+          **Nota**: F7 es crítico para I3 (Trazabilidad) - todo OKR debe ser trazable hasta F2.vision_statement.
+
+      F8_Limits_Definition:
+        Src: "sources/orko_knowledge/30_metodologia_orko/02_fases_development/F8_limits_definition.md"
+        S0_Fundamento_Yaml: |-
+          fase_id: F8
+          nombre_canonico: "Limits Definition"
+          vocabulos_referencia:
+            wslc_phase: "VOCABULARIO_CONTROLADO.layer_3.wslc_phases.F8"
+            axiomas:
+              - "VOCABULARIO_CONTROLADO.layer_0.axiomas.A4_Limite"
+            primitivos:
+              - "VOCABULARIO_CONTROLADO.layer_0.primitivos.P4_Limite"
+            invariantes:
+              - "VOCABULARIO_CONTROLADO.layer_0.invariantes.I4_Clasificacion_Contextual"
+              - "VOCABULARIO_CONTROLADO.layer_0.invariantes.I8_Adaptacion_Contextual"
+            dominios:
+              - "VOCABULARIO_CONTROLADO.layer_1.dominios.D3_Decision"
+              - "VOCABULARIO_CONTROLADO.layer_1.dominios.D2_Percepcion"
+          relacion_kernel:
+            depende_de:
+              - "F1"
+              - "F3"
+            prepara_a:
+              - "F6"
+              - "F9"
+              - "F10"
+              - "F11"
+          trayectorias_soportadas:
+            - "Minimal"
+            - "Avanzada"
+            - "Survival"
+          referencias_formales:
+            - "SPEC_ARQUITECTURA_DEFINITIVA.§1.3.Expansion_Layer_1_Development.F8_Limits_Definition"
+            - "PLAN_ETAPA_2_EXPANSION.SPRINT_3.FASE_3"
+        S1_Interfaz_Yaml: |-
+          inputs:
+            - id: "F1.context_profile_36_params.constraints"
+              fuente: "F1"
+            - id: "F3.trajectory_selected"
+              fuente: "F3"
+            - id: "F3.budget_allocation"
+              fuente: "F3"
+            - id: "schemas.compliance_framework_instances"
+              fuente: "compliance_framework_instances.yaml"
+          outputs:
+            - id: "limit_catalog"
+              archivo: "limit_catalog.yaml"
+              descripcion: "Catálogo clasificado de límites (P4_Limite) que aplica a fases WSLC"
+            - id: "compliance_framework_refs"
+              archivo: "compliance_framework_instances.yaml"
+              descripcion: "Lista de instancias de compliance asociadas a cada límite"
+            - id: "limit_phase_matrix"
+              archivo: "limit_phase_matrix.md"
+              descripcion: "Matriz límite → fases/playbooks afectados"
+          dependencies:
+            reads_from:
+              - "F1"
+              - "F3"
+              - "schemas.compliance_framework_instances"
+            writes_to:
+              - "F6"
+              - "F9"
+              - "F10"
+              - "F11"
+
+      F9_Target_State_Design:
+        Src: "sources/orko_knowledge/30_metodologia_orko/02_fases_development/F9_target_state_design.md"
+        S0_Fundamento_Yaml: |-
+          fase_id: F9
+          nombre_canonico: "Target State Design"
+          vocabulos_referencia:
+            wslc_phase: "VOCABULARIO_CONTROLADO.layer_3.wslc_phases.F9"
+            axiomas:
+              - "VOCABULARIO_CONTROLADO.layer_0.axiomas.A1_Organizacion"
+              - "VOCABULARIO_CONTROLADO.layer_0.axiomas.A4_Contexto"
+            primitivos:
+              - "VOCABULARIO_CONTROLADO.layer_0.primitivos.P2_Flujo"
+              - "VOCABULARIO_CONTROLADO.layer_0.primitivos.P1_Capacidad"
+              - "VOCABULARIO_CONTROLADO.layer_0.primitivos.P3_Informacion"
+            invariantes:
+              - "VOCABULARIO_CONTROLADO.layer_0.invariantes.I4_Clasificacion_Contextual"
+              - "VOCABULARIO_CONTROLADO.layer_0.invariantes.I7_Coherencia"
+              - "VOCABULARIO_CONTROLADO.layer_0.invariantes.I8_Adaptacion_Contextual"
+            dominios:
+              - "VOCABULARIO_CONTROLADO.layer_1.dominios.D1_Arquitectura"
+              - "VOCABULARIO_CONTROLADO.layer_1.dominios.D4_Operacion"
+            metricas_canonicas:
+              - "VOCABULARIO_CONTROLADO.layer_1.metricas_canonicas.H_org"
+          relacion_kernel:
+            depende_de:
+              - "F3"
+              - "F4"
+              - "F5"
+            prepara_a:
+              - "F10"
+              - "F11"
+          trayectorias_soportadas:
+            - "Minimal"
+            - "Avanzada"
+          estado_fundamento: "STABLE"
+          notas_fundamento: |
+            F9 produce E6_target (target architectural state) y target patterns de TF1/TF2/TF3.
+            Entregables: F9.target_state.yaml, e6_target_schema.json, target_components.drawio
+            Metodología: use TEMPLATE_FASE_WSLC.md y DEPENDENCY_GRAPH para trazabilidad.
+          referencias_formales:
+            - "SPEC_ARQUITECTURA_DEFINITIVA.§1.4.Target_State_Design"
+        S1_Interfaz_Yaml: |-
+          inputs:
+            - id: "capacity_inventory"
+              source: "F4.capacity_inventory"
+              schema_ref: "TF1.CapacityInventory"
+              required: true
+              description: "Inventario completo de capacidades target"
+            
+            - id: "flow_maps"
+              source: "F5.flow_maps"
+              schema_ref: "TF2.FlowMap"
+              required: true
+              description: "Mapas de flujo diseñados"
+            
+            - id: "information_architecture"
+              source: "F6.information_architecture"
+              schema_ref: "TF3.InfoArchitecture"
+              required: true
+              description: "Arquitectura de información y datos"
+            
+            - id: "okr_cascade"
+              source: "F7.okr_cascade_L4_to_L1"
+              required: true
+              description: "OKRs cascadeados para alinear target state"
+            
+            - id: "limits_catalog"
+              source: "F8.limits_catalog"
+              schema_ref: "P4_Limite"
+              required: true
+              description: "Catálogo de límites operacionales"
+            
+            - id: "trajectory_selected"
+              source: "F3.trajectory_selected"
+              required: true
+              description: "Trayectoria define alcance target state"
+
+          outputs:
+            - id: "e6_target"
+              artifact: "e6_target.yaml"
+              schema_ref: "E6_ArchitecturalState (ver /10_arquitectura_orko/)"
+              consumers: ["F10", "F11", "F12", "F18"]
+              description: "Estado arquitectónico objetivo con TF1/TF2/TF3 integrados"
+              location: "artefactos/f9/"
+            
+            - id: "target_diagrams"
+              artifact: "target_diagrams.drawio"
+              consumers: ["F11", "F12"]
+              description: "Diagramas visuales de target state (C4, flow, data)"
+              location: "artefactos/f9/"
+            
+            - id: "target_schemas"
+              artifact: "target_schemas.yaml"
+              consumers: ["F11", "F12"]
+              description: "Schemas y contratos de componentes target"
+              location: "artefactos/f9/"
+            
+            - id: "gap_analysis_current_to_target"
+              artifact: "gap_analysis.yaml"
+              consumers: ["F10", "F11"]
+              description: "Análisis de gaps entre E6_current (F1) y E6_target"
+              location: "artefactos/f9/"
+
+          dependencies:
+            reads_from: ["F3", "F4", "F5", "F6", "F7", "F8"]
+            writes_to: ["F10", "F11", "F12"]
+            validates_with: ["F18"]
+
+          acceptance_criteria:
+            - criterion: "E6_target.yaml completo con componentes TF1/TF2/TF3"
+              verification: |
+                Validar schema E6_ArchitecturalState:
+                - TF1_capacities: lista completa
+                - TF2_flows: mapeados a capacidades
+                - TF3_data: linked a flujos
+              responsible: "Role_Architect"
+              bloqueante: true
+            
+            - criterion: "Target_diagrams incluye al menos: C4 context, flow map, data lineage"
+              verification: "manual review (3 diagramas mínimos)"
+              responsible: "Role_Architect"
+            
+            - criterion: "Gap_analysis identifica top-10 gaps críticos"
+              verification: "count(gaps_críticos) >= 10"
+              responsible: "Role_Architect"
+            
+            - criterion: "Target state alineado con OKR cascade de F7"
+              verification: "manual validation: cada OKR L3 tiene componente target"
+              responsible: "Role_Captain"
+
+          templates:
+            - target_state_template.yaml
+            - C4_diagrams_template.drawio
+
+          herramientas:
+            - gap_analysis_calculator.xlsx (en /40_implementacion/calculadoras/)
+        S2_Descripcion_Ejecutiva: |-
+          F9 sintetiza los diseños de F4-F8 en un **estado arquitectónico objetivo (E6_target)** que integra capacidades (TF1), flujos (TF2) e información (TF3) bajo restricciones de F8 y alineado con propósito de F7.
+
+          **Actividades principales**:
+          1. Consolidar outputs de F4, F5, F6, F7, F8
+          2. Diseñar E6_target con componentes TF1/TF2/TF3 integrados
+          3. Crear diagramas arquitectónicos (C4, flujos, datos)
+          4. Analizar gaps: E6_current (de F1) → E6_target
+          5. Priorizar gaps críticos para F10 (Quick Wins)
+
+          **Herramientas**:
+          - drawio para diagramas
+          - E6_ArchitecturalState schema
+          - gap_analysis_calculator.xlsx
+
+          **Duración estimada**: 2-3 días (sesiones diseño + documentación)
+
+          **Owner**: Role_Architect + Role_Captain
+
+          **Nota crítica**: E6_target es referencia para F18 (Convergence Check) - debe ser preciso y medible.
+
+    Implementation:
+      F10_Quick_Wins:
+        Src: "sources/orko_knowledge/30_metodologia_orko/03_fases_implementation/F10_quick_wins.md"
+        S0_Fundamento_Yaml: |-
+          fase_id: F10
+          nombre_canonico: "Quick Wins"
+          vocabulos_referencia:
+            wslc_phase: "VOCABULARIO_CONTROLADO.layer_3.wslc_phases.F10"
+            axiomas:
+              - "VOCABULARIO_CONTROLADO.layer_0.axiomas.A1_Organizacion"
+              - "VOCABULARIO_CONTROLADO.layer_0.axiomas.A3_Flujo"
+              - "VOCABULARIO_CONTROLADO.layer_0.axiomas.A5_Cambio"
+            primitivos:
+              - "VOCABULARIO_CONTROLADO.layer_0.primitivos.P1_Capacidad"
+              - "VOCABULARIO_CONTROLADO.layer_0.primitivos.P2_Flujo"
+              - "VOCABULARIO_CONTROLADO.layer_0.primitivos.P3_Informacion"
+            invariantes:
+              - "VOCABULARIO_CONTROLADO.layer_0.invariantes.I1_Minimalidad"
+              - "VOCABULARIO_CONTROLADO.layer_0.invariantes.I7_Emergencia_Complejidad"
+            dominios:
+              - "VOCABULARIO_CONTROLADO.layer_1.dominios.D4_Operacion"
+              - "VOCABULARIO_CONTROLADO.layer_1.dominios.D3_Decision"
+          relacion_kernel:
+            depende_de:
+              - "F3"
+              - "F4"
+              - "F8"
+            prepara_a:
+              - "F13"
+              - "F12"
+          trayectorias_soportadas:
+            - "Minimal"
+            - "Avanzada"
+            - "Survival"
+          referencias_formales:
+            - "SPEC_ARQUITECTURA_DEFINITIVA.§1.3.Expansion_Layer_2_Implementation.F10_Quick_Wins"
+            - "PLAN_ETAPA_2_EXPANSION.SPRINT_4.FASE_6"
+        S1_Interfaz_Yaml: |-
+          inputs:
+            - id: "F4.capacity_gaps"
+              fuente: "F4"
+            - id: "F4.p1_inventory"
+              fuente: "F4"
+            - id: "F5.vsm_maps"
+              fuente: "F5"
+            - id: "F5.handoff_ratio"
+              fuente: "F5"
+            - id: "F8.limit_catalog"
+              fuente: "F8"
+            - id: "F9.e6_target"
+              fuente: "F9"
+            - id: "F13.h_org_dashboard_live"
+              fuente: "F13"
+          outputs:
+            - id: "quick_wins_backlog"
+              archivo: "quick_wins_backlog.yaml"
+              descripcion: "Lista priorizada de quick wins con esfuerzo e impacto estimado"
+            - id: "quick_wins_execution_log"
+              archivo: "quick_wins_execution_log.md"
+              descripcion: "Registro de ejecucion de quick wins"
+            - id: "quick_wins_impact"
+              archivo: "quick_wins_impact.yaml"
+              descripcion: "Impacto observado en H_org y artefactos relacionados tras quick wins"
+            - id: "h_org_improvement_plan"
+              archivo: "h_org_improvement_plan.md"
+              descripcion: "Plan de mejora de H_org basado en quick wins priorizados"
+          dependencies:
+            reads_from:
+              - "F3"
+              - "F4"
+              - "F5"
+              - "F8"
+              - "F9"
+              - "F13"
+            writes_to:
+              - "F13"
+              - "F12"
+
+      F11_Fabric_Deployment:
+        Src: "sources/orko_knowledge/30_metodologia_orko/03_fases_implementation/F11_fabric_deployment.md"
+        S0_Fundamento_Yaml: |-
+          fase_id: F11
+          nombre_canonico: "Fabric Deployment"
+          vocabulos_referencia:
+            wslc_phase: "VOCABULARIO_CONTROLADO.layer_3.wslc_phases.F11"
+            axiomas:
+              - "VOCABULARIO_CONTROLADO.layer_0.axiomas.A1_Organizacion"
+              - "VOCABULARIO_CONTROLADO.layer_0.axiomas.A3_Flujo"
+              - "VOCABULARIO_CONTROLADO.layer_0.axiomas.A5_Cambio"
+            primitivos:
+              - "VOCABULARIO_CONTROLADO.layer_0.primitivos.P1_Capacidad"
+              - "VOCABULARIO_CONTROLADO.layer_0.primitivos.P2_Flujo"
+              - "VOCABULARIO_CONTROLADO.layer_0.primitivos.P3_Informacion"
+            invariantes:
+              - "VOCABULARIO_CONTROLADO.layer_0.invariantes.I1_Minimalidad"
+              - "VOCABULARIO_CONTROLADO.layer_0.invariantes.I5_HAIC"
+            dominios:
+              - "VOCABULARIO_CONTROLADO.layer_1.dominios.D1_Arquitectura"
+              - "VOCABULARIO_CONTROLADO.layer_1.dominios.D4_Operacion"
+            tejidos:
+              - "VOCABULARIO_CONTROLADO.layer_2.tejidos.TF1_Capacity"
+              - "VOCABULARIO_CONTROLADO.layer_2.tejidos.TF2_Flow"
+              - "VOCABULARIO_CONTROLADO.layer_2.tejidos.TF3_Information"
+          relacion_kernel:
+            depende_de:
+              - "F3"
+              - "F4"
+              - "F5"
+              - "F6"
+              - "F8"
+              - "F9"
+            prepara_a:
+              - "F12"
+              - "F13"
+          trayectorias_soportadas:
+            - "Minimal"
+            - "Avanzada"
+          referencias_formales:
+            - "SPEC_ARQUITECTURA_DEFINITIVA.§1.3.Expansion_Layer_2_Implementation.F11_Fabric_Deployment"
+            - "PLAN_ETAPA_2_EXPANSION.SPRINT_4.FASE_7"
+        S1_Interfaz_Yaml: |-
+          inputs:
+            - id: "F3.trajectory_selected"
+              fuente: "F3"
+            - id: "F4.p1_inventory"
+              fuente: "F4"
+            - id: "F5.vsm_maps"
+              fuente: "F5"
+            - id: "F6.data_catalog"
+              fuente: "F6"
+            - id: "F8.limit_catalog"
+              fuente: "F8"
+            - id: "F9.e6_target"
+              fuente: "F9"
+          outputs:
+            - id: "fabric_deployment_plan"
+              archivo: "02_tejidos_plans/fabric_deployment_plan.yaml"
+              descripcion: "Plan de despliegue de TF1–TF3 por horizonte y modo (full/tool-agnostic/constrained)"
+            - id: "tf1_capacity_plan"
+              archivo: "02_tejidos_plans/tf1_capacity_plan.md"
+              descripcion: "Lineamientos de despliegue para TF1_Capacity (si aplica)"
+            - id: "tf2_flow_plan"
+              archivo: "02_tejidos_plans/tf2_flow_plan.md"
+              descripcion: "Lineamientos de despliegue para TF2_Flow (si aplica)"
+            - id: "tf3_information_plan"
+              archivo: "02_tejidos_plans/tf3_information_plan.md"
+              descripcion: "Lineamientos de despliegue para TF3_Information (si aplica)"
+            - id: "fabric_status"
+              archivo: "02_tejidos_plans/fabric_status.yaml"
+              descripcion: "Estado resumido de despliegue por tejido y horizonte"
+          dependencies:
+            reads_from:
+              - "F3"
+              - "F4"
+              - "F5"
+              - "F6"
+              - "F8"
+              - "F9"
+            writes_to:
+              - "F12"
+              - "F13"
+
+      F12_State_Transition:
+        Src: "sources/orko_knowledge/30_metodologia_orko/03_fases_implementation/F12_state_transition.md"
+        S0_Fundamento_Yaml: |-
+          fase_id: F12
+          nombre_canonico: "State Transition"
+          vocabulos_referencia:
+            wslc_phase: "VOCABULARIO_CONTROLADO.layer_3.wslc_phases.F12"
+            axiomas:
+              - "VOCABULARIO_CONTROLADO.layer_0.axiomas.A1_Organizacion"
+              - "VOCABULARIO_CONTROLADO.layer_0.axiomas.A5_Cambio"
+            primitivos:
+              - "VOCABULARIO_CONTROLADO.layer_0.primitivos.P1_Capacidad"
+              - "VOCABULARIO_CONTROLADO.layer_0.primitivos.P2_Flujo"
+              - "VOCABULARIO_CONTROLADO.layer_0.primitivos.P3_Informacion"
+              - "VOCABULARIO_CONTROLADO.layer_0.primitivos.P4_Limite"
+            invariantes:
+              - "VOCABULARIO_CONTROLADO.layer_0.invariantes.I3_Trazabilidad"
+              - "VOCABULARIO_CONTROLADO.layer_0.invariantes.I6_Trajectory_Awareness"
+            dominios:
+              - "VOCABULARIO_CONTROLADO.layer_1.dominios.D1_Arquitectura"
+              - "VOCABULARIO_CONTROLADO.layer_1.dominios.D4_Operacion"
+            entidades:
+              - "VOCABULARIO_CONTROLADO.layer_1.entidades.E6_ArchitecturalState"
+          relacion_kernel:
+            depende_de:
+              - "F9"
+              - "F11"
+            prepara_a:
+              - "F18"
+              - "F13"
+          trayectorias_soportadas:
+            - "Minimal"
+            - "Avanzada"
+          referencias_formales:
+            - "SPEC_ARQUITECTURA_DEFINITIVA.§1.3.Expansion_Layer_2_Implementation.F12_State_Transition"
+            - "PLAN_ETAPA_2_EXPANSION.SPRINT_4.FASE_8"
+        S1_Interfaz_Yaml: |-
+          inputs:
+            - id: "F1.h_org_baseline"
+              fuente: "F1"
+            - id: "F13.h_org_dashboard_live"
+              fuente: "F13"
+            - id: "F9.e6_target"
+              fuente: "F9"
+            - id: "F11.fabric_deployment_plan"
+              fuente: "F11"
+            - id: "F10.quick_wins_impact"
+              fuente: "F10"
+          outputs:
+            - id: "state_transition_plan"
+              archivo: "02_tejidos_plans/state_transition_plan.yaml"
+              descripcion: "Plan de transicion E6_current → E6_target con pasos, horizontes y deltas esperados en H_org"
+            - id: "e6_intermediate"
+              archivo: "02_tejidos_plans/e6_intermediate.yaml"
+              descripcion: "Estados intermedios definidos en el plan de transicion"
+            - id: "transition_validation"
+              archivo: "02_tejidos_plans/transition_validation.md"
+              descripcion: "Resumen de criterios y riesgos de la transicion"
+            - id: "transition_status"
+              archivo: "02_tejidos_plans/transition_status.yaml"
+              descripcion: "Estado de avance de la transicion, consumido por F13"
+          dependencies:
+            reads_from:
+              - "F1"
+              - "F9"
+              - "F10"
+              - "F11"
+              - "F13"
+            writes_to:
+              - "F18"
+              - "F13"
+
+    Operation:
+      F13_Health_Monitoring:
+        Src: "sources/orko_knowledge/30_metodologia_orko/04_fases_operation/F13_health_monitoring.md"
+        S0_Fundamento_Yaml: |-
+          fase_id: F13
+          nombre_canonico: "Health Monitoring"
+          vocabulos_referencia:
+            wslc_phase: "VOCABULARIO_CONTROLADO.layer_3.wslc_phases.F13"
+            axiomas:
+              - "VOCABULARIO_CONTROLADO.layer_0.axiomas.A1_Organizacion"
+              - "VOCABULARIO_CONTROLADO.layer_0.axiomas.A3_Flujo"
+            primitivos:
+              - "VOCABULARIO_CONTROLADO.layer_0.primitivos.P1_Capacidad"
+              - "VOCABULARIO_CONTROLADO.layer_0.primitivos.P2_Flujo"
+              - "VOCABULARIO_CONTROLADO.layer_0.primitivos.P3_Informacion"
+              - "VOCABULARIO_CONTROLADO.layer_0.primitivos.P4_Limite"
+              - "VOCABULARIO_CONTROLADO.layer_0.primitivos.P5_Proposito"
+            invariantes:
+              - "VOCABULARIO_CONTROLADO.layer_0.invariantes.I5_HAIC"
+              - "VOCABULARIO_CONTROLADO.layer_0.invariantes.I7_Coherencia"
+              - "VOCABULARIO_CONTROLADO.layer_0.invariantes.I8_Adaptacion_Contextual"
+            dominios:
+              - "VOCABULARIO_CONTROLADO.layer_1.dominios.D4_Operacion"
+              - "VOCABULARIO_CONTROLADO.layer_1.dominios.D2_Percepcion"
+            tejidos:
+              - "VOCABULARIO_CONTROLADO.layer_2.tejidos.TF1_Capacity"
+              - "VOCABULARIO_CONTROLADO.layer_2.tejidos.TF2_Flow"
+              - "VOCABULARIO_CONTROLADO.layer_2.tejidos.TF3_Information"
+            metricas_canonicas:
+              - "VOCABULARIO_CONTROLADO.layer_1.metricas.H_org"
+              - "VOCABULARIO_CONTROLADO.layer_1.metricas.eta_org"
+              - "VOCABULARIO_CONTROLADO.layer_1.metricas.ROI_Habilitacion"
+          relacion_kernel:
+            depende_de:
+              - "F1"
+              - "F4"
+              - "F5"
+              - "F6"
+              - "F9"
+              - "F10"
+              - "F11"
+              - "F12"
+            prepara_a:
+              - "F14"
+              - "F17"
+              - "F18"
+          trayectorias_soportadas:
+            - "Minimal"
+            - "Avanzada"
+            - "Survival"
+          estado_fundamento: "STABLE"
+          justificacion: |
+            F13 es fase continua de monitoreo que materializa A1_Organizacion y A3_Flujo mediante tracking 
+            de métricas canónicas (H_org, eta_org, ROI_Habilitacion) derivadas de TF1/TF2/TF3. Implementa 
+            health gates G1-G4 que triggerea playbooks y decisiones adaptativas (F14/F17). Garantiza I5_HAIC 
+            con accountability humana explícita en dashboards. §1 INTERFAZ completo con observability tools.
+          backlog_v1_1:
+            - "Automatizar drift detection E6_current vs E6_target"
+            - "Integrar alerting con playbook triggers automáticos"
+            - "Calibrar thresholds G1-G4 por industria/contexto"
+          referencias_formales:
+            - "SPEC_ARQUITECTURA_DEFINITIVA.§1.4.Operation.F13_Health_Monitoring"
+            - "30_metodologia_orko/13_metricas_validacion/02_health_gates.md"
+            - "30_metodologia_orko/04_fases_operation/README.md"
+        S1_Interfaz_Yaml: |-
+          inputs:
+            - id: "F1.h_org_baseline"
+              fuente: "F1"
+              descripcion: "Línea base de salud organizacional para comparación"
+            - id: "F9.e6_target"
+              fuente: "F9"
+              descripcion: "Estado arquitectónico objetivo definido en Target State Design"
+            - id: "F10.quick_wins_deployed"
+              fuente: "F10"
+              descripcion: "Lista de quick wins ejecutados y su impacto esperado"
+            - id: "F11.fabric_deployment_status"
+              fuente: "F11"
+              descripcion: "Estado de despliegue de tejidos TF1/TF2/TF3"
+            - id: "F12.state_transition_progress"
+              fuente: "F12"
+              descripcion: "Progreso de transición E6_current → E6_target"
+            - id: "tf1_capacity_metrics"
+              fuente: "TF1_Capacity"
+              descripcion: "Señales de capacidad desde tejido TF1"
+            - id: "tf2_flow_metrics"
+              fuente: "TF2_Flow"
+              descripcion: "Señales de flujo desde tejido TF2"
+            - id: "tf3_information_metrics"
+              fuente: "TF3_Information"
+              descripcion: "Señales de información desde tejido TF3"
+            - id: "health_score_calculator"
+              fuente: "40_implementacion_metodologia/calculadoras/health_score_calculator.xlsx"
+              descripcion: "Calculadora de H_org y componentes A/P/D scores"
+          outputs:
+            - id: "h_org_current"
+              descripcion: "Valor actual de salud organizacional (H_org) calculado"
+              consumers:
+                - "F14"
+                - "F17"
+                - "F18"
+            - id: "health_gate_status"
+              descripcion: "Estado actual de health gates (G1 | G2 | G3 | G4) según 02_health_gates.md"
+              consumers:
+                - "F14"
+                - "F17"
+            - id: "drift_signals"
+              descripcion: "Señales de desviación entre E6_current y E6_target"
+              consumers:
+                - "F14"
+                - "F17"
+            - id: "dashboards_h_org"
+              archivo: "health_dashboards.md"
+              descripcion: "Dashboards de seguimiento de H_org, eta_org y ROI_Habilitacion"
+              consumers:
+                - "F15"
+                - "F17"
+            - id: "playbook_triggers"
+              descripcion: "Lista de playbooks (P01–P15) disparados por condiciones de health gates"
+              consumers:
+                - "F14"
+          dependencies:
+            reads_from:
+              - "F1"
+              - "F9"
+              - "F10"
+              - "F11"
+              - "F12"
+              - "TF1_Capacity"
+              - "TF2_Flow"
+              - "TF3_Information"
+            writes_to:
+              - "F14"
+              - "F15"
+              - "F17"
+              - "F18"
+
+      F14_Incident_Response:
+        Src: "sources/orko_knowledge/30_metodologia_orko/04_fases_operation/F14_incident_response.md"
+        S0_Fundamento_Yaml: |-
+          fase_id: F14
+          nombre_canonico: "Incident Response"
+          vocabulos_referencia:
+            wslc_phase: "VOCABULARIO_CONTROLADO.layer_3.wslc_phases.F14"
+            axiomas:
+              - "VOCABULARIO_CONTROLADO.layer_0.axiomas.A3_Flujo"
+              - "VOCABULARIO_CONTROLADO.layer_0.axiomas.A4_Contexto"
+            primitivos:
+              - "VOCABULARIO_CONTROLADO.layer_0.primitivos.P2_Flujo"
+              - "VOCABULARIO_CONTROLADO.layer_0.primitivos.P3_Informacion"
+            invariantes:
+              - "VOCABULARIO_CONTROLADO.layer_0.invariantes.I5_HAIC"
+              - "VOCABULARIO_CONTROLADO.layer_0.invariantes.I3_Trazabilidad"
+            dominios:
+              - "VOCABULARIO_CONTROLADO.layer_1.dominios.D4_Operacion"
+            metricas_canonicas:
+              - "VOCABULARIO_CONTROLADO.layer_1.metricas_canonicas.H_org"
+          relacion_kernel:
+            depende_de:
+              - "F13"
+              - "F11"
+              - "TF2_Flow"
+            prepara_a:
+              - "F15"
+          trayectorias_soportadas:
+            - "Survival"
+            - "Minimal"
+          estado_fundamento: "STABLE"
+          notas_fundamento: |
+            F14 define el proceso responsable por incidentes que afectan H_org o la integridad de E7.
+            Outputs: incident_report.md, incident_RCA.md, recovery_plan.yaml.
+            Integración: playbooks P01/P04/P09 previstos. Se usan T10_incident_report.md y TEMPLATE_PLAYBOOK.md.
+          referencias_formales:
+            - "30_metodologia_orko/04_fases_operation/F13_Health_Monitoring.md"
+        S1_Interfaz_Yaml: |-
+          inputs:
+            - id: "h_org_current"
+              source: "F13.h_org_current"
+              required: true
+              description: "Salud organizacional actual (para detectar degradación)"
+            
+            - id: "playbook_triggers"
+              source: "F13.playbook_triggers"
+              required: true
+              description: "Lista de playbooks triggerados por health gates"
+            
+            - id: "drift_alerts"
+              source: "F13.drift_alerts"
+              required: false
+              description: "Alertas de drift arquitectónico"
+            
+            - id: "incident_notification"
+              source: "external OR F13"
+              required: true
+              description: "Notificación de incidente (manual o automatizada)"
+
+          outputs:
+            - id: "incident_report"
+              artifact: "incident_report.md"
+              template: "T10_incident_report.md"
+              consumers: ["F16", "F17"]
+              description: "Reporte formal de incidente con timeline y impacto"
+              location: "artefactos/f14/"
+            
+            - id: "recovery_actions"
+              artifact: "recovery_actions.yaml"
+              consumers: ["F15", "P01", "P02", "P04", "P09"]
+              description: "Plan de acciones de recuperación"
+              location: "artefactos/f14/"
+            
+            - id: "post_mortem"
+              artifact: "post_mortem.md"
+              consumers: ["F16"]
+              description: "Análisis root cause y learnings"
+              location: "artefactos/f14/"
+
+          dependencies:
+            reads_from: ["F13"]
+            writes_to: ["F16", "F17"]
+            triggers: ["P01", "P02", "P04", "P09"]
+
+          acceptance_criteria:
+            - criterion: "Incident_report completado dentro de 4 horas desde detección"
+              verification: "timestamp incident_detected vs incident_report_created"
+              responsible: "Role_IncidentLead"
+              bloqueante: true
+            
+            - criterion: "Recovery_actions incluye accountability humana (I5_HAIC)"
+              verification: "cada acción tiene owner humano asignado"
+              responsible: "Role_HealthOwner"
+            
+            - criterion: "Post_mortem publicado dentro de 48h post-resolución"
+              verification: "timestamp"
+              responsible: "Role_IncidentLead"
+            
+            - criterion: "Playbook asociado ejecutado (si aplica)"
+              verification: "playbook_execution_log != null"
+              responsible: "Role_PlaybooksLead"
+
+          templates:
+            - T10_incident_report.md
+        S2_Descripcion_Ejecutiva: |-
+          F14 gestiona respuesta a incidentes que degradan H_org o interrumpen operación, siguiendo protocolo formal de detección → contención → resolución → post-mortem.
+
+          **Actividades principales**:
+          1. Recibir alerta de F13 o notificación manual
+          2. Clasificar severidad (P0/P1/P2 según impacto H_org)
+          3. Asignar Role_IncidentLead y equipo respuesta
+          4. Ejecutar recovery_actions (puede triggerar playbooks)
+          5. Documentar incident_report con timeline
+          6. Conducir post_mortem y extraer learnings
+
+          **Playbooks asociados**:
+          - P01: Low H_org recovery (si H_org < 60)
+          - P02: Capacity spike (si overload capacidades)
+          - P04: Stakeholder escalation (si impacto externo)
+          - P09: Drift detection (si incidente arquitectónico)
+
+          **Duración estimada**: 2-48 horas (según severidad)
+
+          **Owner**: Role_IncidentLead + Role_HealthOwner
+
+          **Nota**: F14 NO es parte de trajectory Avanzada (crisis management)
+
+      F15_Continuous_Execution:
+        Src: "sources/orko_knowledge/30_metodologia_orko/04_fases_operation/F15_continuous_execution.md"
+        S0_Fundamento_Yaml: |-
+          fase_id: F15
+          nombre_canonico: "Continuous Execution"
+          vocabulos_referencia:
+            wslc_phase: "VOCABULARIO_CONTROLADO.layer_3.wslc_phases.F15"
+            axiomas:
+              - "VOCABULARIO_CONTROLADO.layer_0.axiomas.A1_Organizacion"
+              - "VOCABULARIO_CONTROLADO.layer_0.axiomas.A2_Capacidad"
+            primitivos:
+              - "VOCABULARIO_CONTROLADO.layer_0.primitivos.P1_Capacidad"
+              - "VOCABULARIO_CONTROLADO.layer_0.primitivos.P2_Flujo"
+            invariantes:
+              - "VOCABULARIO_CONTROLADO.layer_0.invariantes.I6_Trajectory_Awareness"
+              - "VOCABULARIO_CONTROLADO.layer_0.invariantes.I5_HAIC"
+            dominios:
+              - "VOCABULARIO_CONTROLADO.layer_1.dominios.D4_Operacion"
+            metricas_canonicas:
+              - "VOCABULARIO_CONTROLADO.layer_1.metricas_canonicas.eta_org"
+          relacion_kernel:
+            depende_de:
+              - "F13"
+              - "F14"
+              - "F11"
+            prepara_a:
+              - "F16"
+          trayectorias_soportadas:
+            - "Minimal"
+            - "Avanzada"
+          estado_fundamento: "STABLE"
+          notas_fundamento: |
+            F15 regula la operación continua (runbooks, SLOs, cadence). Entregables: runbook_catalog.md, SLO_definitions.yaml, cadence_policy.md.
+            Trazabilidad: cada runbook ligado a E7 y a playbooks con ADRs.
+          referencias_formales:
+            - "SPEC_ARQUITECTURA_DEFINITIVA.§1.4.Continuous_Execution"
+        S1_Interfaz_Yaml: |-
+          inputs:
+            - id: "quick_wins_backlog"
+              source: "F10.quick_wins_backlog"
+              required: true
+              description: "Backlog de quick wins a ejecutar continuamente"
+          
+            - id: "deployment_status"
+              source: "F11.deployment_status"
+              required: true
+              description: "Estado actual de deployments en producción"
+          
+            - id: "state_transition_log"
+              source: "F12.state_transition_log"
+              required: true
+              description: "Log de transiciones E6_current → E6_target"
+          
+            - id: "drift_alerts"
+              source: "F13.drift_alerts"
+              required: false
+              description: "Alertas de drift para ajustar ejecución"
+          
+          outputs:
+            - id: "execution_log"
+              artifact: "execution_log.md"
+              consumers: ["F16", "F17"]
+              description: "Registro continuo de ejecución de tareas y sprints"
+              location: "artefactos/f15/"
+          
+            - id: "cadence_adjustments"
+              artifact: "cadence_adjustments.yaml"
+              consumers: ["F13", "F16"]
+              description: "Ajustes a cadencia operacional (sprints, reviews, deploys)"
+              location: "artefactos/f15/"
+          
+            - id: "sprint_reports"
+              artifact: "sprint_reports/"
+              consumers: ["F16", "F17"]
+              description: "Reportes periódicos de sprints ejecutados"
+              location: "artefactos/f15/sprint_reports/"
+          
+          dependencies:
+            reads_from: ["F10", "F11", "F12", "F13"]
+            writes_to: ["F16", "F17"]
+            triggers: ["P15"]
+          
+          acceptance_criteria:
+            - criterion: "Execution_log actualizado semanalmente (mínimo)"
+              verification: "timestamp last_update <= 7 días"
+              responsible: "Role_Delivery_Lead"
+              bloqueante: false
+          
+            - criterion: "Cadence_adjustments documentados cuando eta_org < threshold"
+              verification: "IF eta_org < 0.70 THEN cadence_adjustment != null"
+              responsible: "Role_HealthOwner"
+          
+            - criterion: "Sprint_reports incluyen métricas DORA (si Avanzada)"
+              verification: "deployment_frequency, lead_time, MTTR, change_failure_rate"
+              responsible: "Role_Delivery_Lead"
+          
+          templates:
+            - T08_weekly_checkin.md
+            - T09_retrospective.md
+            - T15_dora_dashboard.json
+        S2_Descripcion_Ejecutiva: |-
+          F15 gestiona la ejecución operacional continua del sistema de trabajo, ajustando cadencia, priorización y deployment según feedback de F13 (health monitoring).
+
+          **Actividades principales**:
+          1. Ejecutar backlog de F10/F11/F12 en cadencia regular
+          2. Monitorear eta_org (eficiencia organizacional)
+          3. Ajustar sprint length/deploy frequency según contexto
+          4. Documentar execution_log y sprint_reports
+          5. Triggerar P15 (hypergrowth cadence) si aplica
+
+          **Herramientas**:
+          - XanPan board (T11_xanpan_board.png)
+          - Weekly check-in template (T08)
+          - Retrospective template (T09)
+          - DORA dashboard (T15, si Avanzada)
+
+          **Duración estimada**: Continuo (revisión semanal/quincenal)
+
+          **Owner**: Role_Delivery_Lead + equipos ejecución
+
+          **Nota**: F15 NO existe en trajectory Survival (solo recovery)
+
+    Evolution:
+      F16_Learning_Loops:
+        Src: "sources/orko_knowledge/30_metodologia_orko/05_fases_evolution/F16_learning_loops.md"
+        Title: "F16_learning_loops"
+        S0_Fundamento: |-
+          **Layer 0:** `A1`, `A3`, `A5`, `P5`, `I3`, `I6`, `I8`  
+          **Layer 1:** `D1`, `D2`, `D4`, `E6`, `E7`  
+          **Layer 2:** `TF1`, `TF2`
+
+          F16 se encarga de cerrar loops de aprendizaje entre:
+
+          - Resultados medidos por `F13` (`H_org`, `eta_org`, `ROI_Habilitacion`).  
+          - Decisiones de trayectoria (`F3`, `03_decision_matrix.md`).  
+          - Ejecución de playbooks de transformación (`P05`–`P08`) y recovery (`P01`–`P04`).  
+          - Governance y roles definidos en `01_team_structure_raci.md`.
+
+          Su propósito es reforzar:
+
+          - `I3` – Trazabilidad: cada cambio relevante en `H_org`/`eta_org` debe ser rastreable a playbooks, decisiones y contextos.  
+          - `I6` – Trajectory-awareness: los loops de aprendizaje deben informar explícitamente decisiones de cambio/mantenimiento de trayectoria (`Survival`, `Minimal`, `Avanzada`).  
+          - `I8` – Consistencia temporal: los ciclos de aprendizaje deben considerar ventanas de tiempo coherentes con health gates G1–G4.
+        S1_Interfaz_Inputs_Yaml: |-
+          inputs:
+            - id: "metrics_snapshot"
+              source: "F13"
+              description: "Snapshot periódico de H_org, eta_org, ROI_Habilitacion por dominio/trayectoria."
+            - id: "health_gates_state"
+              source: "G1–G4 (02_health_gates.md)"
+              description: "Estado actual de G1–G4 (activados/no activados, notas de umbral)."
+            - id: "decision_matrix_context"
+              source: "09_trayectorias/03_decision_matrix.md"
+              description: "Contexto de trayectoria (Survival/Minimal/Avanzada) y factores de decisión (runway, complejidad, budget)."
+            - id: "playbooks_outputs_P05_P08"
+              source: "P05_bounded_autonomy_m6, P06_pilot_transformation, P07_scale_transformation, P08_optimization_sustain"
+              description: "Reports y planes resultantes de P05–P08 (autonomy/scale/optimization)."
+            - id: "governance_decisions"
+              source: "12_roles_governance/01_team_structure_raci.md"
+              description: "Decisiones clave tomadas en respuesta a G1–G4 y a outputs de playbooks."
+        S1_Interfaz_Outputs_Yaml: |-
+          outputs:
+            - id: "learning_loops_log"
+              description: "Registro estructurado de hipótesis, experimentos (P05–P08), resultados y decisiones de trayectoria."
+              consumers: ["F3", "F13", "F17", "E4_governance"]
+            - id: "playbook_improvement_backlog"
+              description: "Backlog de mejoras para playbooks P01–P08 basadas en evidencias recogidas en F16."
+              consumers: ["E3_playbooks", "F17"]
+            - id: "trajectory_adjustment_recommendations"
+              description: "Recomendaciones para mantener/cambiar trayectoria (Survival/Minimal/Avanzada) apoyadas en G1–G4 y decision_matrix."
+              consumers: ["F3", "F17", "E4_governance"]
+        Notas_sobre_integracion_P05_P08_F16_G1_G4:
+          - "**P05 (Bounded Autonomy M6):** sus outputs sobre diseño de autonomía se registran en `learning_loops_log` como hipótesis de mejora de `eta_org`/`ROI_Habilitacion`. F16 observa si los cambios se reflejan en métricas y, si no, genera ítems en `playbook_improvement_backlog`."
+          - "**P06 (Pilot Transformation):** sus experimentos piloto se usan como casos de prueba controlados; F16 compara métricas pre/post piloto y, si el impacto es positivo, alimenta `trajectory_adjustment_recommendations` y prepara insumos para P07."
+          - "**P07 (Scale Transformation):** F16 monitoriza el efecto de la escala sobre `H_org`/`eta_org`/`ROI_Habilitacion`; cualquier degradación posterior genera loops adicionales (posible reactivación de P01/P02/P11 o reajuste de trayectoria en función de G1–G4)."
+          - "**P08 (Optimization Sustain):** los planes de optimización y sus resultados se consideran parte del ciclo continuo; F16 usa sus outputs para detectar drift y decidir si se requieren nuevos ciclos o cambios de trayectoria según `03_decision_matrix.md`."
+
+      F17_Adaptation:
+        Src: "sources/orko_knowledge/30_metodologia_orko/05_fases_evolution/F17_adaptation.md"
+        S0_Fundamento_Yaml: |-
+          fase_id: F17
+          nombre_canonico: "Adaptation"
+          vocabulos_referencia:
+            wslc_phase: "VOCABULARIO_CONTROLADO.layer_3.wslc_phases.F17"
+            axiomas:
+              - "VOCABULARIO_CONTROLADO.layer_0.axiomas.A5_Cambio"
+            primitivos:
+              - "VOCABULARIO_CONTROLADO.layer_0.primitivos.P4_Limite"
+              - "VOCABULARIO_CONTROLADO.layer_0.primitivos.P5_Proposito"
+            invariantes:
+              - "VOCABULARIO_CONTROLADO.layer_0.invariantes.I8_Adaptacion_Contextual"
+              - "VOCABULARIO_CONTROLADO.layer_0.invariantes.I3_Trazabilidad"
+            dominios:
+              - "VOCABULARIO_CONTROLADO.layer_1.dominios.D3_Decision"
+              - "VOCABULARIO_CONTROLADO.layer_1.dominios.D2_Percepcion"
+            metricas_canonicas:
+              - "VOCABULARIO_CONTROLADO.layer_1.metricas_canonicas.H_org"
+          relacion_kernel:
+            depende_de:
+              - "F16"
+              - "F13"
+            prepara_a:
+              - "F18"
+          trayectorias_soportadas:
+            - "Minimal"
+            - "Avanzada"
+          estado_fundamento: "STABLE"
+          notas_fundamento: |
+            F17 formaliza la adaptación (policy/ADR) ante drift o shock contextual. Entregables: adaptation_policy.yaml, ADRs, decision_log.
+            Integración con learning_loops (F16) y health gates (F13). Es responsable la junta de gobernanza.
+          referencias_formales:
+            - "30_metodologia_orko/16_evolucion_metodologia/01_feedback_loops_metodologia.md"
+        S1_Interfaz_Yaml: |-
+          inputs:
+            - id: "learnings"
+              source: "F16.learnings"
+              required: true
+              description: "Learnings capturados de operación y post-mortems"
+            
+            - id: "health_trends"
+              source: "F13.health_trends"
+              required: true
+              description: "Tendencias H_org, eta_org, ROI_Habilitacion"
+            
+            - id: "gate_history"
+              source: "F13.gate_history"
+              required: true
+              description: "Historial de health gates G1-G4 activados"
+
+          outputs:
+            - id: "trajectory_adjustment"
+              artifact: "trajectory_adjustment.md"
+              consumers: ["F3", "F18"]
+              description: "Ajuste de trayectoria basado en learnings"
+              location: "artefactos/f17/"
+            
+            - id: "adaptation_plan"
+              artifact: "adaptation_plan.yaml"
+              consumers: ["F7", "F9", "F18"]
+              description: "Plan de adaptación con decisiones ADR"
+              location: "artefactos/f17/"
+            
+            - id: "okr_refinement"
+              artifact: "okr_refinement.yaml"
+              consumers: ["F7"]
+              description: "Refinamiento de OKRs basado en feedback operación"
+              location: "artefactos/f17/"
+
+          dependencies:
+            reads_from: ["F13", "F16"]
+            writes_to: ["F3", "F7", "F18"]
+            triggers: ["P03", "P05", "P06", "P13", "P15"]
+
+          acceptance_criteria:
+            - criterion: "Adaptation_plan incluye mínimo 1 ADR formal"
+              verification: "count(ADRs) >= 1"
+              responsible: "Role_Captain"
+            
+            - criterion: "Trajectory_adjustment justificado con datos F13"
+              verification: "trajectory_change_rationale incluye H_org_trends"
+              responsible: "Role_TrajectoryOwner"
+            
+            - criterion: "OKR_refinement aprobado por Sponsor_L1_Human"
+              verification: "sponsor_approval == true"
+              responsible: "Sponsor_L1_Human"
+              bloqueante: true
+
+          templates:
+            - T12_adr_template.md
+        S2_Descripcion_Ejecutiva: |-
+          F17 formaliza decisiones de adaptación organizacional basadas en learnings (F16) y health trends (F13), incluyendo ajustes de trayectoria, OKRs y políticas.
+
+          **Actividades principales**:
+          1. Revisar learnings de F16 y health_trends de F13
+          2. Identificar necesidad de adaptación (cambio trajectory, OKRs, políticas)
+          3. Documentar decisiones con ADRs
+          4. Crear adaptation_plan con acciones concretas
+          5. Triggerar playbooks transformacionales
+
+          **Duración estimada**: 1-2 días
+
+          **Owner**: Role_Captain + Role_SteeringCommittee
+
+      F18_Convergence_Check:
+        Src: "sources/orko_knowledge/30_metodologia_orko/05_fases_evolution/F18_convergence_check.md"
+        S0_Fundamento_Yaml: |-
+          fase_id: F18
+          nombre_canonico: "Convergence Check"
+          vocabulos_referencia:
+            wslc_phase: "VOCABULARIO_CONTROLADO.layer_3.wslc_phases.F18"
+            axiomas:
+              - "VOCABULARIO_CONTROLADO.layer_0.axiomas.A1_Organizacion"
+              - "VOCABULARIO_CONTROLADO.layer_0.axiomas.A5_Cambio"
+            primitivos:
+              - "VOCABULARIO_CONTROLADO.layer_0.primitivos.P1_Capacidad"
+              - "VOCABULARIO_CONTROLADO.layer_0.primitivos.P2_Flujo"
+            invariantes:
+              - "VOCABULARIO_CONTROLADO.layer_0.invariantes.I6_Trajectory_Awareness"
+              - "VOCABULARIO_CONTROLADO.layer_0.invariantes.I7_Coherencia"
+            dominios:
+              - "VOCABULARIO_CONTROLADO.layer_1.dominios.D1_Arquitectura"
+              - "VOCABULARIO_CONTROLADO.layer_1.dominios.D4_Operacion"
+            metricas_canonicas:
+              - "VOCABULARIO_CONTROLADO.layer_1.metricas_canonicas.H_org"
+              - "VOCABULARIO_CONTROLADO.layer_1.metricas_canonicas.eta_org"
+          relacion_kernel:
+            depende_de:
+              - "F9"
+              - "F13"
+              - "F16"
+            prepara_a:
+              - "E3_governance"
+          trayectorias_soportadas:
+            - "Minimal"
+            - "Avanzada"
+          estado_fundamento: "STABLE"
+          notas_fundamento: |
+            F18 revisa convergence_score, verifica cumplimiento de E6_target y produce informe de cierre/reevaluación.
+            Outputs: convergence_report.md, lessons_learned.md, update_requests para playbooks.
+          referencias_formales:
+            - "40_implementacion_metodologia/calculadoras/convergence_tracker.xlsx"
+        S1_Interfaz_Yaml: |-
+          inputs:
+            - id: "e6_target"
+              source: "F9.e6_target"
+              schema_ref: "E6_ArchitecturalState"
+              required: true
+              description: "Estado arquitectónico objetivo definido"
+            
+            - id: "e6_current"
+              source: "F12.e6_current"
+              schema_ref: "E6_ArchitecturalState"
+              required: true
+              description: "Estado arquitectónico actual post-transiciones"
+            
+            - id: "h_org_trends"
+              source: "F13.h_org_trends"
+              required: true
+              description: "Evolución H_org baseline → current"
+
+          outputs:
+            - id: "convergence_report"
+              artifact: "convergence_report.md"
+              consumers: ["F17", "Role_SteeringCommittee"]
+              description: "Reporte formal convergencia E6_current vs E6_target"
+              location: "artefactos/f18/"
+            
+            - id: "convergence_score"
+              type: "float"
+              range: "[0, 1]"
+              consumers: ["F17"]
+              description: "Score numérico de convergencia"
+            
+            - id: "gap_analysis"
+              artifact: "gap_analysis.yaml"
+              consumers: ["F17"]
+              description: "Gaps restantes current → target"
+              location: "artefactos/f18/"
+
+          dependencies:
+            reads_from: ["F9", "F12", "F13"]
+            writes_to: ["F17"]
+
+          acceptance_criteria:
+            - criterion: "Convergence_score calculado con fórmula formal"
+              verification: "score = weighted_avg(arch_convergence, h_org_delta, okr_achievement)"
+              responsible: "Role_Architect"
+              bloqueante: true
+            
+            - criterion: "Convergence_report incluye recomendación: CONTINUE | ADAPT | CLOSE"
+              verification: "recommendation field != null"
+              responsible: "Role_Captain"
+            
+            - criterion: "Gap_analysis prioriza top-5 gaps restantes"
+              verification: "count(gaps_prioritized) >= 5"
+              responsible: "Role_Architect"
+
+          herramientas:
+            - convergence_tracker.xlsx
+        S2_Descripcion_Ejecutiva: |-
+          F18 es el "checkpoint final" del ciclo WSLC que evalúa si la organización ha convergido hacia E6_target o requiere adaptación (vía F17).
+
+          **Actividades principales**:
+          1. Comparar E6_current (F12) vs E6_target (F9)
+          2. Calcular convergence_score con métricas arquitectónicas y H_org
+          3. Analizar gaps restantes (current → target)
+          4. Generar convergence_report con recomendación
+          5. Decidir: CONTINUE (seguir operando), ADAPT (volver a F17), CLOSE (mission accomplished)
+
+          **Fórmula convergence_score**:
+          ```
+          score = weighted_avg(
+            architectural_convergence × 0.40,
+            h_org_improvement × 0.30,
+            okr_achievement × 0.30
+          )
+
+          architectural_convergence = components_deployed / components_target
+          h_org_improvement = (h_org_current - h_org_baseline) / (h_org_target - h_org_baseline)
+          okr_achievement = okrs_met / okrs_total
+          ```
+
+          **Duración estimada**: 4-8 horas (análisis + reporte)
+
+          **Owner**: Role_Architect + Role_Captain
+
+          **Nota**: F18 cierra el ciclo WSLC - solo existe en Minimal y Avanzada (Survival no tiene target formal)

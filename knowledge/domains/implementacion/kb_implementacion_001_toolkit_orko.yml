@@ -1,0 +1,1591 @@
+_manifest:
+  urn: "urn:knowledge:orko:implementacion:toolkit:1.0.0"
+  federation:
+    visibility: public
+    license: "MIT"
+  provenance:
+    created_by: "FS"
+    created_at: "2025-12-14"
+    last_modified_at: "2025-12-14"
+
+Metadata:
+  ID: "ORKO-IMP-TOOLKIT-01"
+  Version: "1.0.0"
+  Status: "Draft"
+  Human-Creator: "FS"
+  Human-Editor: "FS"
+  Model-Collaborator: "Cascade"
+  Creation-Date: "2025-12-14"
+  Modification-Date: "2025-12-14"
+  Ctx: "ORKO Toolkit (Layer 4-5) - calculadoras, kits, templates, guía de uso"
+
+LLM_Parsing_Instructions:
+  Purp: "Guía parsing artefacto KODA/Spec ORKO - Toolkit compilado para usuario final"
+  Format: "YAML jerárquico keyword-driven"
+  Lexicon_Tier2_ORKO:
+    - "Toolkit"
+    - "Calculator"
+    - "Kit"
+    - "Template"
+    - "Checklist"
+  XRef_Required:
+    - "urn:knowledge:orko:metodologia:fases:1.0.0"
+    - "urn:knowledge:orko:metodologia:playbooks:1.0.0"
+
+Src:
+  Toolkit_Root:
+    Comience_Aqui: "sources/ORKO_Toolkit_v1.0.0/00_COMIENCE_AQUI.md"
+  Diagnostico:
+    README: "sources/ORKO_Toolkit_v1.0.0/01_DIAGNOSTICO/README.md"
+    Inventario_Maestro: "sources/ORKO_Toolkit_v1.0.0/01_DIAGNOSTICO/1.1_Inventario_Maestro.xlsx"
+    Calculadora_Salud: "sources/ORKO_Toolkit_v1.0.0/01_DIAGNOSTICO/1.2_Calculadora_Salud.xlsx"
+    Matriz_Decision: "sources/ORKO_Toolkit_v1.0.0/01_DIAGNOSTICO/1.3_Matriz_Decision.xlsx"
+  Ejecucion:
+    README: "sources/ORKO_Toolkit_v1.0.0/02_EJECUCION/README.md"
+    Kit_Survival:
+      README: "sources/ORKO_Toolkit_v1.0.0/02_EJECUCION/A_Kit_Survival/00_README_SURVIVAL.md"
+      Playbooks:
+        P01: "sources/ORKO_Toolkit_v1.0.0/02_EJECUCION/A_Kit_Survival/Playbooks/P01_low_h_org_recovery.md"
+        P02: "sources/ORKO_Toolkit_v1.0.0/02_EJECUCION/A_Kit_Survival/Playbooks/P02_handoff_reduction.md"
+        P04: "sources/ORKO_Toolkit_v1.0.0/02_EJECUCION/A_Kit_Survival/Playbooks/P04_security_remediation.md"
+      Templates:
+        T10: "sources/ORKO_Toolkit_v1.0.0/02_EJECUCION/A_Kit_Survival/Templates/T10_incident_report.md"
+    Kit_Minimal:
+      README: "sources/ORKO_Toolkit_v1.0.0/02_EJECUCION/B_Kit_Minimal/00_README_MINIMAL.md"
+      Playbooks:
+        P05: "sources/ORKO_Toolkit_v1.0.0/02_EJECUCION/B_Kit_Minimal/Playbooks/P05_bounded_autonomy_m6.md"
+        P10: "sources/ORKO_Toolkit_v1.0.0/02_EJECUCION/B_Kit_Minimal/Playbooks/P10_capacity_gap_resolution.md"
+      Templates:
+        T04: "sources/ORKO_Toolkit_v1.0.0/02_EJECUCION/B_Kit_Minimal/Templates/T04_capacity_inventory.xlsx"
+  Referencia:
+    Guia_Uso_Calculadoras: "sources/ORKO_Toolkit_v1.0.0/03_REFERENCIA/Guia_Uso_Calculadoras.md"
+    Vocabulario_Controlado: "sources/ORKO_Toolkit_v1.0.0/03_REFERENCIA/Vocabulario_Controlado.yaml"
+  Soporte:
+    Casos_Prueba:
+      Caso_7_Validacion: "sources/ORKO_Toolkit_v1.0.0/04_SOPORTE/Casos_Prueba/Caso_7_Validacion.md"
+
+Contenido:
+  ID: "ORKO-IMP-TOOLKIT-CONT-01"
+  Ctx: "Se completa por secciones con fidelidad MEAT 100% a cada fuente del toolkit"
+
+  Toolkit_Root:
+    Comience_Aqui:
+      Src: "sources/ORKO_Toolkit_v1.0.0/00_COMIENCE_AQUI.md"
+      Markdown: |-
+        # 🎯 ORKO v1.0.0 - Sistema de Transformación Organizacional
+
+        ## 🚀 COMIENCE AQUÍ
+
+        Bienvenido. Su organización es un sistema complejo. Vamos a ordenarlo en 4 pasos simples.
+
+        ### [1] DIAGNOSTIQUE (1-2 horas)
+        1.  Vaya a la carpeta `01_DIAGNOSTICO`.
+        2.  Abra `1.1_Inventario_Maestro.xlsx`. Liste lo que su organización tiene hoy (personas, flujos, datos).
+        3.  Abra `1.2_Calculadora_Salud.xlsx`. Use el "WIZARD" para transferir los totales del inventario.
+        4.  Obtenga su **Health Score (H_org)** y su **Banda de Salud** (ej: G1-Crítico, G3-Aceptable).
+
+        ### [2] SELECCIONE SU RUTA
+        Use su `H_org` para decidir qué carpeta abrir en `02_EJECUCION`:
+
+        | Si su H_org es... | Su estado es... | Abra el Kit... |
+        |-------------------|-----------------|----------------|
+        | **< 0.50** | 🚨 **Crítico** | `A_Kit_Survival` |
+        | **0.50 - 0.70** | ⚠️ **Estable** | `B_Kit_Minimal` |
+        | **> 0.70** | ✅ **Saludable** | `C_Kit_Avanzado` |
+
+        ### [3] EJECUTE (2-12 semanas)
+        Entre a la carpeta de su Kit y siga las instrucciones del `README` interno.
+        *   **Survival:** Foco en apagar incendios y recuperar capacidad operativa.
+        *   **Minimal:** Foco en construir cimientos y optimizar flujos clave.
+        *   **Avanzado:** Foco en escala, automatización y gobernanza de datos.
+
+        ### [4] MONITOREE
+        Cada 2 semanas, actualice su Inventario y recalcule su `H_org`.
+        *   ↗️ Si mejora: Migre al siguiente Kit.
+        *   ↘️ Si empeora: Active los protocolos de escalamiento (ver `03_REFERENCIA`).
+
+        ---
+        *ORKO Toolkit v1.0.0 - "Complexity, Tamed."*
+
+  Diagnostico:
+    README:
+      Src: "sources/ORKO_Toolkit_v1.0.0/01_DIAGNOSTICO/README.md"
+      Markdown: |-
+        # 01_DIAGNOSTICO
+
+        ## 📍 Usted está aquí: Paso 1 - Entender el Terreno
+
+        Antes de intentar cambiar nada, debe saber exactamente qué tiene.
+
+        ### 🛠️ Herramientas en esta carpeta
+
+        1.  **`1.1_Inventario_Maestro.xlsx` (EL MAPA)**
+            *   **Qué es:** Un censo de sus capacidades (personas/bots), flujos de trabajo y activos de datos.
+            *   **Acción:** Llene las pestañas P1, P2 y P3. No busque perfección, busque completitud al 80%.
+
+        2.  **`1.2_Calculadora_Salud.xlsx` (EL TERMÓMETRO)**
+            *   **Qué es:** Un algoritmo que convierte su inventario en un puntaje único: `H_org` (Health Score).
+            *   **Acción:** Use la pestaña "WIZARD" para copiar los datos del Inventario.
+            *   **Resultado:** Un número entre 0.00 y 1.00.
+
+        3.  **`1.3_Matriz_Decision.xlsx` (LA BRÚJULA)**
+            *   **Qué es:** Una herramienta para cruzar su `H_org` con su presupuesto y riesgo para confirmar su trayectoria.
+            *   **Acción:** (Opcional) Úsela si está en el límite entre dos trayectorias (ej: 0.49 vs 0.51).
+
+        ### ➡️ Siguiente Paso
+        Una vez que tenga su `H_org`, vaya a la carpeta `02_EJECUCION` y seleccione el Kit correspondiente.
+
+    Inventario_Maestro:
+      Src: "sources/ORKO_Toolkit_v1.0.0/01_DIAGNOSTICO/1.1_Inventario_Maestro.xlsx"
+      Markdown: |-
+
+    Calculadora_Salud:
+      Src: "sources/ORKO_Toolkit_v1.0.0/01_DIAGNOSTICO/1.2_Calculadora_Salud.xlsx"
+      Markdown: |-
+
+    Matriz_Decision:
+      Src: "sources/ORKO_Toolkit_v1.0.0/01_DIAGNOSTICO/1.3_Matriz_Decision.xlsx"
+      Markdown: |-
+
+  Ejecucion:
+    README:
+      Src: "sources/ORKO_Toolkit_v1.0.0/02_EJECUCION/README.md"
+      Markdown: |-
+        # 02_EJECUCION
+
+        ## 📍 Usted está aquí: Paso 2 - Manos a la Obra
+
+        Aquí es donde ocurre la transformación. No intente hacer todo. Solo abra la carpeta que le indicó su diagnóstico.
+
+        ### 📂 Seleccione su Kit
+
+        #### 🚨 `A_Kit_Survival` (H_org < 0.50)
+        *   **Para quién:** Organizaciones en caos, con alta rotación, incidentes frecuentes o falta de capacidad crítica.
+        *   **Objetivo:** Estabilizar el barco. Detener el sangrado.
+        *   **Herramientas:** Playbooks de recuperación y reducción de carga.
+
+        #### ⚠️ `B_Kit_Minimal` (H_org 0.50 - 0.70)
+        *   **Para quién:** Organizaciones estables pero lentas, burocráticas o desconectadas de la estrategia.
+        *   **Objetivo:** Construir cimientos sólidos. Conectar estrategia con ejecución.
+        *   **Herramientas:** Diseño de flujos, inventario de capacidades, autonomía acotada.
+
+        #### ✅ `C_Kit_Avanzado` (H_org > 0.70)
+        *   **Para quién:** Organizaciones de alto rendimiento que buscan optimización, escala y gobernanza automatizada.
+        *   **Objetivo:** Excelencia operativa. Innovación continua.
+        *   **Herramientas:** Metodología completa ORKO (todos los playbooks y templates).
+
+        ---
+        **Nota:** Si tiene dudas, empiece por el **Kit Minimal**. Es más fácil agregar complejidad después que quitarla.
+
+    Kit_Survival:
+      README:
+        Src: "sources/ORKO_Toolkit_v1.0.0/02_EJECUCION/A_Kit_Survival/00_README_SURVIVAL.md"
+        Markdown: |-
+          # 🚨 Kit Survival - Recuperación de Crisis
+
+          ## ¿Dónde Estoy?
+          Usted está en el **Kit Survival** porque su Health Score (`H_org`) es **menor a 50**.
+          Esto significa que su organización tiene **riesgo crítico** en al menos una dimensión (capacidad, flujo o datos).
+
+          ## ¿Qué Hago Aquí?
+          **NO** intente ejecutar la metodología completa. **FOCO**: Estabilizar en 2-4 semanas.
+
+          ### Tareas Inmediatas
+          1.  **Recuperar Capacidad:** Ejecute `Playbooks/P01_Low_H_org_Recovery.md`. Identifique qué rol falta o está saturado y soluciónelo en 5 días.
+          2.  **Reducir Fricción:** Ejecute `Playbooks/P02_Handoff_Reduction.md`. Elimine pasos innecesarios en sus flujos críticos.
+          3.  **Asegurar:** Si tiene brechas de seguridad, use `Playbooks/P04_Security_Remediation.md`.
+
+          ### Herramientas
+          *   Use `Templates/T10_Incident_Report.md` para documentar cualquier fuego que apague. Esto genera datos para evitar que se repita.
+
+          ## ¿Qué Sigue?
+          Una vez que ejecute **al menos 1 playbook** y su `H_org` suba por encima de 50:
+          1.  Vuelva a `01_DIAGNOSTICO`.
+          2.  Recalcule su salud.
+          3.  Si `H_org >= 50`, ¡Felicidades! Gradúese al **Kit Minimal**.
+
+      Playbooks:
+        P01:
+          Src: "sources/ORKO_Toolkit_v1.0.0/02_EJECUCION/A_Kit_Survival/Playbooks/P01_low_h_org_recovery.md"
+          Markdown: |-
+            # P01_low_h_org_recovery
+
+            **Tipo:** Playbook Recovery  
+            **ID:** P01  
+            **Trigger:** `H_org` en zona crítica (G1/G2)  
+            **Estimación Ejecución:** `P1D`
+
+            ---
+
+            ## §0. FUNDAMENTO
+
+            **Layer 0:** `A1`, `A5`, `P1`, `P4`, `I3`, `I6`  
+            **Layer 1:** `D2`, `D4`, `E6`  
+            **Layer 2:** `TF1`, `TF2`
+
+            **Justificación:** Cuando `H_org` cae por debajo de los umbrales definidos en G1/G2, la organización entra en riesgo operativo. Este playbook articula capacidades (`P1`) y límites (`P4`) para ejecutar una respuesta rápida (F14) basada en las señales de `F13` y asegurar trazabilidad (`I3`) y adaptación controlada (`I6`).
+
+            ---
+
+            ## §1. INTERFAZ
+
+            ### Trigger Conditions
+
+            ```yaml
+            triggers:
+              - condition: "H_org < 60"
+                metric: "H_org"
+                threshold: 60
+                source: "F13.h_org_dashboard"
+              - condition: "H_org cayendo 2 cortes consecutivos"
+                metric: "H_org"
+                threshold: "tendencia negativa"
+                source: "F13.trend_analysis"
+              - condition: "G1 o G2 activados"
+                metric: "H_org"
+                threshold: "G1/G2"
+                source: "13_metricas_validacion/02_health_gates.md"
+            ```
+
+            ### Outputs
+
+            ```yaml
+            outputs:
+              - report: "P01_execution_report.md"
+                consumers: ["F13", "F16", "F17", "E4_governance"]
+              - artifact: "h_org_recovery_plan.yaml"
+                consumers: ["F14", "F16", "trayectorias.Minimal"]
+              - metric_update: "H_org_post_recovery"
+                consumers: ["F13", "G1", "G2"]
+            ```
+
+            ---
+
+            ## §2. EJECUCIÓN
+
+            **Pasos**:
+            1. **Diagnóstico inmediato** (2-4h): Identificar componentes H_org degradados (H1-H4)
+            2. **Priorizar acciones** (2h): Top-3 gaps críticos por impacto×urgencia
+            3. **Plan recuperación** (4h): Crear h_org_recovery_plan.yaml con timeline
+            4. **Ejecutar quick wins** (1-3 días): Acciones inmediatas (P10, P11, P12)
+            5. **Monitoreo recovery** (continuo): Track H_org improvement vía F13
+
+            **Criterios éxito**:
+            - H_org > 65 en 7-14 días
+            - Ningún componente H1-H4 < 50
+            - Recovery plan aprobado por Sponsor_L1_Human
+
+            ---
+
+            ## §3. RACI
+
+            ```yaml
+            raci:
+              responsible: ["Role_HealthOwner", "Role_Delivery_Lead"]
+              accountable: "Sponsor_L1_Human"
+              consulted: ["Role_Captain", "TF1_Lead", "TF2_Lead", "TF3_Lead"]
+              informed: ["Board_Governance", "All_Stakeholders"]
+            ```
+
+        P02:
+          Src: "sources/ORKO_Toolkit_v1.0.0/02_EJECUCION/A_Kit_Survival/Playbooks/P02_handoff_reduction.md"
+          Markdown: |-
+            # P02_handoff_reduction
+            
+            **Tipo:** Playbook Recovery  
+            **ID:** P02  
+            **Trigger:** Deterioro de `H_org` o `ROI_Habilitacion` atribuido a handoffs  
+            **Estimación Ejecución:** `P2D`
+            
+            ---
+            
+            ## §0. FUNDAMENTO
+            
+            **Layer 0:** `A1`, `A3`, `P2`, `I2`, `I3`, `I6`  
+            **Layer 1:** `D1`, `D4`, `E7`  
+            **Layer 2:** `TF2`
+            
+            **Justificación:** Handoffs excesivos elevan el tiempo de ciclo y degradan `H_org`/`ROI_Habilitacion`. Este playbook aplica principios de flujo (`P2`) y ortogonalidad (`I2`) para estabilizar operaciones (`D4`) y recuperar eficiencia, manteniendo trazabilidad (`I3`) y aprendizaje para ajustes de trayectoria (`I6`).
+            
+            ---
+            
+            ## §1. INTERFAZ
+            
+            ### Trigger Conditions
+            
+            ```yaml
+            triggers:
+              - condition: "H_org < 70 con evidencia de handoffs altos en F5/F11"
+                metric: "H_org"
+                threshold: 70
+                source: "F13.h_org_dashboard"
+              - condition: "ROI_Habilitacion < 1.0 por ineficiencias de flujo"
+                metric: "ROI_Habilitacion"
+                threshold: 1.0
+                source: "F13.roi_habilitacion"
+              - condition: "G1 exige contención adicional tras análisis de F5/F11"
+                metric: "H_org"
+                threshold: "G1"
+                source: "13_metricas_validacion/02_health_gates.md"
+            ```
+            
+            ### Outputs
+            
+            ```yaml
+            outputs:
+              - report: "P02_execution_report.md"
+                consumers: ["F13", "F16", "F17", "E4_governance"]
+              - artifact: "handoff_reduction_plan.yaml"
+                consumers: ["F5", "F11", "F14"]
+              - metric_update: "ROI_Habilitacion_post_P02"
+                consumers: ["F13", "G1"]
+            ```
+            
+            ---
+            
+            ## §2. EJECUCIÓN
+            
+            **Pasos**:
+            1. **Mapeo flujos** (4-6h): Identificar handoffs críticos en TF2
+            2. **Análisis impacto** (2h): Cuantificar delay por handoff
+            3. **Rediseño flujos** (1 día): Reducir handoffs, aumentar bounded autonomy
+            4. **Implementación** (2-3 días): Ejecutar cambios flujo
+            5. **Validación** (continuo): Medir ROI_Habilitacion improvement
+            
+            **Criterios éxito**:
+            - Reducción >30% handoffs críticos
+            - ROI_Habilitacion > 1.0
+            - H_org recovery
+            
+            ---
+            
+            ## §3. RACI
+            
+            ```yaml
+            raci:
+              responsible: ["Role_FlowOwner", "TF2_Lead"]
+              accountable: "Role_Captain"
+              consulted: ["Role_Architect", "Delivery_Lead"]
+              informed: ["Sponsor_L1_Human", "Board_Governance"]
+            ```
+
+        P04:
+          Src: "sources/ORKO_Toolkit_v1.0.0/02_EJECUCION/A_Kit_Survival/Playbooks/P04_security_remediation.md"
+          Markdown: |-
+            # P04_security_remediation
+            
+            **Tipo:** Playbook Recovery  
+            **ID:** P04  
+            **Trigger:** Incidente de seguridad o gap de cumplimiento que amenaza `H_org`/`ROI_Habilitacion`  
+            **Estimación Ejecución:** `P2D`
+            
+            ---
+            
+            ## §0. FUNDAMENTO
+            
+            **Layer 0:** `A1`, `A4`, `P3`, `P4`, `I3`, `I5`, `I6`  
+            **Layer 1:** `D2`, `D4`, `E6`  
+            **Layer 2:** `TF3`
+            
+            **Justificación:** Los incidentes de seguridad o gaps regulatorios (`P4`) impactan directamente la salud organizacional (`H_org`) y el retorno de habilitación (`ROI_Habilitacion`). P04 define respuesta inmediata y trazable (`I3`) preservando responsabilidad humana (`I5`) y aprendizaje para ajustes posteriores (`I6`).
+            
+            ---
+            
+            ## §1. INTERFAZ
+            
+            ### Trigger Conditions
+            
+            ```yaml
+            triggers:
+              - condition: "Security incident confirmado por F11"
+                metric: "H_org"
+                threshold: "impacto en H_org"
+                source: "F13.incident_reports"
+              - condition: "Compliance gap crítico detectado en F8"
+                metric: "ROI_Habilitacion"
+                threshold: "impacto en ROI"
+                source: "F13.roi_habilitacion"
+              - condition: "G1/G2 escalado por riesgo de seguridad"
+                metric: "H_org"
+                threshold: "G1/G2"
+                source: "13_metricas_validacion/02_health_gates.md"
+            ```
+            
+            ### Outputs
+            
+            ```yaml
+            outputs:
+              - report: "P04_security_report.md"
+                consumers: ["F13", "F16", "F17", "E4_governance"]
+              - artifact: "remediation_plan_security.yaml"
+                consumers: ["F8", "F11", "F14"]
+              - metric_update: "H_org_security_delta"
+                consumers: ["F13", "G1", "G2"]
+            ```
+            
+            ---
+            
+            ## §2. EJECUCIÓN
+            
+            **Pasos**:
+            1. **Contención** (inmediato): Mitigar riesgo security/compliance
+            2. **Análisis impacto** (4h): Evaluar impacto H_org y ROI_Habilitacion
+            3. **Plan remediación** (1 día): Definir acciones correctivas
+            4. **Implementación** (2-5 días): Ejecutar remediation plan
+            5. **Post-mortem** (4h): Documentar learnings y prevención
+            
+            **Criterios éxito**:
+            - Incident cerrado
+            - Compliance gap remediado
+            - H_org recovery
+            - Post-mortem publicado
+            
+            ---
+            
+            ## §3. RACI
+            
+            ```yaml
+            raci:
+              responsible: ["Role_SecurityOwner", "Role_ComplianceOfficer"]
+              accountable: "Role_Captain"
+              consulted: ["TF3_Lead", "Legal", "Infosec_Team"]
+              informed: ["Sponsor_L1_Human", "Board_Governance", "Regulators"]
+            ```
+
+      Templates:
+        T10:
+          Src: "sources/ORKO_Toolkit_v1.0.0/02_EJECUCION/A_Kit_Survival/Templates/T10_incident_report.md"
+          Markdown: |-
+
+    Kit_Minimal:
+      README:
+        Src: "sources/ORKO_Toolkit_v1.0.0/02_EJECUCION/B_Kit_Minimal/00_README_MINIMAL.md"
+        Markdown: |-
+          # ⚠️ Kit Minimal - Cimientos y Optimización
+
+          ## ¿Dónde Estoy?
+          Usted está en el **Kit Minimal** porque su Health Score (`H_org`) está entre **50 y 70**.
+          Su organización funciona, pero podría ser más rápida, más clara y más eficiente.
+
+          ## ¿Qué Hago Aquí?
+          **FOCO**: Construir una estructura escalable en 6-12 meses.
+
+          ### Tareas Clave
+          1.  **Mapeo de Capacidades:** Use `Templates/T04_Capacity_Inventory.xlsx` para profundizar en quién hace qué y con qué nivel cognitivo.
+          2.  **Autonomía Acotada:** Ejecute `Playbooks/P05_Bounded_Autonomy.md` para delegar decisiones a los equipos sin perder control.
+          3.  **Resolver Brechas:** Si detecta falta de skills, use `Playbooks/P10_Capacity_Gap_Resolution.md`.
+
+          ### Herramientas
+          Este kit incluye las herramientas de Survival más herramientas de planificación táctica.
+
+          ## ¿Qué Sigue?
+          Su meta es llegar a `H_org > 75`.
+          Monitoree su progreso mensualmente. Cuando la "fricción" desaparezca y la estrategia fluya hacia la ejecución sin esfuerzo, estará listo para el **Kit Avanzado**.
+
+      Playbooks:
+        P05:
+          Src: "sources/ORKO_Toolkit_v1.0.0/02_EJECUCION/B_Kit_Minimal/Playbooks/P05_bounded_autonomy_m6.md"
+          Markdown: |-
+            # P05_bounded_autonomy_m6
+            
+            **Tipo:** Playbook Transformation  
+            **ID:** P05  
+            **Trigger:** `eta_org` y/o `ROI_Habilitacion` subóptimos con `H_org` suficiente para aumentar autonomía (M6)  
+            **Estimación Ejecución:** `P4W`
+            
+            ---
+            
+            ## §0. FUNDAMENTO
+            
+            **Layer 0:** `A1`, `A3`, `A5`, `P1`, `P2`, `P5`, `I3`, `I5`, `I6`  
+            **Layer 1:** `D1`, `D2`, `D4`, `E6`, `E7`  
+            **Layer 2:** `TF1`, `TF2`
+            
+            **Justificación:** Cuando `H_org` es suficientemente alto pero `eta_org` y/o `ROI_Habilitacion` no alcanzan el potencial esperado, una causa recurrente es un modelo de autonomía/decisión pobremente diseñado. P05 define cómo pasar a modos de autonomía más avanzados (en especial `M6_BoundedAutonomy`) articulando capacidades (`P1`), flujos (`P2`) y propósito (`P5`) sin romper límites (`P4`) ni invariantes de trazabilidad (`I3`), accountability (`I5`) y adaptación (`I6`).
+            
+            ---
+            
+            ## §1. INTERFAZ
+            
+            ### Trigger Conditions
+            
+            ```yaml
+            triggers:
+              - condition: "H_org >= 70 AND eta_org < target_minimal"
+                metric: "eta_org"
+                threshold: "target_minimal"
+                source: "F13.eta_org_dashboard"
+              - condition: "H_org >= 70 AND ROI_Habilitacion < 1.2"
+                metric: "ROI_Habilitacion"
+                threshold: 1.2
+                source: "F13.roi_habilitacion"
+              - condition: "Trayectoria Minimal lista para mayor autonomía (decisión F3/F17)"
+                metric: "eta_org"
+                threshold: "Minimal->Avanzada"
+                source: "F3.trayectoria_decision"
+            ```
+            
+            ### Outputs
+            
+            ```yaml
+            outputs:
+              - report: "P05_autonomy_design_report.md"
+                consumers: ["F3", "F7", "F11", "F17", "E4_governance"]
+              - artifact: "bounded_autonomy_m6_playbook.yaml"
+                consumers: ["F11", "F15", "trayectorias.Avanzada"]
+              - metric_update: "eta_org_autonomy_expected_delta"
+                consumers: ["F13", "F17"]
+            ```
+            
+            ---
+            
+            ## §2. EJECUCIÓN
+            **Pasos**: 1) Diseñar modelo M6 autonomía, 2) Pilotear con 1-2 equipos, 3) Escalar, 4) Monitorear eta_org
+            
+            ---
+            
+            ## §3. RACI
+            ```yaml
+            raci:
+              responsible: ["Role_Architect", "Transformation_Lead"]
+              accountable: "Role_Captain"
+              consulted: ["Team_Leads", "TF1_Lead", "TF2_Lead"]
+              informed: ["Sponsor_L1_Human", "All_Teams"]
+            ```
+
+        P10:
+          Src: "sources/ORKO_Toolkit_v1.0.0/02_EJECUCION/B_Kit_Minimal/Playbooks/P10_capacity_gap_resolution.md"
+          Markdown: |-
+            # P10_capacity_gap_resolution
+            
+            **Tipo:** Playbook Transformation  
+            **ID:** P10  
+            **Trigger:** Gaps críticos de capacidad en F4/F10 que explican baja `H_org`/`eta_org` o bajo `ROI_Habilitacion`  
+            **Estimación Ejecución:** `P4W`
+            
+            ---
+            
+            ## §0. FUNDAMENTO
+            
+            **Layer 0:** `A1`, `A3`, `A5`, `P1`, `P2`, `P5`, `I3`, `I6`  
+            **Layer 1:** `D1`, `D4`, `E6`  
+            **Layer 2:** `TF1`, `TF2`
+            
+            **Justificación:** P10 se activa cuando la degradación de `H_org`/`eta_org` o el bajo `ROI_Habilitacion` se explican por gaps de capacidad (skills, FTE, plataformas) identificados en `F4`/`F10`. Su objetivo es diseñar y ejecutar un plan de cierre de gaps que restaure la eficiencia y prepare a la organización para escenarios G3/G4, en coordinación con P05, P06 y P11.
+            
+            ---
+            
+            ## §1. INTERFAZ
+            
+            ### Trigger Conditions
+            
+            ```yaml
+            triggers:
+              - condition: "F4/F10 identifican gaps críticos de capacidad que explican baja H_org/eta_org o bajo ROI_Habilitacion"
+                metric: "H_org"
+                threshold: "por_debajo_objetivo_trayectoria"
+                source: "F13.h_org_dashboard"
+              - condition: "G3_H_org_Bueno_Eficiencia_Baja activo con evidencia de falta de capacidades"
+                metric: "eta_org"
+                threshold: "G3_activo"
+                source: "02_health_gates.md"
+            ```
+            
+            ### Outputs
+            
+            ```yaml
+            outputs:
+              - report: "P10_capacity_gap_resolution_report.md"
+                consumers: ["F4", "F10", "F13", "F17", "E4_governance"]
+              - artifact: "capacity_gap_resolution_plan.yaml"
+                consumers: ["F10", "F17", "P05", "P06"]
+            ```
+            
+            
+            ---
+            
+            ## §2. EJECUCIÓN
+            **Pasos**: 1) Identificar gap capacidad (TF1), 2) Evaluar opciones (hire/buy/build/borrow), 3) Ejecutar adquisición, 4) Onboard, 5) Validar gap cerrado
+            
+            ---
+            
+            ## §3. RACI
+            ```yaml
+            raci:
+              responsible: ["Role_CapacityOwner", "TF1_Lead", "HR"]
+              accountable: "Role_Captain"
+              consulted: ["Role_Architect", "Finance"]
+              informed: ["Sponsor_L1_Human", "Affected_Teams"]
+            ```
+
+      Templates:
+        T04:
+          Src: "sources/ORKO_Toolkit_v1.0.0/02_EJECUCION/B_Kit_Minimal/Templates/T04_capacity_inventory.xlsx"
+          Markdown: |-
+
+
+  Referencia:
+    Guia_Uso_Calculadoras:
+      Src: "sources/ORKO_Toolkit_v1.0.0/03_REFERENCIA/Guia_Uso_Calculadoras.md"
+      Markdown: |-
+        # GUÍA DE USO – CALCULADORAS ORKO v1.0.0
+
+        ## §0 PROPÓSITO Y ALCANCE
+
+        ### Objetivo
+        Esta guía documenta cómo usar las tres calculadoras críticas de ORKO para apoyar decisiones en las fases del Work System Life Cycle (WSLC). Las calculadoras operacionalizan métricas canónicas definidas en el genoma ORKO.
+
+        ### Calculadoras cubiertas
+        1. **health_score_calculator.xlsx** – Calcula H_org (salud organizacional) y componentes A/P/D
+        2. **context_decision_matrix.xlsx** – Determina trayectoria óptima (Survival/Minimal/Avanzada)
+        3. **convergence_tracker.xlsx** – Mide convergencia E6_current → E6_target
+
+        ### Audiencia
+        - Practicantes ORKO (consultores, facilitadores, arquitectos organizacionales)
+        - Equipos de transformación que requieren métricas objetivas
+        - Auditores que validan coherencia con invariantes I1-I8
+
+        ### Principios de uso
+        - **Trazabilidad GENOMA→FENOTIPO:** Fórmulas derivan de axiomas, primitivos, invariantes y tejidos
+        - **No modificar genoma:** Calculadoras son fenotipo parametrizable
+        - **Uso secuencial:** F1→F3→F9→F13→F18 según flujo WSLC
+        - **Health gates obligatorios:** G1-G4 deben revisarse antes de avanzar
+
+        ---
+
+        ## §1 HEALTH_SCORE_CALCULATOR
+
+        ### Propósito
+        Calcular **H_org** (salud organizacional) en tres dimensiones:
+        - **A_Score:** Coherencia con propósito/estrategia
+        - **P_Score:** Desempeño operativo
+        - **D_Score:** Capacidad de evolución
+
+        **Fundamento:** Métrica `H_org` de `out/00_fundamentos_teoricos.md` §4.3 (T6), ecuación `V_org = f(H_org, η_org, ROI_Habilitacion, t)`, invariantes I1/I3/I6, tejidos TF1/TF2/TF3.
+
+        ### Inputs
+        **Desde F1:**
+        - `org_size`, `context_complexity`, `budget_available`, `strategic_clarity`
+
+        **Autoevaluación:**
+        - `current_state_maturity`, `TF1/TF2/TF3_deployed` (%)
+
+        **Cómo obtener:** Desde `context.yaml`, talleres F1, auditorías de tejidos.
+
+        ### Parámetros ajustables
+        - `w_A/w_P/w_D`: Pesos A/P/D (default: 0.33, 0.33, 0.34)
+        - `TF1/TF2/TF3_weight`: Ponderación tejidos (default: 0.4, 0.35, 0.25)
+        - `maturity_floor`, `critical_threshold_G1`
+
+        ### Outputs
+        - **H_org** (0-1), **A/P/D_Score** (0-1), **TF1/TF2/TF3_Score** (0-1)
+        - **Health_Band:** G1 (<0.35), G2 (0.35-0.55), G3 (0.55-0.75), G4 (≥0.75)
+        - **Recomendaciones:** Playbooks según banda
+
+        ### Ejemplo caso 01_startup_50p
+        **Inputs:** org_size=50, complexity=3, budget=25M CLP, strategic_clarity=70%, maturity=2, TF1=40%, TF2=30%, TF3=20%
+
+        **Resultado:** H_org=0.43 → **G2 (bajo)** → Trayectoria Survival/Minimal, playbooks P01/P02
+
+        ---
+
+        ## §2 CONTEXT_DECISION_MATRIX
+
+        ### Propósito
+        Determinar **trayectoria** (Survival/Minimal/Avanzada) desde:
+        - H_org, budget, complejidad/riesgo, madurez
+
+        **Fundamento:** Primitivo P6 (WSLC), invariante I6 (health gates), teorema T7 (trayectorias válidas).
+
+        ### Inputs
+        - `H_org` (desde calculator), `budget_total`, `org_size`, `context_risk`, `strategic_horizon`, `current_maturity`
+
+        ### Reglas DM1-DM5
+        **DM1:** Si H_org<0.35 O riesgo=5 → Survival  
+        **DM2:** Si budget/persona < 500 USD/año → Survival  
+        **DM3:** Si H_org<0.65 Y madurez≤3 → Minimal  
+        **DM4:** Si H_org≥0.65 Y budget/persona≥2000 Y madurez≥4 → Avanzada  
+        **DM5:** Otro caso → Minimal (default)
+
+        ### Outputs
+        - `trajectory_selected`, `rationale`, `health_band_used`, `estimated_duration_months`, `key_constraints`
+        - **Playbooks:** Survival (P01/P02/P13), Minimal (P01-P06+P13), Avanzada (P01-P15)
+
+        ### Ejemplo caso 01_startup_50p
+        **Input:** H_org=0.43, budget=50K USD, org_size=50, risk=3, maturity=2  
+        **Regla aplicada:** DM3 (H_org<0.65 Y madurez=2≤3)  
+        **Resultado:** **Minimal** (12-18 meses, playbooks P01-P06+P13)
+
+        ---
+
+        ## §3 CONVERGENCE_TRACKER
+
+        ### Propósito
+        Medir **convergencia** E6_current → E6_target durante habilitación.
+
+        **Fundamento:** Primitivo P5 (Architectural State), invariante I3 (no-regresión), tejidos TF1/TF2/TF3.
+
+        ### Inputs
+        **E6_CURRENT:** TF1/TF2/TF3_current_count, H_org_current, timestamp_current  
+        **E6_TARGET:** TF1/TF2/TF3_target_count, H_org_target, timestamp_target
+
+        **Cómo obtener:** E6_current desde auditoría F13, E6_target desde diseño F4-F9.
+
+        ### Parámetros
+        - `weight_TF1/TF2/TF3`, `weight_H_org`, `convergence_threshold` (default: 0.85)
+
+        ### Outputs
+        - **Convergence_Score** (0-1), **Convergence_Status** (Converged/In Progress/Lagging)
+        - **Deltas:** Delta_TF1/TF2/TF3/H_org
+        - **Proyecciones:** Estimated_Time_To_Target, Recommendations
+
+        ### Ejemplo caso 06_gore_nuble (3 meses post-F12)
+        **E6_current:** TF1=12, TF2=8, TF3=15, H_org=0.58  
+        **E6_target:** TF1=18, TF2=14, TF3=25, H_org=0.75  
+        **Resultado:** Convergence_Score=0.65 → **In Progress** (6 meses restantes, priorizar TF2/TF3)
+
+        ---
+
+        ## §4 FLUJO INTEGRADO
+
+        ### Secuencia típica
+        1. **F1** → captura inputs → **health_score_calculator** (H_org)
+        2. **F3** → **context_decision_matrix** (trayectoria)
+        3. **F4-F9** → diseña TF1/TF2/TF3 → define E6_target
+        4. **F9** → **convergence_tracker** (inicialización)
+        5. **F10-F12** → despliega → actualiza E6_current
+        6. **F13** → re-calcula H_org → actualiza **convergence_tracker**
+        7. **F17** (opcional) → re-evalúa trayectoria si drift
+        8. **F18** → monitorea convergencia → ajusta/itera
+
+        ### Dependencias
+        - health_score → context_decision (H_org input crítico)
+        - context_decision → F4-F9 (trayectoria determina alcance)
+        - health_score + F4-F9 → convergence (H_org + E6 target/current)
+
+        ---
+
+        ## §5 REFERENCIAS AL GENOMA
+
+        ### Vínculos FENOTIPO→GENOMA
+        **Métricas canónicas:**
+        - H_org → `out/00_fundamentos_teoricos.md` §4.3 (T6)
+        - η_org, ROI_Habilitacion → ecuación master V_org
+        - TF1/TF2/TF3 → `out/20_tejidos.md`
+
+        **Invariantes validados:**
+        - I1 (conservación propósito) → A_Score mide alignment
+        - I3 (no-regresión) → convergence_tracker valida
+        - I6 (health gates) → Health_Band G1-G4
+
+        **Fases WSLC:**
+        - F1 (Context) → inputs para health_score/context_decision
+        - F3 (Trajectory) → usa context_decision
+        - F9 (Transition) → define E6_target
+        - F13 (Health) → mide H_org periódicamente
+        - F18 (Evolution) → monitorea convergence
+
+        **Contratos kernel:**
+        - `VOCAB_CONTROLADO.yaml`: IDs canónicos (health_score, trajectory_selected, architectural_state)
+        - `DEPENDENCY_GRAPH.yaml`: F1→F3, F3→F4-F9, F9→F10-F12, F13→F18
+        - §0 FUNDAMENTO: F1/F3/F9/F13/F18 documentan relación con calculadoras
+
+        ---
+
+        **Versión:** CAP-22 (ORKO v1.0.0 post-release)  
+        **Estado:** Guía de uso operativa  
+        **Autor:** sq4/E4 (coordinación/completion)  
+        **Fecha:** 2025-11-18  
+        **Refs:** `CALCULADORAS_P0_SPEC.md`, `P0_calculadoras_y_templates_map.md`
+    Vocabulario_Controlado:
+      Src: "sources/ORKO_Toolkit_v1.0.0/03_REFERENCIA/Vocabulario_Controlado.yaml"
+      Yaml_Part_1: |-
+        # ================================================================
+        # VOCABULARIO CONTROLADO ORKO - DICCIONARIO CANÓNICO
+        # ================================================================
+        # 
+        # Propósito: Diccionario canónico términos técnicos ORKO Layers 0-3
+        # Enforcement: 100% obligatorio (0 términos prohibidos tolerados)
+        # Validación: grep, code review, CHECKLIST_VALIDACION.md
+        # 
+        # Version: 1.0.0
+        # Date: 2024-11-14
+        # Status: PRODUCTION
+        #
+        # ================================================================
+
+        metadata:
+          version: "1.0.0"
+          date: "2024-11-14"
+          status: "production"
+          scope: "layers_0_to_3"
+          purpose: "Diccionario canónico términos ORKO para desarrollo metodología"
+          enforcement: "mandatory_100_percent"
+          validation_methods:
+            - "grep términos prohibidos en todos archivos .md"
+            - "code review peer obligatorio"
+            - "CHECKLIST_VALIDACION.md pre-commit"
+            - "yamllint VOCABULARIO_CONTROLADO.yaml"
+          statistics:
+            total_terms: null  # Completar al final
+            axiomas: 5
+            primitivos: 5
+            invariantes: 8
+            dominios: 4
+            contratos: 5
+            entidades: 2
+            metricas_core: 3
+            delegation_modes: 6
+            tejidos: 3
+            fases_wslc: 18
+            playbooks: 15
+            trayectorias: 3
+            terminos_prohibidos: 6
+          authors:
+            - "Lead Architecture"
+            - "Lead Methodology"
+          maintainers:
+            - "Equipo Arquitectura ORKO"
+          kernel_contract:
+            release_tag: "v1.0.0-kernel"
+            stable_id_families:
+              - "A*"
+              - "P*"
+              - "I*"
+              - "D*"
+              - "F*"
+              - "P0x"
+              - "trayectorias"
+            stable_metric_ids:
+              - "H_org"
+              - "eta_org"
+              - "ROI_Habilitacion"
+            change_policy: "Cambios futuros serán backward-compatible o documentados como breaking change en el changelog."
+
+        # ================================================================
+        # LAYER 0: FUNDAMENTOS TEÓRICOS (NO MODIFICABLE)
+        # ================================================================
+        # Base axiomática, primitivos irreducibles, invariantes preservados
+        # Source: out/00_fundamentos_teoricos.md
+        # ================================================================
+
+        layer_0:
+
+          # ------------------------------------------------------------
+          # AXIOMAS A1-A5: Base conceptual irrefutable
+          # ------------------------------------------------------------
+          axiomas:
+
+            A1_Organizacion:
+              id: "A1"
+              nombre: "Axioma Organización"
+              categoria: "axioma"
+              enunciado: "Organización = colaboración de personas transformando inputs en outputs."
+              alias:
+                - "Organization"
+                - "Org"
+                - "Work System"
+              palabras_clave:
+                - "colaboración"
+                - "personas"
+                - "transformación"
+                - "inputs"
+                - "outputs"
+              fuente_oficial: "00_fundamentos_teoricos/01_axiomas.md"
+
+            A2_Proposito:
+              id: "A2"
+              nombre: "Axioma Propósito"
+              categoria: "axioma"
+              enunciado: "Toda organización existe para un objetivo específico y explícito."
+              alias:
+                - "Purpose"
+                - "Mission"
+                - "Raison d'être"
+              palabras_clave:
+                - "objetivo"
+                - "intencionalidad"
+                - "direccionalidad"
+              fuente_oficial: "00_fundamentos_teoricos/01_axiomas.md"
+
+            A3_Flujo:
+              id: "A3"
+              nombre: "Axioma Flujo"
+              categoria: "axioma"
+              enunciado: "Las organizaciones son redes de flujo, no jerarquías estáticas."
+              alias:
+                - "Flow"
+                - "Network"
+                - "Dynamic System"
+              palabras_clave:
+                - "redes"
+                - "flujo"
+                - "dinámica"
+                - "anti-jerarquía"
+              fuente_oficial: "00_fundamentos_teoricos/01_axiomas.md"
+
+            A4_Limite:
+              id: "A4"
+              nombre: "Axioma Límite"
+              categoria: "axioma"
+              enunciado: "Los sistemas operan bajo restricciones que acotan el espacio de posibilidades."
+              alias:
+                - "Constraint"
+                - "Limit"
+                - "Boundary"
+              palabras_clave:
+                - "restricciones"
+                - "feasibility"
+                - "acotar"
+              fuente_oficial: "00_fundamentos_teoricos/01_axiomas.md"
+
+            A5_Cambio:
+              id: "A5"
+              nombre: "Axioma Cambio"
+              categoria: "axioma"
+              enunciado: "Las organizaciones evolucionan continuamente bajo presión selectiva."
+              alias:
+                - "Evolution"
+                - "Change"
+                - "Adaptation"
+              palabras_clave:
+                - "evolución"
+                - "adaptación"
+                - "presión selectiva"
+              fuente_oficial: "00_fundamentos_teoricos/01_axiomas.md"
+
+          # ------------------------------------------------------------
+          # PRIMITIVOS P1-P5: Elementos irreducibles
+          # ------------------------------------------------------------
+          primitivos:
+
+            P1_Capacidad:
+              id: "P1"
+              nombre: "Primitivo Capacidad"
+              definicion: "Habilidad de ejecutar transformaciones sobre inputs para producir outputs."
+              contrato: "C1_CapacityAsset"
+              alias:
+                - "Capacity"
+                - "CapacityAsset"
+                - "Capability"
+              atributos_core:
+                substrate: ["Humano", "Algorítmico", "Mecánico", "Mixto"]
+                capacity_type: ["C0_Foundational", "C1_Core", "C2_Context", "C3_Commodity"]
+              fuente_oficial: "00_fundamentos_teoricos/02_primitivos.md"
+
+            P2_Flujo:
+              id: "P2"
+              nombre: "Primitivo Flujo"
+              definicion: "Secuencia de transformaciones que conectan capacidades y objetos de información."
+              contrato: "C2_FlowAsset"
+              alias:
+                - "Flow"
+                - "FlowAsset"
+                - "Workflow"
+              atributos_core:
+                flow_type: ["Sequential", "Parallel", "Conditional", "Iterative"]
+              fuente_oficial: "00_fundamentos_teoricos/02_primitivos.md"
+
+            P3_Informacion:
+              id: "P3"
+              nombre: "Primitivo Información"
+              definicion: "Datos estructurados con schema y governance explícita."
+              contrato: "C3_InformationAsset"
+              alias:
+                - "Information"
+                - "InformationAsset"
+                - "Data"
+              atributos_core:
+                estructura: ["Structured", "Semi_Structured", "Unstructured"]
+              fuente_oficial: "00_fundamentos_teoricos/02_primitivos.md"
+
+            P4_Limite:
+              id: "P4"
+              nombre: "Primitivo Límite"
+              definicion: "Restricción explícita que acota decisiones, flujos o capacidades."
+              contrato: "C4_LimitAsset"
+              alias:
+                - "Constraint"
+                - "Limit"
+                - "Boundary"
+              atributos_core:
+                tipos: ["Regulatory", "Budget", "Technical", "Time", "Security", "Political"]
+              fuente_oficial: "00_fundamentos_teoricos/02_primitivos.md"
+
+            P5_Proposito:
+              id: "P5"
+              nombre: "Primitivo Propósito"
+              definicion: "Outcome deseado más métricas asociadas y su posición en jerarquía de objetivos."
+              contrato: "C5_PurposeAsset"
+              alias:
+                - "Purpose"
+                - "Objective"
+              atributos_core:
+                campos: ["outcome", "metrics", "parent_id"]
+              fuente_oficial: "00_fundamentos_teoricos/02_primitivos.md"
+
+          # ------------------------------------------------------------
+          # INVARIANTES I1-I8: Propiedades preservadas
+          # ------------------------------------------------------------
+          invariantes:
+
+            I1_Minimalidad:
+              id: "I1"
+              nombre: "Minimalidad"
+              enunciado: "El sistema usa el conjunto mínimo necesario y suficiente de primitivos."
+              fuente_oficial: "00_fundamentos_teoricos/03_invariantes.md"
+
+            I2_Ortogonalidad:
+              id: "I2"
+              nombre: "Ortogonalidad"
+              enunciado: "Los primitivos son mutuamente independientes y no se solapan en responsabilidad."
+              fuente_oficial: "00_fundamentos_teoricos/03_invariantes.md"
+
+            I3_Trazabilidad:
+              id: "I3"
+              nombre: "Trazabilidad"
+              enunciado: "Toda transformación debe ser auditable desde inputs hasta outputs."
+              fuente_oficial: "00_fundamentos_teoricos/03_invariantes.md"
+
+            I4_Clasificacion_Contextual:
+              id: "I4"
+              nombre: "Clasificación Contextual"
+              enunciado: "Las responsabilidades se asignan explícitamente entre humanos y sistemas algorítmicos."
+              fuente_oficial: "00_fundamentos_teoricos/03_invariantes.md"
+
+            I5_HAIC:
+              id: "I5"
+              nombre: "Human-AI Collaboration (HAIC)"
+              enunciado: "La primacía humana debe quedar explícita en toda decisión asistida por IA."
+              fuente_oficial: "00_fundamentos_teoricos/03_invariantes.md"
+
+            I6_Trajectory_Awareness:
+              id: "I6"
+              nombre: "Trajectory-Awareness"
+              enunciado: "La progresión de autonomía y cambios de trayectoria deben quedar documentados."
+              fuente_oficial: "00_fundamentos_teoricos/03_invariantes.md"
+
+            I7_Emergencia_Complejidad:
+              id: "I7"
+              nombre: "Emergencia de Complejidad"
+              enunciado: "Las prácticas emergen según la complejidad organizacional y madurez del sistema."
+              fuente_oficial: "00_fundamentos_teoricos/03_invariantes.md"
+
+            I8_Adaptacion_Contextual:
+              id: "I8"
+              nombre: "Adaptación Contextual"
+              enunciado: "La metodología debe parametrizarse al contexto sin violar los invariantes del genoma."
+              fuente_oficial: "00_fundamentos_teoricos/03_invariantes.md"
+
+        # ================================================================
+        # LAYER 1: ARQUITECTURA
+        # ================================================================
+        # Dominios, contratos, entidades, métricas
+        # Source: out/10_arquitectura_orko.md
+        # ================================================================
+
+        layer_1:
+
+          dominios:
+
+            D1_Arquitectura:
+              id: "D1"
+              nombre: "Arquitectura"
+              definicion: "Diseño de la estructura estática de los sistemas de trabajo."
+              fuente_oficial: "00_fundamentos_teoricos/05_dominios.md"
+
+            D2_Percepcion:
+              id: "D2"
+              nombre: "Percepción"
+              definicion: "Captura y actualización de información sobre el entorno organizacional."
+              fuente_oficial: "00_fundamentos_teoricos/05_dominios.md"
+
+            D3_Decision:
+              id: "D3"
+              nombre: "Decisión"
+              definicion: "Elección informada bajo límites y trade-offs explícitos."
+              fuente_oficial: "00_fundamentos_teoricos/05_dominios.md"
+
+            D4_Operacion:
+              id: "D4"
+              nombre: "Operación"
+              definicion: "Ejecución dinámica de transformaciones sobre capacidades y flujos."
+              fuente_oficial: "00_fundamentos_teoricos/05_dominios.md"
+
+          contratos:
+
+            C1_Capacidad:
+              id: "C1"
+              nombre: "Contrato Capacidad"
+              primitivo_base: "P1_Capacidad"
+              definicion: "Schema operable para describir y gobernar capacidades (P1)."
+              fuente_oficial: "10_arquitectura_orko/01_contratos.md"
+
+            C2_Flujo:
+              id: "C2"
+              nombre: "Contrato Flujo"
+              primitivo_base: "P2_Flujo"
+              definicion: "Schema operable para describir flujos de trabajo y orquestación (P2)."
+              fuente_oficial: "10_arquitectura_orko/01_contratos.md"
+
+            C3_Informacion:
+              id: "C3"
+              nombre: "Contrato Información"
+              primitivo_base: "P3_Informacion"
+              definicion: "Schema operable para activos de información (P3)."
+              fuente_oficial: "10_arquitectura_orko/01_contratos.md"
+
+            C4_Limite:
+              id: "C4"
+              nombre: "Contrato Límite"
+              primitivo_base: "P4_Limite"
+              definicion: "Schema operable para límites y restricciones (P4)."
+              fuente_oficial: "10_arquitectura_orko/01_contratos.md"
+
+            C5_Proposito:
+              id: "C5"
+              nombre: "Contrato Propósito"
+              primitivo_base: "P5_Proposito"
+              definicion: "Schema operable para propósitos, outcomes y métricas (P5)."
+              fuente_oficial: "10_arquitectura_orko/01_contratos.md"
+          entidades:
+            E6_ArchitecturalState:
+              id: "E6"
+              nombre: "Architectural State"
+              definicion: "Snapshot completo del sistema en un momento dado (current, target, intermediate, historical)."
+              fuente_oficial: "20_tejidos/07_architectural_state_management.md"
+            E7_FlowExecution:
+              id: "E7"
+              nombre: "Flow Execution"
+              definicion: "Instancia concreta de ejecución de un flujo, incluyendo estado, métricas y lineage."
+              fuente_oficial: "20_tejidos/00_introduccion_tejidos.md"
+
+          metricas:
+            H_org:
+              id: "H_org"
+              nombre: "Health organizacional"
+              definicion: "Métrica integrada de salud organizacional sobre D1-D4."
+              fuente_oficial: "00_fundamentos_teoricos/05_dominios.md"
+            eta_org:
+              id: "eta_org"
+              nombre: "η_org"
+              definicion: "Eficiencia global derivada de la ecuación maestra de valor organizacional V_org."
+              fuente_oficial: "00_fundamentos_teoricos/07_ecuacion_maestra.md"
+            ROI_Habilitacion:
+              id: "ROI_Habilitacion"
+              nombre: "ROI Habilitación"
+              definicion: "Retorno de inversión asociado a flujos y capacidades de habilitación."
+              fuente_oficial: "00_fundamentos_teoricos/07_ecuacion_maestra.md"
+
+          delegation_modes:
+            M1:
+              id: "M1"
+              nombre: "Modo de delegación M1"
+              notas: "Modo de delegación asociado al invariante I5_HAIC. Ver documentación HAIC."
+              fuente_oficial: "00_fundamentos_teoricos/03_invariantes.md"
+            M2:
+              id: "M2"
+              nombre: "Modo de delegación M2"
+              notas: "Modo de delegación asociado al invariante I5_HAIC. Ver documentación HAIC."
+              fuente_oficial: "00_fundamentos_teoricos/03_invariantes.md"
+            M3:
+              id: "M3"
+              nombre: "Modo de delegación M3"
+              notas: "Modo de delegación asociado al invariante I5_HAIC. Ver documentación HAIC."
+              fuente_oficial: "00_fundamentos_teoricos/03_invariantes.md"
+            M4:
+              id: "M4"
+              nombre: "Modo de delegación M4"
+              notas: "Modo de delegación asociado al invariante I5_HAIC. Ver documentación HAIC."
+              fuente_oficial: "00_fundamentos_teoricos/03_invariantes.md"
+            M5:
+              id: "M5"
+              nombre: "Modo de delegación M5"
+              notas: "Modo de delegación asociado al invariante I5_HAIC. Ver documentación HAIC."
+              fuente_oficial: "00_fundamentos_teoricos/03_invariantes.md"
+            M6:
+              id: "M6"
+              nombre: "Modo de delegación M6"
+              notas: "Modo de delegación asociado al invariante I5_HAIC. Ver documentación HAIC."
+              fuente_oficial: "00_fundamentos_teoricos/03_invariantes.md"
+
+        # ================================================================
+        # LAYER 2: TEJIDOS (TF1-TF3)
+        # ================================================================
+        # Capacity, Flow, Information Fabrics
+        # Source: out/20_tejidos.md
+        # ================================================================
+
+        layer_2:
+
+          tejidos:
+
+            TF1_Capacity:
+              id: "TF1"
+              nombre: "Tejido Capacity"
+              primitivo_base: "P1_Capacidad"
+              definicion: "Actores (humanos, algorítmicos, mecánicos) que ejecutan transformaciones."
+              fuente_oficial: "20_tejidos/01_TF1_capacity.md"
+
+            TF2_Flow:
+              id: "TF2"
+              nombre: "Tejido Flow"
+              primitivo_base: "P2_Flujo"
+              definicion: "Orquestación de capacidades en secuencias de transformación (DAGs)."
+              fuente_oficial: "20_tejidos/02_TF2_flow.md"
+
+            TF3_Information:
+              id: "TF3"
+              nombre: "Tejido Information"
+              primitivo_base: "P3_Informacion"
+              definicion: "Ciclo de vida de la información: ingestion → storage → analytics → semantics."
+              fuente_oficial: "20_tejidos/03_TF3_information.md"
+
+        # ================================================================
+        # LAYER 3: METODOLOGÍA
+        # ================================================================
+        # WSLC Phases, Playbooks, Trayectorias
+        # Source: 30_metodologia_orko
+        # ================================================================
+
+        layer_3:
+
+          wslc_phases:
+            F1:
+              id: "F1"
+              nombre: "Context Assessment"
+              definicion: "Evalúa el contexto organizacional y establece un perfil de contexto e H_org baseline."
+              fuente_oficial:
+                - "30_metodologia_orko/01_fases_initiation/F1_context_assessment.md"
+                - "30_metodologia_orko/00b_mapeo_dominios_fases.md"
+            F2:
+              id: "F2"
+              nombre: "Vision Definition"
+              definicion: "Define la visión y el propósito organizacional de alto nivel."
+              fuente_oficial: "30_metodologia_orko/01_fases_initiation/F2_vision_definition.md"
+            F3:
+              id: "F3"
+              nombre: "Trajectory Selection"
+              definicion: "Selecciona la trayectoria Survival/Minimal/Avanzada según contexto y constraints."
+              fuente_oficial:
+                - "30_metodologia_orko/01_fases_initiation/F3_trajectory_selection.md"
+                - "30_metodologia_orko/00b_mapeo_dominios_fases.md"
+            F4:
+              id: "F4"
+              nombre: "Capability Mapping"
+              definicion: "Mapea capacidades actuales y requeridas (P1_Capacidad) para la transformación."
+              fuente_oficial: "30_metodologia_orko/02_fases_development/F4_capability_mapping.md"
+            F5:
+              id: "F5"
+              nombre: "Flow Design"
+              definicion: "Diseña flujos de trabajo (P2_Flujo) y reduce handoffs críticos."
+              fuente_oficial: "30_metodologia_orko/02_fases_development/F5_flow_design.md"
+            F6:
+              id: "F6"
+              nombre: "Information Architecture"
+              definicion: "Diseña la arquitectura de información (P3_Informacion, TF3_Information)."
+              fuente_oficial:
+                - "30_metodologia_orko/02_fases_development/F6_information_architecture.md"
+                - "30_metodologia_orko/00b_mapeo_dominios_fases.md"
+            F7:
+              id: "F7"
+              nombre: "Purpose Cascade"
+              definicion: "Cascada de propósito y OKR desde nivel organizacional a equipos e individuos."
+              fuente_oficial: "30_metodologia_orko/02_fases_development/F7_purpose_cascade.md"
+            F8:
+              id: "F8"
+              nombre: "Limits Definition"
+              definicion: "Define límites regulatorios, técnicos, de seguridad y presupuesto (P4_Limite)."
+              fuente_oficial: "30_metodologia_orko/02_fases_development/F8_limits_definition.md"
+            F9:
+              id: "F9"
+              nombre: "Target State Design"
+              definicion: "Diseña el estado arquitectónico objetivo (E6_ArchitecturalState)."
+              fuente_oficial:
+                - "30_metodologia_orko/02_fases_development/F9_target_state_design.md"
+                - "30_metodologia_orko/00b_mapeo_dominios_fases.md"
+            F10:
+              id: "F10"
+              nombre: "Quick Wins"
+              definicion: "Identifica e implementa quick wins de alto impacto y bajo esfuerzo."
+              fuente_oficial: "30_metodologia_orko/03_fases_implementation/F10_quick_wins.md"
+            F11:
+              id: "F11"
+              nombre: "Fabric Deployment"
+              definicion: "Despliega tejidos tecnológicos TF1–TF3 según el diseño arquitectónico."
+              fuente_oficial: "30_metodologia_orko/03_fases_implementation/F11_fabric_deployment.md"
+            F12:
+              id: "F12"
+              nombre: "State Transition"
+              definicion: "Ejecuta la transición controlada desde el estado actual al estado objetivo."
+              fuente_oficial: "30_metodologia_orko/03_fases_implementation/F12_state_transition.md"
+            F13:
+              id: "F13"
+              nombre: "Health Monitoring"
+              definicion: "Monitorea H_org, drifts y métricas clave mediante dashboards y alertas."
+              fuente_oficial:
+                - "30_metodologia_orko/04_fases_operation/F13_health_monitoring.md"
+                - "30_metodologia_orko/00b_mapeo_dominios_fases.md"
+            F14:
+              id: "F14"
+              nombre: "Incident Response"
+              definicion: "Gestiona incidentes críticos usando playbooks de recuperación."
+              fuente_oficial: "30_metodologia_orko/04_fases_operation/F14_incident_response.md"
+            F15:
+              id: "F15"
+              nombre: "Continuous Execution"
+              definicion: "Implementa ejecución continua basada en Xanpan y cadencias estables."
+              fuente_oficial: "30_metodologia_orko/04_fases_operation/F15_continuous_execution.md"
+            F16:
+              id: "F16"
+              nombre: "Learning Loops"
+              definicion: "Cierra loops de aprendizaje mediante retros, post-mortems y ajustes."
+              fuente_oficial: "30_metodologia_orko/05_fases_evolution/F16_learning_loops.md"
+            F17:
+              id: "F17"
+              nombre: "Adaptation"
+              definicion: "Ajusta la trayectoria y el diseño según evidencias y drifts detectados."
+              fuente_oficial:
+                - "30_metodologia_orko/05_fases_evolution/F17_adaptation.md"
+                - "30_metodologia_orko/00b_mapeo_dominios_fases.md"
+            F18:
+              id: "F18"
+              nombre: "Convergence Check"
+              definicion: "Verifica convergencia entre estado actual, estado objetivo y propósito."
+              fuente_oficial: "30_metodologia_orko/05_fases_evolution/F18_convergence_check.md"
+
+          playbooks:
+            P01:
+              id: "P01"
+              nombre: "Low H_org Recovery"
+              definicion: "Playbook de recuperación cuando H_org cae bajo umbral crítico."
+              archivo: "30_metodologia_orko/06_playbooks_recovery/P01_low_h_org_recovery.md"
+            P02:
+              id: "P02"
+              nombre: "Handoff Reduction"
+              definicion: "Playbook para reducir handoffs y mejorar flow efficiency."
+              archivo: "30_metodologia_orko/06_playbooks_recovery/P02_handoff_reduction.md"
+            P03:
+              id: "P03"
+              nombre: "OKR Alignment"
+              definicion: "Playbook para recuperar alineamiento de OKR entre niveles."
+              archivo: "30_metodologia_orko/06_playbooks_recovery/P03_okr_alignment.md"
+            P04:
+              id: "P04"
+              nombre: "Security Remediation"
+              definicion: "Playbook de remediación ante incidentes de seguridad."
+              archivo: "30_metodologia_orko/06_playbooks_recovery/P04_security_remediation.md"
+            P05:
+              id: "P05"
+              nombre: "Bounded Autonomy M6"
+              definicion: "Playbook para implementar autonomía acotada basada en modos de delegación M1–M6."
+              archivo: "30_metodologia_orko/07_playbooks_transformation/P05_bounded_autonomy_m6.md"
+            P06:
+              id: "P06"
+              nombre: "Pilot Transformation"
+              definicion: "Playbook para ejecutar pilotos de transformación controlados."
+              archivo: "30_metodologia_orko/07_playbooks_transformation/P06_pilot_transformation.md"
+            P07:
+              id: "P07"
+              nombre: "Scale Transformation"
+              definicion: "Playbook para escalar una transformación probada a más unidades."
+              archivo: "30_metodologia_orko/07_playbooks_transformation/P07_scale_transformation.md"
+            P08:
+              id: "P08"
+              nombre: "Optimization Sustain"
+              definicion: "Playbook para sostener optimizaciones logradas en el tiempo."
+              archivo: "30_metodologia_orko/07_playbooks_transformation/P08_optimization_sustain.md"
+            P09:
+              id: "P09"
+              nombre: "Drift Detection Response"
+              definicion: "Playbook para detección y respuesta a drift en métricas o arquitectura."
+              archivo: "30_metodologia_orko/08_playbooks_operational/P09_drift_detection_response.md"
+            P10:
+              id: "P10"
+              nombre: "Capacity Gap Resolution"
+              definicion: "Playbook para resolver gaps críticos de capacidad."
+              archivo: "30_metodologia_orko/08_playbooks_operational/P10_capacity_gap_resolution.md"
+            P11:
+              id: "P11"
+              nombre: "Flow Optimization"
+              definicion: "Playbook para optimizar flujos con cuellos de botella."
+              archivo: "30_metodologia_orko/08_playbooks_operational/P11_flow_optimization.md"
+            P12:
+              id: "P12"
+              nombre: "Data Quality Recovery"
+              definicion: "Playbook para recuperar la calidad de datos en activos de información."
+              archivo: "30_metodologia_orko/08_playbooks_operational/P12_data_quality_recovery.md"
+            P13:
+              id: "P13"
+              nombre: "Political Alignment"
+              definicion: "Playbook para gestionar desalineamientos políticos y de stakeholders."
+              archivo: "30_metodologia_orko/08_playbooks_operational/P13_political_alignment.md"
+            P14:
+              id: "P14"
+              nombre: "Client Expectation Management"
+              definicion: "Playbook para gestionar expectativas de clientes frente a capacidades reales."
+              archivo: "30_metodologia_orko/08_playbooks_operational/P14_client_expectation_mgmt.md"
+            P15:
+              id: "P15"
+              nombre: "Adaptive Cadence"
+              definicion: "Playbook para ajustar cadencias de trabajo según señales de contexto."
+              archivo: "30_metodologia_orko/08_playbooks_operational/P15_adaptive_cadence.md"
+
+          trayectorias:
+            Minimal:
+              id: "Minimal"
+              nombre: "Trayectoria Minimal 6–12 meses"
+              definicion: "Trayectoria de implementación focalizada con horizonte 6–12 meses."
+              archivo: "30_metodologia_orko/09_trayectorias/01_minimal_6_12_meses.md"
+            Avanzada:
+              id: "Avanzada"
+              nombre: "Trayectoria Avanzada 18–36 meses"
+              definicion: "Trayectoria de transformación profunda con horizonte 18–36 meses."
+              archivo: "30_metodologia_orko/09_trayectorias/02_avanzada_18_36_meses.md"
+            Survival:
+              id: "Survival"
+              nombre: "Trayectoria Survival 0–10K"
+              definicion: "Trayectoria de supervivencia orientada a contextos de alto riesgo o recursos mínimos."
+              archivo: "30_metodologia_orko/09_trayectorias/04_survival_0_10K.md"
+
+        # ================================================================
+        # TÉRMINOS PROHIBIDOS (Ambiguos/Imprecisos)
+        # ================================================================
+        # Lista términos NO permitidos + alternativas canónicas
+        # ================================================================
+
+        terminos_prohibidos:
+          - termino: "recurso"
+            motivo: "Ambiguo: mezcla personas, capacidades, presupuesto y tiempo."
+            usar_en_cambio:
+              - "P1_Capacidad"
+          - termino: "gente"
+            motivo: "No distingue roles ni capacidades; usar términos alineados a P1_Capacidad."
+            usar_en_cambio:
+              - "P1_Capacidad"
+          - termino: "equipo IT"
+            motivo: "Demasiado genérico; no indica dominio ni tipo de capacidad."
+            usar_en_cambio:
+              - "D1_Arquitectura"
+              - "P1_Capacidad"
+          - termino: "iniciativa suelta"
+            motivo: "No distingue entre fase, playbook o trayectoria."
+            usar_en_cambio:
+              - "wslc_phase (F1-F18)"
+              - "playbook (P01-P15)"
+              - "trayectoria (Minimal/Avanzada/Survival)"
+          - termino: "AI genérica"
+            motivo: "No especifica tipo de capacidad ni modo de delegación."
+            usar_en_cambio:
+              - "P1_Capacidad"  # substrate=Algorítmico
+              - "delegation_mode M1-M6"
+          - termino: "proyecto transformación"
+            motivo: "Mezcla concepto de proyecto con trayectoria metodológica."
+            usar_en_cambio:
+              - "trayectoria Minimal/Avanzada/Survival"
+
+        # ================================================================
+        # QUICK REFERENCE ALIASES
+        # ================================================================
+        # Mapeo alias → término canónico (auto-generated)
+        # ================================================================
+
+        quick_reference:
+          "Organization": "A1_Organizacion"
+          "Org": "A1_Organizacion"
+          "Work System": "A1_Organizacion"
+          "Purpose": "A2_Proposito"
+          "Mission": "A2_Proposito"
+          "Raison d'être": "A2_Proposito"
+          "Flow": "A3_Flujo"
+          "Network": "A3_Flujo"
+          "Dynamic System": "A3_Flujo"
+          "Constraint": "A4_Limite"
+          "Limit": "A4_Limite"
+          "Boundary": "A4_Limite"
+          "Evolution": "A5_Cambio"
+          "Change": "A5_Cambio"
+          "Adaptation": "A5_Cambio"
+          "Capacity": "P1_Capacidad"
+          "CapacityAsset": "P1_Capacidad"
+          "Capability": "P1_Capacidad"
+          "Workflow": "P2_Flujo"
+          "FlowAsset": "P2_Flujo"
+          "Information": "P3_Informacion"
+          "InformationAsset": "P3_Informacion"
+          "Data": "P3_Informacion"
+          "Health Score": "H_org"
+
+        # ================================================================
+        # CHANGELOG
+        # ================================================================
+
+        changelog:
+          - version: "1.0.0"
+            date: "2024-11-14"
+            author: "Equipo Arquitectura ORKO"
+            changes:
+              - "Creación inicial estructura vocabulario Layer 0-3."
+              - "Documentados A1-A5, P1-P5, I1-I8, D1-D4, C1-C5 y TF1-TF3."
+          - version: "1.0.0-kernel"
+            date: "2024-11-14"
+            author: "Equipo Arquitectura ORKO"
+            changes:
+              - "Congelado contrato semántico kernel para Layers 0-3."
+              - "Marcadas como estables las familias de IDs A*,P*,I*,D*,F*,P01-P15, trayectorias y métricas H_org, eta_org, ROI_Habilitacion para SPRINT 1."
+
+  Soporte:
+    Casos_Prueba:
+      Caso_7_Validacion:
+        Src: "sources/ORKO_Toolkit_v1.0.0/04_SOPORTE/Casos_Prueba/Caso_7_Validacion.md"
+        Markdown: |-
+          # Caso 7: Validación de Campo (Scenario "Fintech Caos")
+
+          ## 🎯 Objetivo
+          Validar que un usuario nuevo puede diagnosticar correctamente una organización y encontrar las herramientas adecuadas en menos de 30 minutos.
+
+          ## 🏢 Contexto: "Fintech X"
+          Usted acaba de ser contratado como consultor para "Fintech X", una startup de pagos que creció demasiado rápido.
+          *   **Situación:** El CEO está estresado. Los clientes se quejan de errores. El equipo de ingeniería está "quemado".
+          *   **Misión:** Usar ORKO para estabilizar la situación.
+
+          ## 📝 Datos para el Inventario (T00)
+
+          Abra `01_DIAGNOSTICO/1.1_Inventario_Maestro.xlsx` e ingrese estos datos aproximados:
+
+          ### Pestaña P1_PERSONAS
+          *   Liste **30 personas** con rol "Humano" (Invente nombres o use "Dev 1", "Dev 2"...).
+          *   Marque **10** como "Activo".
+          *   Marque **20** como "Saturado" o "Ocioso".
+          *   *Resultado esperado:* TF1 Score bajo (aprox 33%).
+
+          ### Pestaña P2_FLUJOS
+          *   Liste **5 flujos críticos** (ej: Onboarding, Pagos, Soporte, Reembolsos, Reportes).
+          *   Marque "Documentado?" = **No** en todos.
+          *   Marque "Automatizado?" = **0%** en todos.
+          *   *Resultado esperado:* TF2 Score = 0%.
+
+          ### Pestaña P3_DATOS
+          *   Liste **3 fuentes de datos** (CRM, Base de Datos, Excel Finanzas).
+          *   Calidad = **2** (en escala 1-5).
+          *   *Resultado esperado:* TF3 Score bajo.
+
+          ## 🧮 Cálculo de Salud
+
+          1.  Vaya a `01_DIAGNOSTICO/1.2_Calculadora_Salud.xlsx`.
+          2.  Use el **WIZARD** para copiar los totales del Inventario.
+          3.  Verifique el resultado en la pestaña `Outputs`.
+
+          ### Resultado Esperado
+          *   **H_org:** Debería estar entre **0.20 y 0.40**.
+          *   **Banda:** **G1-Crítico**.
+          *   **Recomendación:** **Survival Mode**.
+
+          ## 🚀 Ejecución
+
+          Basado en el resultado, vaya a `02_EJECUCION` y abra la carpeta correcta.
+          *   ¿Qué carpeta abrió? (Debería ser `A_Kit_Survival`).
+          *   ¿Qué Playbook debe ejecutar primero? (Debería ser `P01_Low_H_org_Recovery`).
+
+          ---
+          *Si logró llegar aquí sin preguntar al autor, ¡Felicidades! El sistema funciona.*
