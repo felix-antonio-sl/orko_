@@ -5,7 +5,7 @@
 _meta:
   resolver_version: "1.0.0"
   koda_compatibility: ">=1.0.0 <2.0.0"
-  last_sync: "2025-12-03T02:16:18Z"
+  last_sync: "2025-12-16T03:30:00-03:00"
   health_check_interval: weekly
 
 self:
@@ -20,7 +20,7 @@ namespaces:
     base_path: "./"
     required: true
     description: "ORKO - Organizational Knowledge Ontology: Complexity, Tamed"
-  
+
   koda:
     type: upstream
     base_path: "../koda/"
@@ -33,13 +33,13 @@ resolution_rules:
   "urn:knowledge:orko:core:fundamentos:*": "./knowledge/core/guide_core_000_fundamentos_orko.yml"
   "urn:knowledge:orko:core:arquitectura:*": "./knowledge/core/guide_core_001_arquitectura_orko.yml"
   "urn:knowledge:orko:core:tejidos:*": "./knowledge/core/guide_core_002_tejidos_orko.yml"
-  
+
   # Methodology (Layer 3)
   "urn:knowledge:orko:metodologia:*": "./knowledge/domains/metodologia/"
-  
+
   # Implementation (Layer 4)
   "urn:knowledge:orko:implementacion:*": "./knowledge/domains/implementacion/"
-  
+
   # Agents
   "urn:knowledge:orko:agents:*": "./agents/"
 

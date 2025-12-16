@@ -108,60 +108,17 @@ Catalog:
       status: published
       primary: true
 
-    - urn: "urn:knowledge:orko:agents:orko-director:1.0.0"
-      title: "Director ORKO"
-      description: "Higher-Order Agent que orquesta la cuadrilla de 6 especialistas ORKO"
-      file: "agents/orko-director/agent_orko_director.yaml"
-      status: deprecated
-      higher_order: true
-
-    - urn: "urn:knowledge:orko:agents:orko-theorist:1.0.0"
-      title: "ORKO Theorist"
-      description: "Especialista en Fundamentos Teóricos: Genoma, axiomas, primitivos, invariantes y teoremas (Layer 0)"
-      file: "agents/orko-theorist/agent_orko_theorist.yaml"
-      status: deprecated
-
-    - urn: "urn:knowledge:orko:agents:orko-sage:1.0.0"
-      title: "ORKO Sage"
-      description: "Guardián de referencias fundacionales (WST, AOC, IA, eGov) que dan sustento teórico a ORKO"
-      file: "agents/orko-sage/agent_orko_sage.yaml"
-      status: deprecated
-
-    - urn: "urn:knowledge:orko:agents:orko-architect:1.0.0"
-      title: "ORKO Architect"
-      description: "Arquitecto de sistemas organizacionales basado en contratos, principios, relaciones y vistas (Layer 1)"
-      file: "agents/orko-architect/agent_orko_architect.yaml"
-      status: deprecated
-
-    - urn: "urn:knowledge:orko:agents:orko-guide:1.0.0"
-      title: "ORKO Guide"
-      description: "Especialista metodológico en fases, playbooks y trayectorias de transformación (Layer 3)"
-      file: "agents/orko-guide/agent_orko_guide.yaml"
-      status: deprecated
-
-    - urn: "urn:knowledge:orko:agents:orko-weaver:1.0.0"
-      title: "ORKO Weaver"
-      description: "Ingeniero de tejidos técnicos TF1/TF2/TF3 para llevar la arquitectura a implementación (Layer 2)"
-      file: "agents/orko-weaver/agent_orko_weaver.yaml"
-      status: deprecated
-
-    - urn: "urn:knowledge:orko:agents:orko-builder:1.0.0"
-      title: "ORKO Builder"
-      description: "Especialista en Toolkit, calculadoras, templates y ejemplos prácticos (Layer 4-5)"
-      file: "agents/orko-builder/agent_orko_builder.yaml"
-      status: deprecated
-
   Schemas: []
     # Future: JSON schemas for ORKO primitives validation
 
 Statistics:
-  total_artifacts: 16
+  total_artifacts: 9
   core_guides: 5
   domains: 3
-  agents: 8
+  agents: 1
   schemas: 0
-  last_updated: "2025-12-15"
-  notes: "Registered guide_core_003 (metodologia) and guide_core_004 (toolkit)"
+  last_updated: "2025-12-16"
+  notes: "Removed 7 deprecated specialist agents. Only arquitecto-orko remains as unified expert."
 
 # ORKO Layer Architecture Reference
 Layer_Architecture:
