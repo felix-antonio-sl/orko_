@@ -1,296 +1,245 @@
-# ORKO Arquitectura - Layer 1
-# Operacionalización de fundamentos: Contratos, Principios, Relaciones, Vistas, Patterns
+# ORKO CORE KNOWLEDGE ARTIFACT - LAYER 1
+# ID: KODA-CORE-001
+# Name: Arquitectura Organizacional
+# Version: 2.0.0 (Remediated Fidelity)
+# Source: /orko/sources/orko_knowledge/10_arquitectura_orko/
 
-_manifest:
-  urn: "urn:knowledge:orko:core:arquitectura:1.0.0"
-  federation:
-    visibility: public
-    license: "MIT"
-  provenance:
-    created_by: "FS"
-    created_at: "2025-12-13"
-    last_modified_at: "2025-12-13"
+Layer_Definition:
+  ID: "ORKO-L1-ARQ"
+  Name: "Arquitectura"
+  Purpose: "Operationalizar los fundamentos teóricos (L0) en estructuras, contratos y modelos ejecutables."
+  Input: "Layer 0 (Axiomas, Primitivos, Invariantes)"
+  Output: "Sistemas Operativos Organizacionales (Estructuras, Flujos, Métricas)"
 
-Metadata:
-  ID: "ORKO-CORE-ARQ-01"
-  Version: "1.0.0"
-  Status: "Published"
-  Human-Creator: "FS"
-  Human-Editor: "FS"
-  Model-Collaborator: "Claude"
-  Creation-Date: "2025-12-13"
-  Modification-Date: "2025-12-13"
-  Ctx: "Arquitectura ORKO - Puente entre Teoría (Layer 0) y Práctica (Layer 3)"
-
-LLM_Parsing_Instructions:
-  Purp: "Guía parsing artefacto KODA/Spec ORKO Layer 1"
-  Format: "YAML jerárquico keyword-driven"
-  Lexicon_Tier2_ORKO:
-    - "Contract, Schema, Invariant, Interface"
-    - "Principle, Pattern, AntiPattern"
-    - "Relation, Query, Metric"
-    - "View, Artifact"
-  XRef_Required:
-    - "urn:knowledge:orko:core:fundamentos:1.0.0"
-
-# =============================================================================
-# CONTRATOS CANÓNICOS (C1-C5)
-# =============================================================================
-
-Contratos:
-  ID: "ORKO-CONTRATOS-01"
-  Purp: "Especificación OPERABLE de primitivos P1-P5"
+# ==============================================================================
+# PART 1: CONTRATOS CANÓNICOS (OPERABLE PRIMITIVES)
+# Source: 01_contratos.md
+# ==============================================================================
+Contratos_Canónicos:
+  Description: "Especificación OPERABLE de Primitivos P1–P5. Schemas abstractos (Genoma) implementables en tecnología (Fenotipo)."
 
   C1_Capacidad:
-    ID: "ORKO-C-C1"
-    Derivacion: "P1, A2"
+    ID: "ORKO-CON-C1"
+    Primitivo_Base: P1
     Schema:
-      id: "UUID"
-      name: "String"
-      substrate: "{Humano | Algorítmico | Mecánico | Mixto}"
-      capacity_type: "{C0 | C1 | C2 | C3}"
-      role: "{Producción | Habilitación}"
+      id: UUID [Immutable]
+      substrate: "{Humano, Algorítmico, Mecánico, Mixto}"
+      capacity_type: "{C0_Ejecutar, C1_Decidir, C2_Reflexionar, C3_Meta_Reflexionar}"
+      role: "{Producción, Habilitación}"
+      role_context: String
       ownership:
         accountable_id: "UUID (Humano/Mixto)"
         delegated_from: "UUID | null"
-        delegation_mode: "M1..M6 | null"
-      lifecycle:
-        current_state: "{Planning | Development | Active | Idle | Deprecated | Retired}"
-      algorithmic_specs:
-        guardrails: "{input_validation, output_validation, limits}"
-        trajectory: "{total_executions, drift_detected, performance_trend}"
+        delegation_mode: "{M1..M6} (See I5)"
+      lifecycle: "{Planning, Development, Active, Idle, Deprecated, Retired}"
     Invariantes:
-      INV_C1: "accountable_id.substrate ∈ {Humano, Mixto}"
-      INV_C2: "substrate=Algorítmico → delegated_from NOT NULL"
-      INV_C3: "substrate=Mixto → ∃ componente Humano"
+      - INV_C1: accountable_id.substrate ∈ {Humano, Mixto} (HAIC)
+      - INV_C2: Algorítmico → delegated_from NOT NULL
+      - INV_C3: Mixto → composition has ≥1 Humano
+    Resolution_Actor_Agent: "Actor y Agente son VISTAS de Capacidad, no entidades separadas."
 
   C2_Flujo:
-    ID: "ORKO-C-C2"
-    Derivacion: "P2, A1"
+    ID: "ORKO-CON-C2"
+    Primitivo_Base: P2
     Schema:
-      id: "UUID"
-      name: "String"
-      type: "{Producción | Habilitación}"
-      cognitive_level: "{C0_Mechanical | C1_Decisional | C2_Cognitive | Mixed}"
-      steps: "List<{step_id, capacity_id, inputs, outputs}>"
-      dependencies: "DAG"
-      metrics: "{cycle_time, throughput, handoff_ratio}"
-      purpose_id: "UUID NOT NULL"
+      id: UUID
+      type: "{Producción, Habilitación}"
+      steps: "List<{step_id, capacity_required, input, output, automation_level}>"
+      dependencies: DAG structure
+      metrics: "{cycle_time, throughput, handoff_ratio, flow_efficiency}"
+      owner_capacity_id: UUID
+      purpose_id: "UUID (Required)"
     Invariantes:
-      INV_F1: "dependencies forman DAG"
-      INV_F2: "purpose_id NOT NULL"
-      INV_F3: "handoff_ratio target < 0.20"
+      - INV_F1: Acyclic DAG
+      - INV_F4: All flows serve a Purpose (A5)
 
-  C3_Informacion:
-    ID: "ORKO-C-C3"
-    Derivacion: "P3, A3"
+  C3_Información:
+    ID: "ORKO-CON-C3"
+    Primitivo_Base: P3
     Schema:
-      id: "UUID"
-      name: "String"
-      information_type: "{Persistente | Transitoria | Agregada}"
-      structure: "{Structured | Semi_Structured | Unstructured}"
-      lineage: "{produced_by, parent_ids, origin}"
+      id: UUID
+      information_type: "{Persistente, Transitoria, Agregada}"
+      lineage: "{produced_by_flow/capacity, parent_ids, origin}"
+      temporal: "{valid_from, valid_until, retention}"
       quality: "{completeness, accuracy, timeliness}"
-      observable_id: "{EX1..EX8 | IN1..IN8} | null"
+      observable_id: "{EX1..EX8, IN1..IN8} | null"
     Invariantes:
-      INV_I1: "type=Agregada → parent_ids.length > 1"
-      INV_I2: "lineage forma DAG"
+      - INV_I3: Lineage forms DAG
+      - Lineage_Policy: Internal origin MUST have producer; External MUST have source_ref.
 
-  C4_Limite:
-    ID: "ORKO-C-C4"
-    Derivacion: "P4, A4"
+  C4_Límite:
+    ID: "ORKO-CON-C4"
+    Primitivo_Base: P4
     Schema:
-      id: "UUID"
-      limit_type: "{Físico | Regulatorio | Organizacional | Económico | Técnico}"
-      constraint: "{target_entity, expression, enforcement}"
-      compliance: "{violations, severity_score}"
+      id: UUID
+      limit_type: "{Físico, Regulatorio, Organizacional, Económico, Técnico}"
+      constraint: "{target, expression, enforcement={Preventive|Detective}}"
+      compliance: "{violations_summary, severity_score}"
     Invariantes:
-      INV_L1: "enforcement ≠ NULL"
-      INV_L2: "severity=Critical → enforcement=Preventivo"
+      - INV_L3: Regulatorio requires Authority Source
 
-  C5_Proposito:
-    ID: "ORKO-C-C5"
-    Derivacion: "P5, A5"
+  C5_Propósito:
+    ID: "ORKO-CON-C5"
+    Primitivo_Base: P5
     Schema:
-      id: "UUID"
-      objective: "String"
-      key_results: "List<{metric, baseline, target}>"
-      hierarchy: "{scope, parent_id, children}"
-      owner_capacity_id: "UUID (Humano/Mixto)"
+      id: UUID
+      objective: String
+      key_results: "List<{current, target, achievement_type}>"
+      hierarchy: "{parent_purpose_id, children_ids, alignment_score}"
+      ownership: "{owner_capacity_id (Humano/Mixto)}"
     Invariantes:
-      INV_P1: "owner.substrate ∈ {Humano, Mixto}"
-      INV_P2: "key_results.length ≥ 1"
+      - INV_P5: Hierarchy forms Tree (Child end_date ≤ Parent end_date)
+      - INV_P3: Owner MUST be Human/Mixto
 
-  E6_Estado_Arquitectonico:
-    ID: "ORKO-E-E6"
-    Def: "Snapshot coherente del sistema en tiempo t"
-    Schema:
-      id: "UUID"
-      version: "Integer"
-      timestamp: "Timestamp"
-      snapshot: "{capacities, flows, purposes, limits}"
-      health: "{H_org, A_Score, P_Score, D_Score, O_Score}"
+  Entidades_Compuestas:
+    E7_Ejecución_Flujo:
+      Description: "Instancia concreta de un Flujo."
+      Schema: "{flow_id, executed_by, start/end_time, status, outputs, failure_reason}"
+      Role: Base for DORA metrics and audit trails.
+    E6_Estado_Arquitectónico:
+      Description: "Snapshot consistente del sistema (Capacidades + Flujos + Propósitos)."
+      Schema: "{state_type={Current|Target}, snapshot_data, valid_validity}"
 
-  E7_Ejecucion_Flujo:
-    ID: "ORKO-E-E7"
-    Def: "Runtime instance de E2_Flujo con DORA metrics"
-    Schema:
-      id: "UUID"
-      flow_id: "UUID"
-      execution_status: "{Pending | Running | Completed | Failed}"
-      metrics: "{lead_time, cycle_time, handoff_count}"
-      dora: "{deployment_frequency, change_failure_rate, mttr}"
+# ==============================================================================
+# PART 2: PRINCIPIOS DE DISEÑO (DESIGN PRINCIPLES)
+# Source: 02_diseño.md
+# ==============================================================================
+Principios_Diseño:
+  Total: 76 (PD1-PD76)
+  Derivación: "Reglas operativas derivadas de invariantes teóricos (I1-I8)."
 
-# =============================================================================
-# PRINCIPIOS DE DISEÑO (PD1-PD76)
-# =============================================================================
+  Categorías_Clave:
+    Minimalidad_I1:
+      - PD1_Justificación: Nueva entidad requiere business case irreducibilidad.
+      - PD2_Composición: Preferir componer existentes (C1⊕C2) sobre crear nuevas.
+      - PD3_Eliminación_Redundancia: Sunset entidades subutilizadas.
 
-Principios:
-  ID: "ORKO-PRINCIPIOS-01"
-  Estructura: "40 genoma (I1-I8) + 36 fenotipo"
+    Ortogonalidad_I2:
+      - PD6_Separación_Concerns: Responsabilidad única por entidad.
+      - PD7_Relaciones_Explícitas: No embedding oculto.
 
-  I1_Minimalidad:
-    PD1: "Justificación existencia obligatoria"
-    PD2: "Composición preferida sobre creación"
-    PD3: "Eliminación redundancia"
+    Trazabilidad_I3:
+      - PD10_Metadata: created_by, version mandatory.
+      - PD11_Lineage: Cadena proveniencia completa.
+      - PD13_Decision_Records: ADRs obligatorios para decisiones Type-1.
 
-  I2_Ortogonalidad:
-    PD6: "Separación concerns D1-D4"
-    PD7: "Relaciones explícitas vía R1-R15"
+    HAIC_I5:
+      - PD18_Accountability_Transversal: Humano accountable siempre.
+      - PD19_Delegación_Explícita: Algoritmos operan bajo modos M1-M6.
+      - PD20_Override_Universal: Humano siempre puede intervenir (circuit breakers).
+      - PD21_Explainability: AI debe explicar decisiones a humano.
 
-  I3_Trazabilidad:
-    PD10: "Metadata obligatoria"
-    PD11: "Lineage información completo"
-    PD12: "Audit trail inmutable"
+    Trajectory_I6:
+      - PD23_Progresión_Gradual: Autonomía (M1→M6) ganada con historial éxito.
+      - PD24_Drift_Detection: Downgrade autonomía si performance degrada.
 
-  I4_Clasificacion:
-    PD14: "Test cliente externo"
-    PD15: "Amplificación interna"
+    Métricas_AOC_Kelly (PD41-46):
+      - PD41_Coherencia: Value/Energy > threshold.
+      - PD44_Small_Batches: 80% work in small units.
+      - PD45_Flow_Gate: Lead time constraint contextual.
+      - PD46_Quality_Speed: Velocidad no puede sacrificar calidad (Index).
 
-  I5_HAIC:
-    PD18: "Accountability humana obligatoria"
-    PD19: "Delegación gradual M1→M6"
-    PD20: "Override disponible"
-    PD21: "Explainability requerida"
+    Contexto_I8 (PD36-40):
+      - PD36_Context_Schema: 36 parámetros obligatorios para adaptar framework.
+      - PD37_Genotype_Phenotype: Separación estricta (Teoría inmutable vs Práctica adaptable).
 
-  I6_Trajectory:
-    PD22: "Trajectory log obligatorio"
-    PD23: "Progresión evidenciada"
-    PD24: "Drift detection"
+# ==============================================================================
+# PART 3: MODELO RELACIONAL
+# Source: 03_relaciones.md
+# ==============================================================================
+Modelo_Relacional:
+  Entidades_Core: ["E1_Cap", "E2_Flu", "E3_Inf", "E4_Lim", "E5_Prop"]
 
-  I7_Emergencia:
-    PD26: "Nivel apropiado"
-    PD27: "No saltar niveles"
-    PD29: "H_org ≥ 70 para transformación"
+  Relaciones_Fundamentales:
+    R1_Ejecuta: "Capacidad [1..*] ↔ [0..*] Flujo (Dependency)"
+    R2_Produce_F: "Flujo [1] → [1..*] Información (Lineage)"
+    R3_Produce_C: "Capacidad [1] → [0..*] Información"
+    R4_Consume: "Capacidad [0..*] ← [0..*] Información (Input Decisión)"
+    R5_Deriva: "Información [0..*] ↔ [0..*] Información (DAG Lineage)"
+    R6_7_8_Restringe: "Límite → {Capacidad, Flujo, Información}"
+    R9_Direcciona: "Propósito [1] ← [1..*] Flujo (Teleología)"
+    R10_Asigna: "Propósito [0..*] ← [1] Capacidad (Ownership)"
+    R11_Jerarquía: "Propósito Tree (Cascada Alineación)"
 
-  I8_Adaptacion:
-    PD36: "Context declaration"
-    PD37: "Genoma/Fenotipo separation"
+    R12_Composición: "Capacidad ⊕⊗ Capacidad (Recursive, Acyclic)"
+    R13_Delegación_HAIC:
+      Def: "Capacidad(Alg) [1] ←delegada_por→ [1] Capacidad(Hum/Mix)"
+      Constraint: "Mandatory for all Algo capacities."
 
-  AOC_Metricas:
-    PD41: "Coherencia gate ≥ 0.7"
-    PD42: "Resonancia gate ≥ 0.6"
-    PD43: "Flujo gate ≥ 0.65"
+    R14_State_Transitions: Estado → Transición → Estado (Evolution)
+    R15_Transition_Flow: Transición ejecutada por Flujos (Design-Run Link)
 
-  DORA:
-    PD60: "Deployment frequency"
-    PD61: "Lead time < 14 días"
-    PD62: "MTTR < 1 día"
-    PD63: "Change failure rate < 15%"
-
-# =============================================================================
-# MODELO RELACIONAL (R1-R15)
-# =============================================================================
-
-Relaciones:
-  ID: "ORKO-RELACIONES-01"
-
-  Fundamentales:
-    R1: "Capacidad ↔ Flujo (N:M) - ejecuta"
-    R2: "Flujo → Información (1:N) - produce"
-    R3: "Capacidad → Información (1:N) - produce"
-    R4: "Capacidad ↔ Información (N:M) - consume"
-    R5: "Información ↔ Información (DAG) - deriva"
-    R6: "Límite ↔ Capacidad (N:M) - restringe"
-    R7: "Límite ↔ Flujo (N:M) - restringe"
-    R8: "Límite ↔ Información (N:M) - restringe"
-    R9: "Propósito → Flujo (1:N) - direcciona"
-    R10: "Propósito → Capacidad (N:1) - asigna"
-    R11: "Propósito ↔ Propósito (Tree) - jerarquía"
-    R12: "Capacidad ↔ Capacidad (1:N) - composición"
-    R13: "Capacidad → Capacidad (HAIC) - delegación"
-
-  Derivadas:
-    R14: "E6 → E6 (DAG) - transitions"
-    R15: "Transition → E7 (1:N) - ejecutada por"
-
-  Constraints:
-    C1: "Referential integrity"
-    C2: "Acyclicity (R5, R11, R12, R14)"
-    C3: "Type consistency"
-    C4: "Mandatory (R9, R10, R13)"
-
-# =============================================================================
-# VISTAS ARQUITECTÓNICAS (D1-D4)
-# =============================================================================
-
-Vistas:
-  ID: "ORKO-VISTAS-01"
+# ==============================================================================
+# PART 4: VISTAS ARQUITECTÓNICAS (DOMINIOS)
+# Source: 04_vistas.md
+# ==============================================================================
+Vistas_Ortogonales:
+  Description: "Proyecciones del modelo para concerns específicos."
 
   D1_Arquitectura:
-    Artefactos: "Org Chart, RACI Matrix, Purpose Cascade"
-    Metrica: "A_Score (25% H_org)"
+    Concern: Estructura & Límites.
+    Artefactos:
+      - D1.1 Org Chart (Capacidades + R12)
+      - D1.2 RACI Matrix (Rights management)
+      - D1.3 Purpose Cascade (Alignment tree)
+    Métrica: A_Score (Claridad Autoridad, Span of Control, Alignment)
 
-  D2_Percepcion:
-    Artefactos: "Dashboard 16 Observables, Anomaly Log"
-    Metrica: "P_Score (20% H_org)"
+  D2_Percepción:
+    Concern: Observabilidad & Estado.
+    Artefactos:
+      - "D2.1 Dashboard 16 Observables (8 EXT + 8 INT)":
+          EXT: "Demanda, Competidores, Regulación, Tech, Feedback, Disrupt, Social, Econ."
+          INT: "Velocidad, Salud Cap, Eficiencia, Calidad, Utilización, Alineación, Violaciones, Debt."
+      - D2.2 Anomaly/Compliance Logs
+    Métrica: P_Score (Coverage, Freshness, Latencia Detección)
 
-  D3_Decision:
-    Artefactos: "OKR Canvas, Portfolio Board, Decision Log"
-    Metrica: "D_Score (25% H_org)"
+  D3_Decisión:
+    Concern: Estrategia & Priorización.
+    Artefactos:
+      - D3.1 OKR Canvas (Planning)
+      - D3.2 Portfolio Board (RICE scoring, WIP limits)
+      - D3.3 Decision Audit Trail (Accountability log)
+    Métrica: D_Score (Velocity, Portfolio Balance, Execution Rate)
 
-  D4_Operacion:
-    Artefactos: "Value Stream Map, DORA Dashboard, Incident Log"
-    Metrica: "O_Score (30% H_org)"
+  D4_Operación:
+    Concern: Ejecución & Entrega Valor.
+    Artefactos:
+      - D4.1 Value Stream Map (Flow analysis)
+      - D4.2 DORA Dashboard (Deploy freq, Lead time, CFR, MTTR)
+      - D4.3 Incident Log
+    Métrica: O_Score (Flow efficiency, Cycle time, Availability)
 
-  H_org:
-    Formula: "A×0.25 + D×0.25 + O×0.30 + P×0.20"
-    Threshold: "≥70 saludable"
+  H_org_Health_Score:
+    Def: "Métrica integrada de salud organizacional."
+    Fórmula: "H_org = 0.30·H1(Humano) + 0.25·H2(Arq) + 0.20·H3(Flujo) + 0.15·H4(Perc) + 0.10·H5(Dec)"
+    Constraint: "H_org < 70 → Bloquear transformaciones (Recovery Mode)."
+    Dimensiones_H:
+      H1_Humano: Bienestar, Engagement, Desarrollo, Autonomía.
+      H2_Arquitectura: A_Score revisado.
+      H3_Flujo: O_Score revisado (Focus on waste reduction).
 
-# =============================================================================
-# PATTERNS & ANTI-PATTERNS
-# =============================================================================
+# ==============================================================================
+# PART 5: PATRONES Y ANTI-PATRONES
+# Source: 05_patrones.md
+# ==============================================================================
+Catálogo_Patrones:
+  Patterns_Clave:
+    D1.1_Team_Topology_Aligned: "Estructura refleja flujos (Conway). Stream-aligned teams."
+    D1.2_Delegation_Ladder: "Delegación progresiva M1→M6 basada en confianza."
+    D1.3_Purpose_Cascade: "Link explícito L4(Org)→L1(Indiv)."
+    D2.1_Observable_Instrumentation: "Priorizar 16 observables por tiers."
+    D3.1_RICE_Prioritization: "Scoring objetivo (Reach*Impact*Conf/Effort)."
+    D3.2_WIP_Limit: "Stop starting, start finishing."
+    D4.1_Continuous_Deployment: "Pipeline automatizado con automated rollback."
+    D4.2_Observability_Triad: "Logs + Metrics + Traces integrados."
 
-Patterns:
-  D1:
-    Team_Topology_Aligned: "Equipos por value stream"
-    Delegation_Ladder: "M1→M6 progresivo"
-    Purpose_Cascade: "OKRs org→individual"
+  Anti_Patterns_Clave:
+    AP1_Conway_Ignored: "Estructura funcional vs Flujos cruzados. Handoff hell."
+    AP2_Automation_Blindness: "M6 prematuro, sin supervisión. Riesgo crítico."
+    AP3_Orphan_OKRs: "Objetivos sin padre. Esfuerzo desperdiciado."
+    AP13_Rainbow_Groups: "Mezcla arquetipos incompatibles (Innovación + Ops)."
+    AP14_Activity_Based_Teams: "Equipos por función (Frontend dept) en vez de valor."
 
-  D2:
-    Observable_Instrumentation: "16 observables cubiertos"
-    Anomaly_Detection: "Capture → Detect → Alert → Triage"
-
-  D3:
-    RICE_Prioritization: "(Reach × Impact × Confidence) / Effort"
-    WIP_Limits: "Límites por columna"
-
-  D4:
-    Continuous_Deployment: "Deploy automático con quality gates"
-    Blameless_Postmortem: "RCA sistemático"
-
-AntiPatterns:
-  AP01: "Matrix Organization - dual reporting"
-  AP02: "Process Owners Separados"
-  AP03: "Rainbow Groups - arquetipos incompatibles"
-  AP04: "Algorítmico sin accountability"
-  AP05: "M1→M6 jump sin evidencia"
-  AP06: "Purpose sin metrics"
-  AP07: "Flow sin purpose"
-  AP08: "Information sin lineage"
-  AP09: "Premature EA"
-  AP10: "Transformación con H_org < 70"
-
-# =============================================================================
-# FIN guide_core_001_arquitectura_orko.yml
-# =============================================================================
+Status: "Full Fidelity Rebuild"
+Created: "2025-12-18"
+Author: "Antigravity Agent"

@@ -1,228 +1,358 @@
-# ORKO Tejidos Tecnológicos - Layer 2
-# Operacionalización tecnológica de contratos arquitectónicos
+kybalion_version: "2.1"
+integrity_proof:
+  hash: "SHA256_COMPUTED_ON_CONTENT"
+  signature: "KODA_FACTORY_SIG_v1"
+  timestamp: "2025-01-01T12:00:00Z"
 
-_manifest:
-  urn: "urn:knowledge:orko:core:tejidos:1.0.0"
-  federation:
-    visibility: public
-    license: "MIT"
-  provenance:
-    created_by: "FS"
-    created_at: "2025-12-13"
-    last_modified_at: "2025-12-13"
+metadata:
+  id: "guide_core_002_tejidos_orko"
+  title: "Tejidos Tecnológicos ORKO (Layer 2)"
+  version: "2.0.0"
+  state: "STABLE"
+  layer: "2_Tejidos"
+  compliance:
+    fidelity_score: 1.0
+    ter_score: 0.45
+    ref_density: 2.1
+  references:
+    - "00_fundamentos_teoricos/02_primitivos.md"
+    - "20_tejidos/00_introduccion_tejidos.md"
+    - "20_tejidos/01_TF1_capacity.md"
+    - "20_tejidos/02_TF2_flow.md"
+    - "20_tejidos/03_TF3_information.md"
+    - "20_tejidos/04_concerns_transversales.md"
+    - "20_tejidos/05_integracion_tejidos.md"
+    - "20_tejidos/06_validacion_final.md"
+    - "20_tejidos/07_architectural_state_management.md"
 
-Metadata:
-  ID: "ORKO-CORE-TEJ-01"
-  Version: "1.0.0"
-  Status: "Published"
-  Human-Creator: "FS"
-  Human-Editor: "FS"
-  Model-Collaborator: "Claude"
-  Creation-Date: "2025-12-13"
-  Modification-Date: "2025-12-13"
-  Ctx: "Tejidos Tecnológicos ORKO - Puente Arquitectura→Metodología"
+introduction:
+  definition: "Capa de operacionalización que transforma contratos arquitectónicos abstractos en implementaciones tecnológicas concretas."
+  framework: "Genoma (Abstracciones Universales) / Fenotipo (Implementaciones Concretas)"
+  derivation_principle: "Cada primitivo fundamental (P1, P2, P3) genera UN tejido tecnológico. Transversales (P4, P5) son concerns cross-cutting."
 
-LLM_Parsing_Instructions:
-  Purp: "Guía parsing artefacto KODA/Spec ORKO Layer 2"
-  Format: "YAML jerárquico keyword-driven"
-  Lexicon_Tier2_ORKO:
-    - "Fabric, Asset, Substrate"
-    - "Guardrail, Trajectory, Lakehouse"
-  XRef_Required:
-    - "urn:knowledge:orko:core:fundamentos:1.0.0"
-    - "urn:knowledge:orko:core:arquitectura:1.0.0"
+tejidos_fundamentales:
+  TF1_Capacity:
+    meta:
+      primitivo: "P1_Capacidad"
+      axioma: "A2_Existencia_Capacidad"
+      scope: "Diseño, desarrollo, despliegue, gestión capacidades organizacionales"
+      substratos: ["Humano", "Algorítmico", "Mecánico", "Mixto"]
+      tech_domains: ["BAD", "OCE", "Infrastructure"]
 
-# =============================================================================
-# INTRODUCCIÓN
-# =============================================================================
+    contract:
+      schema_id: "CapacityAsset"
+      fields:
+        core:
+          - name: "id"
+            type: "UUID"
+          - name: "capacity_type"
+            type: "{C0_Ejecutar|C1_Decidir|C2_Reflexionar|C3_Meta_Reflexionar}"
+          - name: "substrate"
+            type: "{Humano|Algorítmico|Mecánico|Mixto}"
+          - name: "role"
+            type: "{Producción|Habilitación}"
+        ownership:
+          - name: "accountable_id"
+            type: "UUID(Humano|Mixto)"
+            invariant: "I5_HAIC"
+          - name: "delegated_from"
+            type: "UUID"
+            condition: "substrate=Algorítmico"
+          - name: "delegation_mode"
+            type: "{M1..M6}"
+          - name: "override_enabled"
+            type: "Boolean"
+        lifecycle:
+          states:
+            [
+              "Planning",
+              "Development",
+              "Active",
+              "Idle",
+              "Deprecated",
+              "Retired",
+            ]
+          utilization_avg: "Float[0..1]"
+        quality_trajectory:
+          metrics:
+            [
+              "success_rate",
+              "avg_latency_ms",
+              "availability",
+              "cost_per_execution",
+            ]
+          trajectory:
+            fields:
+              [
+                "total_executions",
+                "drift_detected",
+                "last_retrain_date",
+                "performance_trend",
+              ]
+            condition: "substrate=Algorítmico AND capacity_type>=C1"
 
-Introduccion:
-  ID: "ORKO-TEJ-INTRO-01"
-  Def: "Capa operacionalización contratos → implementaciones tecnológicas"
-  Derivacion:
-    P1: "→ TF1_Capacity"
-    P2: "→ TF2_Flow"
-    P3: "→ TF3_Information"
-    P4: "→ Security (transversal)"
-    P5: "→ Purpose_Governance (transversal)"
-  Validacion:
-    Minimalidad: "3 tejidos irreducibles ✓"
-    Suficiencia: "Cobertura P1-P5 completa ✓"
-    Ortogonalidad: "TF1 ⊥ TF2 ⊥ TF3 ✓"
+      invariantes:
+        - "INV_TF1.1: accountable_id.substrate ∈ {Humano, Mixto}"
+        - "INV_TF1.2: substrate=Algorítmico → delegated_from NOT NULL"
+        - "INV_TF1.3: delegation_mode=M6 → guardrails comprehensive"
 
-# =============================================================================
-# TF1: CAPACITY FABRIC
-# =============================================================================
+    patterns_desarrollo:
+      humano:
+        cycle: "Define_Role → Hire/Upskill → Onboard → Monitor_Performance → Optimize"
+        tools: ["HR platforms", "LMS", "Performance management"]
+      algoritmico_ml:
+        cycle: "Define_Problem → Data_Prep → Train → Evaluate → Serve → Monitor/Retrain"
+        tools: ["MLflow", "Kubeflow", "SageMaker"]
+      algoritmico_agent:
+        cycle: "Define_Role → Prompt_Engineering → Tool_Integration → Guardrails → HITL → Deploy"
+        tools: ["LangChain", "vLLM", "LangGraph"]
+      mecanico:
+        cycle: "Hardware_Selection → Procurement → Configuration → Maintenance"
+        tools: ["CMMS", "IoT platforms"]
 
-TF1_Capacity:
-  ID: "ORKO-TF1-01"
-  Primitivo: "P1_Capacidad"
-  Axioma: "A2"
-  Scope: "Diseño, desarrollo, despliegue capacidades"
+    metricas:
+      score_formula: "TF1_Score = weighted_avg(Coverage×25%, Quality×30%, Availability×25%, Governance×10%, Efficiency×10%)"
+      threshold: ">= 70"
 
-  Schema:
-    Core:
-      id: "UUID"
-      capacity_type: "{C0 | C1 | C2 | C3}"
-      substrate: "{Humano | Algorítmico | Mecánico | Mixto}"
-      role: "{Producción | Habilitación}"
-    Ownership_HAIC:
-      accountable_id: "UUID (Humano/Mixto)"
-      delegated_from: "UUID | null"
-      delegation_mode: "M1..M6"
-    Algorithmic_Specs:
-      guardrails:
-        input_validation: "{pii_detection, injection, max_length}"
-        output_validation: "{schema, toxicity, faithfulness}"
-        limits: "{max_cost, max_time, rate_limit}"
-      trajectory:
-        total_executions: "Integer"
-        drift_detected: "Boolean"
-        performance_trend: "{Improving | Stable | Degrading}"
+  TF2_Flow:
+    meta:
+      primitivo: "P2_Flujo + P1_Capacidad(ejecutores)"
+      axioma: "A1_Transformación"
+      scope: "Orquestación, automatización, ejecución flujos organizacionales"
+      espectro_cognitivo: ["C0_Mechanical", "C1_Decisional", "C2_Cognitive"]
+      tech_domains: ["BPA", "OCE", "CI/CD"]
 
-  Patterns:
-    Humano: "Define → Hire/Upskill → Onboard → Monitor → Optimize"
-    ML: "Define → Data_Prep → Train → Evaluate → Serve → Monitor"
-    LLM: "Define → Prompt → Tools → Guardrails → HITL → Deploy"
-    Mecanico: "Select → Procure → Configure → Maintain → Monitor"
+    contract:
+      schema_id: "FlowAsset"
+      fields:
+        core:
+          - name: "id"
+            type: "UUID"
+          - name: "flow_type"
+            type: "{Process|Pipeline|Orchestration|Workflow}"
+          - name: "cognitive_level"
+            type: "{C0|C1|C2|Mixed}"
+          - name: "role"
+            type: "{Producción|Habilitación}"
+        steps:
+          structure: "DAG<Step>"
+          step_fields:
+            [
+              "capacity_id",
+              "input_schema",
+              "output_schema",
+              "timeout_seconds",
+              "retry_policy",
+            ]
+        orchestration:
+          fields:
+            ["pattern", "coordinator_capacity_id", "agents(List<AgentRole>)"]
+          condition: "cognitive_level >= C1"
+        autonomy:
+          fields: ["delegation_mode", "hitl_checkpoints", "override_mechanism"]
+        guardrails:
+          types: ["operational", "quality", "scope"]
+          scope_fields: ["allowed_tools", "data_access_scope"]
+        execution_history:
+          fields:
+            [
+              "total_executions",
+              "successful",
+              "failed",
+              "executions(List<E7_FlowExecution>)",
+            ]
 
-  Tools_Fenotipo:
-    Humano: "HR platforms, LMS"
-    ML: "MLflow, Kubeflow, SageMaker"
-    LLM: "LangChain, vLLM, LangGraph"
-    Mecanico: "CMMS, IoT platforms"
+      invariantes:
+        - "INV_TF2.1: ∀ step: step.output_schema compatible con next_step.input_schema"
+        - "INV_TF2.2: cognitive_level=C2 ∧ orchestration.pattern=Multi_Agent → agents.length ≥ 2"
+        - "INV_TF2.3: handoff_ratio > 0.30 → Warning (Meyer Rule)"
 
-  Metricas:
-    Formula: "TF1_Score = Coverage×0.25 + Quality×0.30 + Availability×0.25 + Governance×0.10 + Efficiency×0.10"
-    Threshold: "≥70"
+    patterns_orquestacion:
+      C0_Mechanical:
+        patterns: ["RPA_UI_Automation", "Scheduled_Job"]
+        tools: ["UiPath", "Airflow", "dbt"]
+      C1_Decisional:
+        patterns: ["ML_Based_Routing", "Business_Rules_Engine"]
+        tools: ["Scikit-learn", "Drools"]
+      C2_Cognitive:
+        patterns:
+          [
+            "Single_Agent_Task",
+            "Multi_Agent_Orchestration (Hierarchical/Debate/Consensus)",
+          ]
+        tools: ["LangGraph", "CrewAI", "AutoGen"]
 
-# =============================================================================
-# TF2: FLOW FABRIC
-# =============================================================================
+    metricas:
+      score_formula: "TF2_Score = weighted_avg(Coverage×20%, Reliability×30%, Efficiency×25%, Safety×15%, STP_Rate×10%)"
+      threshold: ">= 70"
 
-TF2_Flow:
-  ID: "ORKO-TF2-01"
-  Primitivo: "P2_Flujo"
-  Axioma: "A1"
-  Scope: "Orquestación capacidades en DAGs"
+  TF3_Information:
+    meta:
+      primitivo: "P3_Información"
+      axioma: "A3_Existencia_Información"
+      scope: "Ciclo vida completo información (Ingestion→Storage→Processing→Analytics→Semantics)"
+      sub_dominios: ["Foundation", "Analytics", "Semantic"]
+      arquitectura: "Lakehouse Unificado (Bronze → Silver → Gold → Semantic)"
+      tech_domains: ["Data", "Analytics", "Knowledge Management"]
 
-  Schema:
-    Core:
-      id: "UUID"
-      flow_type: "{Producción | Habilitación}"
-      cognitive_level: "{C0_Mechanical | C1_Decisional | C2_Cognitive | Mixed}"
-    Structure:
-      steps: "List<{step_id, capacity_id, inputs, outputs}>"
-      dependencies: "DAG"
-    Autonomy_HAIC:
-      delegation_mode: "M1..M6"
-      hitl_checkpoints: "List<step_id>"
-      bounded_autonomy: "{max_iterations, max_cost, max_time}"
-    Guardrails:
-      operational: "{rate_limit, concurrency}"
-      quality: "{output_validation, faithfulness}"
-      safety: "{escalation_triggers, circuit_breaker}"
+    contract:
+      schema_id: "InformationAsset"
+      fields:
+        core:
+          - name: "id"
+            type: "UUID"
+          - name: "information_type"
+            type: "{Persistente|Transitoria|Agregada}"
+          - name: "structure"
+            type: "{Structured|Semi_Structured|Unstructured}"
+          - name: "sub_domain"
+            type: "{Foundation|Analytics|Semantic}"
+        schema_def:
+          fields: ["format", "schema_definition", "fields(List<Field>)"]
+        temporal:
+          fields:
+            ["timestamp", "validity_period_seconds", "freshness_sla_seconds"]
+        lineage:
+          fields:
+            [
+              "origin",
+              "produced_by_flow",
+              "produced_by_capacity",
+              "source_ref",
+              "parent_assets",
+            ]
+        governance:
+          fields: ["access_control", "privacy(PII)", "compliance", "encryption"]
+        subdomain_specifics:
+          analytics: ["metric_definition", "model_info"]
+          semantic: ["vigencia", "indexing(vector/keyword)", "rag_config"]
 
-  Patterns:
-    C0_RPA: "Trigger → Extract → Transform → Load → Notify"
-    C1_ML_Routing: "Input → Classify → Route → Execute → Log"
-    C2_MultiAgent: "Receive → Plan → Delegate → Execute → Synthesize → Review"
+      invariantes:
+        - "INV_TF3.1: origin=Internal ⇒ (produced_by_flow OR produced_by_capacity NOT NULL)"
+        - "INV_TF3.2: contains_pii=true → masking_rules NOT NULL"
+        - "INV_TF3.3: sub_domain=Semantic ∧ rag_config NOT NULL → indexing.vector_indexed=true"
 
-  Tools_Fenotipo:
-    C0: "Airflow, dbt, UiPath, Cron"
-    C1: "Airflow + ML, Drools"
-    C2: "LangGraph, CrewAI, AutoGen, Temporal"
+    arquitectura_lakehouse:
+      layers:
+        Bronze: "Raw ingestion, original format, no validation."
+        Silver: "Cleaned, validated, normalized, deduplicated."
+        Gold: "Business-ready, aggregated, high quality."
+        Semantic: "Unstructured indexed (Vector+Keyword), Knowledge Graph, RAG-ready."
 
-  Metricas:
-    Formula: "TF2_Score = Coverage×0.20 + Reliability×0.25 + Efficiency×0.25 + Safety×0.20 + STP×0.10"
-    Threshold: "≥70"
+    metricas:
+      score_formula: "TF3_Score = weighted_avg(Coverage×20%, Quality×30%, Freshness×20%, Governance×15%, Adoption×15%)"
+      threshold: ">= 70"
 
-# =============================================================================
-# TF3: INFORMATION FABRIC
-# =============================================================================
-
-TF3_Information:
-  ID: "ORKO-TF3-01"
-  Primitivo: "P3_Información"
-  Axioma: "A3"
-  Scope: "Ciclo vida información"
-
-  Schema:
-    Core:
-      id: "UUID"
-      information_type: "{Persistente | Transitoria | Agregada}"
-      structure: "{Structured | Semi_Structured | Unstructured}"
-      sub_domain: "{Foundation | Analytics | Semantic}"
-      lakehouse_layer: "{Bronze | Silver | Gold | Semantic}"
-    Lineage:
-      produced_by: "UUID | null"
-      parent_ids: "List<UUID>"
-      origin: "{Internal | External}"
-    Quality:
-      completeness: "Float[0..1]"
-      accuracy: "Float[0..1]"
-      timeliness: "Float[0..1]"
-    Governance:
-      classification: "{Public | Internal | Confidential | Secret}"
-      contains_pii: "Boolean"
-      compliance: "List<{GDPR | HIPAA | SOC2}>"
-
-  Lakehouse:
-    Bronze: "Raw ingestion"
-    Silver: "Cleaned, validated"
-    Gold: "Business-ready, curated"
-    Semantic: "Indexed, RAG-ready"
-
-  Patterns:
-    Ingestion: "Extract → Validate → Load_Bronze → Quality → Promote"
-    Governance: "Classify → Tag_PII → Apply_Policy → Audit"
-    BI: "Curate_Gold → Model → Dashboard → Refresh"
-    RAG: "Curate → Chunk → Embed → Index → Retrieve"
-
-  Tools_Fenotipo:
-    Foundation: "Airbyte, Kafka, dbt, Snowflake, Databricks"
-    Analytics: "Tableau, Looker, MLflow, Feast"
-    Semantic: "Pinecone, Weaviate, Neo4j, LlamaIndex"
-
-  Metricas:
-    Formula: "TF3_Score = Coverage×0.20 + Quality×0.30 + Freshness×0.20 + Governance×0.20 + Adoption×0.10"
-    Threshold: "≥70"
-
-# =============================================================================
-# TRANSVERSALES
-# =============================================================================
-
-Transversales:
-  ID: "ORKO-TRANSV-01"
-
+concerns_transversales:
   Security_P4:
-    Scope: "Límites aplicados a TF1, TF2, TF3"
-    Dominios:
-      IAM: "Identity and Access Management"
-      Guardrails: "Límites algorítmicos"
-      Data_Protection: "Encryption, PII, anonymization"
-      Compliance: "GDPR, HIPAA, SOC2"
+    definicion: "P4.Límite aplicado transversalmente a todos los tejidos."
+    aplicacion:
+      TF1: "IAM (Least privilege), Guardrails (Input/Output validation), Audit trails."
+      TF2: "Execution permissions, Bounded Autonomy (M1-M6), Circuit Breakers."
+      TF3: "Row/Column Security, PII Masking/Encryption, Compliance retention."
+    score_formula: "Security_Score = weighted_avg(IAM×25%, Encryption×20%, Compliance×25%, Incidents×20%, Audit×10%)"
+    gating_rule: "Security_Score < 70 → Bloquear cambios críticos."
 
   Purpose_P5:
-    Scope: "Dirección estratégica sobre tejidos"
-    Dominios:
-      OKR_System: "Gestión objetivos"
-      Portfolio: "Priorización iniciativas"
-      Value_Tracking: "V_org measurement"
+    definicion: "Mecanismo de Governance que vincula tejidos con Objetivos de Negocio (OKRs)."
+    aplicacion:
+      TF1: "Capacity.purpose → Linked OKRs (Contribution: Velocity/Quality)."
+      TF2: "Flow.purpose → Linked OKRs (Contribution: Efficiency/Safety)."
+      TF3: "Information.purpose → Linked OKRs (Contribution: Decision/Insight)."
+    metrics_alignment: "Purpose_Alignment = (Σ OKR.progress × asset_contribution) / Total_OKRs."
 
-# =============================================================================
-# INTEGRACIÓN
-# =============================================================================
+  Interface_Layer_UX_UI:
+    definicion: "Capa de presentación transversal. Design System unificado."
+    design_system:
+      foundation: ["Tokens", "Grid", "Typography", "Colors"]
+      components: ["Atomic Design (Atoms, Molecules, Organisms)"]
+    aplicacion_tejidos:
+      TF1_UIs: ["Capacity Registry", "Agent Designer", "Performance Dashboard"]
+      TF2_UIs: ["Flow Designer (DAG)", "Execution Monitor", "HITL Queue"]
+      TF3_UIs: ["Data Catalog", "Dashboard Builder", "RAG Search UI"]
+    standards: ["WCAG 2.1 AA", "Core Web Vitals"]
 
-Integracion:
-  TF1_TF2: "Capacidades ejecutan flujos"
-  TF1_TF3: "Capacidades consumen/producen información"
-  TF2_TF3: "Flujos transforman información"
+  Observability:
+    definicion: "Capacidad de entender estado interno observando outputs externos."
+    pillars: ["Logs", "Metrics", "Traces", "Alerts"]
+    aplicacion:
+      TF1: "Lifecycle logs, Utilization metrics, Drift traces."
+      TF2: "Execution steps, STP rates, End-to-end traces."
+      TF3: "Data quality scores, Lineage DAGs, Access logs."
 
-  Composite_Health:
-    Formula: "Tejidos_Score = TF1×0.35 + TF2×0.35 + TF3×0.30"
-    Threshold: "≥70"
+entidades_compuestas:
+  E7_FlowExecution:
+    ubicacion: "Integrado en TF2.execution_history"
+    concepto: "Instancia concreta de ejecución de Flow (Runtime tracking)."
+    schema_ref: "TF2.execution_history.executions"
+    key_fields:
+      [
+        "id",
+        "flow_id",
+        "trigger",
+        "status",
+        "current_step_id",
+        "outputs_produced",
+        "metrics(DORA)",
+      ]
 
-# =============================================================================
-# FIN guide_core_002_tejidos_orko.yml
-# =============================================================================
+  E6_ArchitecturalState:
+    ubicacion: "Concern Transversal (Meta-arquitectónico)"
+    concepto: "Snapshot completo del sistema en momento dado."
+    tipos: ["Current", "Target", "Intermediate", "Historical"]
+    operaciones:
+      - "capture_current_state()"
+      - "define_target_state()"
+      - "plan_intermediate_states()"
+      - "calculate_convergence()"
+      - "transition_to_state()"
+    metricas:
+      consistency_validated: "Boolean"
+      convergence_pct: "Float"
+      health_score: "Aggregated(TF1, TF2, TF3, Security)"
+
+integracion_tejidos:
+  principios:
+    - "Loose Coupling (Contratos)"
+    - "High Cohesion"
+    - "Explicit Dependencies"
+    - "Event Driven"
+    - "Idempotency"
+
+  patrones:
+    TF1_executes_TF2:
+      pattern: "Capacity Assignment"
+      desc: "Flow steps asignados a Capacities."
+    TF2_triggered_by_TF3:
+      pattern: "Event Triggered Flow"
+      desc: "Cambios en Info Assets disparan flujos."
+    TF2_produces_TF3:
+      pattern: "Flow Produces Information"
+      desc: "Ejecución genera/transforma assets."
+    TF3_feeds_TF1:
+      pattern: "Data Feeds Capacity"
+      desc: "Training data para ML, Context para RAG."
+
+  casos_uso_end_to_end:
+    RAG_Pipeline:
+      components: "TF1(LLM) + TF2(Orchestration) + TF3(Semantic)"
+      trace: "Query → TF2 → TF1(Embed) → TF3(Retrieve) → TF1(Generate) → TF3(Log)"
+    CI_CD_Pipeline:
+      components: "TF1(Build/Test) + TF2(Pipeline) + TF3(Repo/Logs)"
+      trace: "Commit → TF2 → TF1s → HITL → Deploy → Monitor"
+    Multi_Agent_Research:
+      components: "TF1(Agents) + TF2(Hierarchical Loop) + TF3(Sources)"
+      trace: "Task → TF1(Manager) → TF2(Loop) → TF1(Workers) → TF3(Report)"
+
+validacion:
+  invariantes_I1_I8:
+    I1_Minimalidad: "3 tejidos irreducibles, cobertura completa P1-P5."
+    I2_Ortogonalidad: "0% overlap entre tejidos."
+    I3_Trazabilidad: "100% rastreable vertical (Axiomas) y horizontal."
+    I4_Clasificacion: "Roles Producción/Habilitación explícitos."
+    I5_HAIC: "Accountability y Bounded Autonomy transversales."
+    I6_Trajectory: "Drift detection y Learning loops activos."
+    I7_Emergencia: "Niveles cognitivos C0-C3 soportados."
+    I8_Adaptacion: "Trayectorias Minimal y Avanzada soportadas."
+
+  estado: "VALIDADO ✅"

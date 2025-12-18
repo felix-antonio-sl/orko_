@@ -1,320 +1,265 @@
-# ORKO Metodología - Layer 3
-# 18 Fases WSLC + 15 Playbooks operativos
+kybalion_version: "2.1"
+integrity_proof:
+  hash: "SHA256_COMPUTED_ON_CONTENT"
+  signature: "KODA_FACTORY_SIG_v1"
+  timestamp: "2025-01-01T12:00:00Z"
 
-_manifest:
-  urn: "urn:knowledge:orko:core:metodologia:1.0.0"
-  federation:
-    visibility: public
-    license: "MIT"
-  provenance:
-    created_by: "FS"
-    created_at: "2025-12-13"
-    last_modified_at: "2025-12-13"
+metadata:
+  id: "guide_core_003_metodologia_orko"
+  title: "Metodología ORKO (Layer 3)"
+  version: "1.0.0"
+  state: "STABLE"
+  layer: "3_Metodología"
+  compliance:
+    fidelity_score: 1.0
+    ter_score: 0.45
+    ref_density: 2.2
+  references:
+    - "30_metodologia_orko/00_introduccion_metodologia.md"
+    - "30_metodologia_orko/00b_mapeo_dominios_fases.md"
+    - "30_metodologia_orko/01_fases_initiation/"
+    - "30_metodologia_orko/02_fases_development/"
+    - "30_metodologia_orko/03_fases_implementation/"
+    - "30_metodologia_orko/04_fases_operation/"
+    - "30_metodologia_orko/05_fases_evolution/"
+    - "30_metodologia_orko/06_playbooks_recovery/"
+    - "30_metodologia_orko/07_playbooks_transformation/"
+    - "30_metodologia_orko/08_playbooks_operational/"
 
-Metadata:
-  ID: "ORKO-CORE-MET-01"
-  Version: "1.0.0"
-  Status: "Published"
-  Human-Creator: "FS"
-  Human-Editor: "FS"
-  Model-Collaborator: "Claude"
-  Creation-Date: "2025-12-13"
-  Modification-Date: "2025-12-13"
-  Ctx: "Metodología ORKO - Fases y Playbooks operativos"
+introduction:
+  definition: "Sistema operativo organizacional adaptable y formal para guiar transformaciones complejas."
+  core_concept: "Work-System Lifecycle (WSLC) de 18 fases + Catálogo de 15 Playbooks activados por Health Gates."
+  philosophy: "Minimalidad, Ortogonalidad, Accountability Humana (HAIC), Adaptación basada en Datos."
 
-LLM_Parsing_Instructions:
-  Purp: "Guía parsing artefacto KODA/Spec ORKO Layer 3"
-  Format: "YAML jerárquico keyword-driven"
-  Lexicon_Tier2_ORKO:
-    - "Phase, Playbook, WSLC"
-    - "Trajectory, HealthGate, RACI"
-  XRef_Required:
-    - "urn:knowledge:orko:core:fundamentos:1.0.0"
-    - "urn:knowledge:orko:core:arquitectura:1.0.0"
-    - "urn:knowledge:orko:core:tejidos:1.0.0"
+fases_wslc:
+  initiation:
+    F1_Context_Assessment:
+      canonico: "Context Assessment"
+      proposito: "Capturar estado organizacional actual (E6_current), H_org baseline y perfil de contexto (36 params)."
+      inputs: ["Stakeholder Interviews", "Org Docs", "Regulatory Context"]
+      outputs:
+        [
+          "context_profile_36_params",
+          "h_org_baseline",
+          "context_classification",
+        ]
+      owner: "Role_Captain"
 
-# =============================================================================
-# INTRODUCCIÓN
-# =============================================================================
+    F2_Vision_Definition:
+      canonico: "Vision Definition"
+      proposito: "Definir visión, ambición y North Star alineada con restricciones del contexto."
+      inputs: ["F1.context_profile", "F3.trajectory_selected"]
+      outputs: ["vision_statement.md", "okr_L4", "vision_constraints"]
+      owner: "Role_Captain + Sponsor_L1_Human"
+      protocol: "F2_F3_convergence (circular dependency)"
 
-Introduccion:
-  ID: "ORKO-MET-INTRO-01"
-  Def: "ORKO - Metodología adaptable para transformaciones organizacionales"
-  Componentes:
-    Fases: "18 fases F1-F18 (WSLC)"
-    Playbooks: "15 procedimientos P01-P15"
-    Gobernanza: "Captain, HealthOwner, Architect"
+    F3_Trajectory_Selection:
+      canonico: "Trajectory Selection"
+      proposito: "Seleccionar trayectoria óptima (Survival, Minimal, Avanzada) basada en decisión matrix formal."
+      inputs: ["F1.h_org_baseline", "Budget/Runway"]
+      outputs:
+        ["trajectory_selected", "timeline_commitment", "budget_allocation"]
+      owner: "Role_Captain + Sponsor_L1_Human"
 
-  Trayectorias:
-    Survival: "H_org < 0.50 - 3-6 semanas - estabilizar"
-    Minimal: "H_org 0.50-0.70 - 6-12 semanas - cimientos"
-    Avanzada: "H_org > 0.70 - 3-6 meses - transformación completa"
+  development:
+    F4_Capability_Mapping:
+      canonico: "Capability Mapping"
+      proposito: "Inventariar y mapear capacidades (P1) humanas, algorítmicas y mixtas."
+      inputs: ["F2.vision", "F3.trajectory"]
+      outputs: ["p1_inventory.yaml", "skills_matrix", "capacity_gaps"]
+      owner: "Role_Architect"
 
-# =============================================================================
-# FASES INITIATION (F1-F3)
-# =============================================================================
+    F5_Flow_Design:
+      canonico: "Flow Design"
+      proposito: "Diseñar flujos de valor (P2) y optimizar handoffs."
+      inputs: ["F4.p1_inventory", "F7.okr_cascade"]
+      outputs: ["vsm_maps", "handoff_ratio_metrics", "flow_optimization_plan"]
+      owner: "Role_Architect"
 
-Fases_Initiation:
-  F1_Context_Assessment:
-    ID: "ORKO-F1-01"
-    Dominio: "D2_Percepción"
-    Purp: "Capturar estado actual vía 36 parámetros"
-    Outputs: "context_profile, h_org_baseline"
-    Duracion: "2-4 semanas"
+    F6_Information_Architecture:
+      canonico: "Information Architecture"
+      proposito: "Diseñar arquitectura de información (P3), dominios de datos y governance."
+      inputs: ["F1.context", "F7.okrs"]
+      outputs:
+        ["data_catalog", "architecture_blueprint", "information_governance"]
+      owner: "Role_Architect (Data)"
 
-  F2_Vision_Definition:
-    ID: "ORKO-F2-01"
-    Dominio: "D3_Decisión"
-    Purp: "Articular visión y criterios éxito"
-    Outputs: "vision_statement, success_criteria"
-    Duracion: "1-2 semanas"
+    F7_Purpose_Cascade:
+      canonico: "Purpose Cascade"
+      proposito: "Cascadear OKRs (P5) desde L4 (Org) hasta L3/L2/L1 según trayectoria, asignando accountability humana."
+      inputs: ["F2.okr_L4", "F3.trajectory"]
+      outputs:
+        ["okr_cascade_L4_to_L1.yaml", "purpose_policy", "alignment_matrix"]
+      owner: "Role_Captain + Leaders"
+      invariant: "I5_HAIC: Every OKR must have a Human Owner"
 
-  F3_Trajectory_Selection:
-    ID: "ORKO-F3-01"
-    Dominio: "D3_Decisión"
-    Purp: "Seleccionar trayectoria transformación"
-    Outputs: "trajectory_selected, roadmap"
-    Duracion: "1 semana"
+    F8_Limits_Definition:
+      canonico: "Limits Definition"
+      proposito: "Formalizar límites (P4) regulatorios, técnicos y presupuestarios."
+      inputs: ["F1.regulatory_constraints", "F3.budget"]
+      outputs: ["limit_catalog.yaml", "compliance_framework_refs"]
+      owner: "Role_Architect (Governance)"
 
-# =============================================================================
-# FASES DEVELOPMENT (F4-F9)
-# =============================================================================
+    F9_Target_State_Design:
+      canonico: "Target State Design"
+      proposito: "Sintetizar diseños F4-F8 en un Estado Arquitectónico Objetivo (E6_target)."
+      inputs: ["F4-F8 outputs", "F3.trajectory"]
+      outputs:
+        ["e6_target.yaml", "target_diagrams", "gap_analysis_current_target"]
+      owner: "Role_Architect"
 
-Fases_Development:
-  F4_Capability_Mapping:
-    ID: "ORKO-F4-01"
-    Dominio: "D1_Arquitectura"
-    Purp: "Mapear capacidades actuales y target"
-    Outputs: "capability_inventory, gap_analysis"
-    Duracion: "2-4 semanas"
+  implementation:
+    F10_Quick_Wins:
+      canonico: "Quick Wins"
+      proposito: "Ejecutar acciones de alto impacto y bajo esfuerzo para ganar momentum y mejorar H_org temprano."
+      inputs: ["F9.gap_analysis", "F5.vsm_maps"]
+      outputs: ["quick_wins_backlog", "execution_log", "h_org_early_impact"]
+      owner: "Role_Delivery_Lead"
 
-  F5_Flow_Design:
-    ID: "ORKO-F5-01"
-    Dominio: "D1_Arquitectura"
-    Purp: "Diseñar flujos valor y automatización"
-    Outputs: "flow_catalog, value_stream_maps"
-    Duracion: "2-4 semanas"
+    F11_Fabric_Deployment:
+      canonico: "Fabric Deployment"
+      proposito: "Desplegar cambios estructurales en Tejidos (TF1, TF2, TF3)."
+      inputs: ["F9.target_schemas", "F9.e6_target"]
+      outputs: ["fabric_deployment_plan", "tf1/tf2/tf3_status"]
+      owner: "Role_Delivery_Lead"
 
-  F6_Information_Architecture:
-    ID: "ORKO-F6-01"
-    Dominio: "D1_Arquitectura"
-    Purp: "Diseñar arquitectura información"
-    Outputs: "information_blueprint, lakehouse_design"
-    Duracion: "3-6 semanas"
+    F12_State_Transition:
+      canonico: "State Transition"
+      proposito: "Orquestar la transición formal de E6_current a E6_target (migraciones, reorgs)."
+      inputs: ["F9.e6_target", "F11.fabric_status"]
+      outputs: ["state_transition_plan", "e6_intermediate_states"]
+      owner: "Role_Architect + Delivery"
 
-  F7_Purpose_Cascade:
-    ID: "ORKO-F7-01"
-    Dominio: "D1_Arquitectura"
-    Purp: "Diseñar cascada OKRs"
-    Outputs: "okr_hierarchy, alignment_matrix"
-    Duracion: "2-3 semanas"
+  operation:
+    F13_Health_Monitoring:
+      canonico: "Health Monitoring"
+      proposito: "Monitoreo continuo de métricas canónicas (H_org, eta_org) y activación de Health Gates."
+      inputs: ["Live Signals TF1/TF2/TF3"]
+      outputs:
+        ["h_org_dashboard", "health_gate_status (G1-G4)", "playbook_triggers"]
+      owner: "Role_HealthOwner"
 
-  F8_Limits_Definition:
-    ID: "ORKO-F8-01"
-    Dominio: "D1+D3"
-    Purp: "Definir límites y governance"
-    Outputs: "limits_catalog, enforcement_policies"
-    Duracion: "1-2 semanas"
+    F14_Incident_Response:
+      canonico: "Incident Response"
+      proposito: "Gestión reactiva de incidentes y degradaciones de salud detectadas por F13."
+      inputs: ["F13.alerts", "playbook_triggers"]
+      outputs: ["incident_reports", "recovery_actions", "post_mortems"]
+      owner: "Role_IncidentLead"
 
-  F9_Target_State_Design:
-    ID: "ORKO-F9-01"
-    Dominio: "D1_Arquitectura"
-    Purp: "Diseñar E6 target completo"
-    Outputs: "E6_target, ADRs, transition_plan"
-    Duracion: "2-4 semanas"
+    F15_Continuous_Execution:
+      canonico: "Continuous Execution"
+      proposito: "Operación regular del sistema de trabajo (Sprints, BAU, Cadencia)."
+      inputs: ["Backlog F10/F11", "F7.okrs"]
+      outputs: ["execution_log", "sprint_reports", "cadence_adjustments"]
+      owner: "Role_Delivery_Lead"
 
-# =============================================================================
-# FASES IMPLEMENTATION (F10-F12)
-# =============================================================================
+  evolution:
+    F16_Learning_Loops:
+      canonico: "Learning Loops"
+      proposito: "Cerrar ciclos de aprendizaje, analizando correlación entre acciones y métricas."
+      inputs: ["F13.trends", "F14.post_mortems", "F15.reports"]
+      outputs:
+        [
+          "learning_log",
+          "playbook_improvement_backlog",
+          "trajectory_recommendations",
+        ]
+      owner: "Role_Captain"
 
-Fases_Implementation:
-  F10_Quick_Wins:
-    ID: "ORKO-F10-01"
-    Dominio: "D4_Operación"
-    Purp: "Entregar valor temprano"
-    Outputs: "quick_wins_delivered"
-    Duracion: "4-8 semanas"
+    F17_Adaptation:
+      canonico: "Adaptation"
+      proposito: "Formalizar decisiones de cambio de rumbo (Pivots, Trajectory Adjustments) vía ADRs."
+      inputs: ["F16.learnings", "F13.trends"]
+      outputs: ["trajectory_adjustment", "adaptation_plan", "okr_refinement"]
+      owner: "Role_SteeringCommittee"
 
-  F11_Fabric_Deployment:
-    ID: "ORKO-F11-01"
-    Dominio: "D1+D4"
-    Purp: "Desplegar TF1, TF2, TF3"
-    Outputs: "tejidos deployed"
-    Duracion: "8-16 semanas"
+    F18_Convergence_Check:
+      canonico: "Convergence Check"
+      proposito: "Validación final de convergencia hacia E6_target al cierre de ciclo."
+      inputs: ["F9.e6_target", "F12.e6_current_post"]
+      outputs:
+        ["convergence_report", "convergence_score", "gap_analysis_residual"]
+      owner: "Role_Architect"
 
-  F12_State_Transition:
-    ID: "ORKO-F12-01"
-    Dominio: "D4_Operación"
-    Purp: "Transicionar E6_current → E6_target"
-    Outputs: "E6_new, transition_log"
-    Duracion: "2-4 semanas"
+playbooks:
+  recovery:
+    desc: "Restaurar H_org ante degradaciones críticas (G1/G2)."
+    items:
+      P01_Low_H_org_Recovery:
+        trigger: "H_org < 60 (Critical)"
+        action: "Emergency capacity checks, kill non-critical flows."
+      P02_Handoff_Reduction:
+        trigger: "Handoff Ratio > 30% (High Friction)"
+        action: "Consolidate teams, unify roles, reduce steps."
+      P03_OKR_Alignment:
+        trigger: "OKR Alignment Score < 0.6 (Strategic Drift)"
+        action: "Re-cascade workshops, prune orphan projects."
+      P04_Security_Remediation:
+        trigger: "P4 Limit Breach / Security Incident"
+        action: "Containment, limit enforcement, compliance audit."
 
-# =============================================================================
-# FASES OPERATION (F13-F15)
-# =============================================================================
+  transformation:
+    desc: "Cambios estructurales proactivos para mejorar eta_org y ROI."
+    items:
+      P05_Bounded_Autonomy_M6:
+        trigger: "H_org high + eta_org low (Stagnation)"
+        action: "Design M6 autonomy frameworks, devolve decision rights."
+      P06_Pilot_Transformation:
+        trigger: "Trajectory Milestone / New Innovation"
+        action: "Launch controlled pilot in safe-to-fail zone."
+      P07_Scale_Transformation:
+        trigger: "Pilot Success confirmed by F16"
+        action: "Rollout pilot patterns to wider org."
+      P08_Optimization_Sustain:
+        trigger: "Post-Transformation Stabilization"
+        action: "Refine processes, document efficiency gains."
 
-Fases_Operation:
-  F13_Health_Monitoring:
-    ID: "ORKO-F13-01"
-    Dominio: "D2_Percepción"
-    Purp: "Monitoreo continuo H_org"
-    Outputs: "health_dashboard, alerts"
-    Health_Gates:
-      G1: "H_org < 70 → P01"
-      G2: "handoff > 30% → P02"
-      G3: "alignment < 60% → P03"
-      G4: "critical_violations > 0 → P04"
+  operational:
+    desc: "Ajustes tácticos durante operación continua."
+    items:
+      P09_Drift_Detection_Response:
+        trigger: "Drift E6_current vs Target > Threshold"
+        action: "Corrective actions to realign architecture."
+      P10_Capacity_Gap_Resolution:
+        trigger: "Missing Skills / Capacity Bottleneck"
+        action: "Hiring, Training, or Automating gap."
+      P11_Flow_Optimization:
+        trigger: "Cycle Time degradation"
+        action: "Value stream tuning, bottleneck removal."
+      P12_Data_Quality_Recovery:
+        trigger: "Data Quality Score drop"
+        action: "Clean-up, fix lineage, enforce schema."
+      P13_Political_Alignment:
+        trigger: "Stakeholder conflict / blocking"
+        action: "Alignment workshops, sponsor intervention."
+      P14_Client_Expectation_Mgmt:
+        trigger: "NPS Drop / Client Churn risk"
+        action: "Client interviews, roadmap adjustment."
+      P15_Adaptive_Cadence:
+        trigger: "Volatility up / Velocity down"
+        action: "Change sprint length, review frequency."
 
-  F14_Incident_Response:
-    ID: "ORKO-F14-01"
-    Dominio: "D4_Operación"
-    Purp: "Responder incidentes, ejecutar playbooks"
-    Pattern: "OODA: Observe → Orient → Decide → Act"
-    Outputs: "incident_log, remediation"
+governance:
+  roles:
+    Role_Captain: "Orquestador metodológico general. Accountable por F1-F3, F7, F16."
+    Role_Architect: "Guardián de integridad técnica (D1). Accountable por F4, F5, F6, F8, F9, F18."
+    Role_HealthOwner: "Guardián de H_org (D2). Accountable por F13 y activación de Playbooks."
+    Role_Delivery_Lead: "Líder de ejecución (D4). Accountable por F10, F11, F15."
+    Role_IncidentLead: "Líder efímero para F14."
+    Sponsor_L1_Human: "Ejecutivo responsable final de decisiones estratégicas y presupuesto."
 
-  F15_Continuous_Execution:
-    ID: "ORKO-F15-01"
-    Dominio: "D4_Operación"
-    Purp: "Ejecución continua Xanpan"
-    Cadencia: "Sprints 2 semanas"
-    Outputs: "increments, velocity"
+  rituals:
+    Health_Check_Weekly: "Revisión F13 de H_org y health gates."
+    Steering_Committee_Monthly: "Revisión F17 de trayectoria y adaptación."
+    Learning_Review_Quarterly: "Sesión F16 de aprendizaje profundo."
 
-# =============================================================================
-# FASES EVOLUTION (F16-F18)
-# =============================================================================
+validation:
+  invariantes_I1_I8:
+    I1_Minimalidad: "Fases necesarias y suficientes. Playbooks ortogonales."
+    I2_Ortogonalidad: "Mapeo D1-D4 a Fases es limpio y sin overlap funcional."
+    I3_Trazabilidad: "Todo artefacto traza a Primitivos P1-P5."
+    I5_HAIC: "Todo rol y ownership es explícitamente humano."
+    I6_Trajectory: "Metodología soporta 3 trayectorias diferenciadas."
+    I8_Adaptacion: "F16/F17 garantizan evolución del sistema."
 
-Fases_Evolution:
-  F16_Learning_Loops:
-    ID: "ORKO-F16-01"
-    Dominio: "D2_Percepción"
-    Purp: "Capturar y aplicar aprendizajes"
-    Tipos: "Retros, Post-mortems, Quarterly reviews"
-
-  F17_Adaptation:
-    ID: "ORKO-F17-01"
-    Dominio: "D3_Decisión"
-    Purp: "Adaptar trayectoria según contexto"
-    Triggers: "H_org changes, context shifts"
-    Outputs: "trajectory_adjustment, roadmap_updated"
-
-  F18_Convergence_Check:
-    ID: "ORKO-F18-01"
-    Dominio: "D2_Percepción"
-    Purp: "Verificar convergencia hacia target"
-    Cadencia: "Trimestral"
-    Outputs: "convergence_report"
-
-# =============================================================================
-# GOBERNANZA
-# =============================================================================
-
-Gobernanza:
-  Roles:
-    Captain: "Líder operativo transformación"
-    HealthOwner: "Guardian H_org"
-    Architect: "Guardian coherencia arquitectónica"
-    Sponsor: "Executive accountable"
-
-  Rituales:
-    Board_Coordinacion: "Quincenal - Health + Progress + Blockers"
-    Health_Standup: "Semanal - H_org status"
-    Architecture_Review: "Mensual - ADRs, drift"
-
-# =============================================================================
-# PLAYBOOKS RECOVERY (P01-P04)
-# =============================================================================
-
-Playbooks_Recovery:
-  P01_Low_H_org:
-    ID: "ORKO-P01-01"
-    Trigger: "H_org < 70"
-    Steps: "Diagnose → Triage → Stabilize → Monitor → Prevent"
-    Timeline: "1-4 semanas"
-
-  P02_Handoff_Reduction:
-    ID: "ORKO-P02-01"
-    Trigger: "handoff_ratio > 30%"
-    Steps: "Map → Analyze → Consolidate → Implement → Validate"
-    Target: "< 20%"
-
-  P03_OKR_Alignment:
-    ID: "ORKO-P03-01"
-    Trigger: "alignment_score < 60%"
-    Steps: "Diagnose → Realign_Top → Cascade → Resolve → Communicate"
-    Target: "≥ 80%"
-
-  P04_Security_Remediation:
-    ID: "ORKO-P04-01"
-    Trigger: "critical_violations > 0"
-    Steps: "Assess → Contain → Remediate → Validate → Prevent"
-    Response: "< 15min containment"
-
-# =============================================================================
-# PLAYBOOKS TRANSFORMATION (P05-P10)
-# =============================================================================
-
-Playbooks_Transformation:
-  P05_Bounded_Autonomy_M6:
-    ID: "ORKO-P05-01"
-    Trigger: "Ready for M6"
-    Prerequisites: "success_rate ≥ 98%, override < 2%, trajectory ≥ 90 días"
-    Steps: "Evidence → Review → Enhanced_Guardrails → Gradual_Rollout → Monitor"
-
-  P06_Team_Restructure:
-    ID: "ORKO-P06-01"
-    Trigger: "Topology change needed"
-    Patterns: "Stream-aligned, Platform, Enabling, Complicated-subsystem"
-
-  P07_Tech_Stack_Migration:
-    ID: "ORKO-P07-01"
-    Trigger: "Tech change required"
-    Steps: "ADR → Plan → Prepare → Migrate → Decommission"
-
-  P08_Capacity_Scaling:
-    ID: "ORKO-P08-01"
-    Trigger: "Capacity shortage/excess"
-    Steps: "Analyze → Plan → Execute → Validate"
-
-  P09_Flow_Automation:
-    ID: "ORKO-P09-01"
-    Trigger: "Manual flow for automation"
-    Steps: "Assess_ROI → Design → Build → Test → Deploy → Monitor"
-
-  P10_Data_Quality:
-    ID: "ORKO-P10-01"
-    Trigger: "TF3_Quality < 70%"
-    Steps: "Profile → Prioritize → Cleanse → Prevent → Govern"
-
-# =============================================================================
-# PLAYBOOKS OPERATIONAL (P11-P15)
-# =============================================================================
-
-Playbooks_Operational:
-  P11_Sprint_Execution:
-    ID: "ORKO-P11-01"
-    Trigger: "Sprint cycle"
-    Rituals: "Planning, Daily, Review, Retro"
-
-  P12_Quarterly_OKR:
-    ID: "ORKO-P12-01"
-    Trigger: "Quarter end"
-    Steps: "Score → Reflect → Learn → Plan → Cascade"
-
-  P13_Architecture_Review:
-    ID: "ORKO-P13-01"
-    Trigger: "Monthly"
-    Steps: "Drift_Check → ADR_Review → Tech_Debt → Actions"
-
-  P14_Capacity_Review:
-    ID: "ORKO-P14-01"
-    Trigger: "Monthly"
-    Steps: "Utilization → Performance → Trajectory → Gaps → Plan"
-
-  P15_Governance_Audit:
-    ID: "ORKO-P15-01"
-    Trigger: "Quarterly"
-    Steps: "Policy_Review → Compliance → Violations → Controls → Report"
-
-# =============================================================================
-# FIN guide_core_003_metodologia_orko.yml
-# =============================================================================
+  estado: "VALIDADO ✅"

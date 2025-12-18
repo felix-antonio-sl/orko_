@@ -10,7 +10,7 @@ _manifest:
   provenance:
     created_by: "FS"
     created_at: "2025-12-01"
-    last_modified_at: "2025-12-14"
+    last_modified_at: "2025-12-18"
 
 ID: ORKO-CATALOG-MASTER-01
 Version: 1.0.0
@@ -39,7 +39,7 @@ Catalog:
         - "ORKO-INV-I6"
         - "ORKO-INV-I7"
         - "ORKO-INV-I8"
-      status: draft
+      status: published
       layer: 0
 
     - urn: "urn:knowledge:orko:core:arquitectura:1.0.0"
@@ -53,7 +53,7 @@ Catalog:
         - "ORKO-C-C3"
         - "ORKO-C-C4"
         - "ORKO-C-C5"
-      status: draft
+      status: published
       layer: 1
 
     - urn: "urn:knowledge:orko:core:tejidos:1.0.0"
@@ -67,14 +67,14 @@ Catalog:
       title: "Metodología ORKO (Layer 3)"
       description: "Fases de transformación, templates y guías de implementación"
       file: "knowledge/core/guide_core_003_metodologia_orko.yml"
-      status: draft
+      status: published
       layer: 3
 
     - urn: "urn:knowledge:orko:core:toolkit:1.0.0"
       title: "ORKO Toolkit (Layer 4-5)"
       description: "Calculadoras, scripts y herramientas para usuario final"
       file: "knowledge/core/guide_core_004_toolkit_orko.yml"
-      status: draft
+      status: published
       layer: 4
 
   # Layer 3-4: Methodology & Implementation
@@ -83,21 +83,21 @@ Catalog:
       title: "Metodología ORKO - Fases de Transformación (Layer 3)"
       description: "Receta de transformación: Fases, Playbooks, Templates"
       file: "knowledge/domains/metodologia/kb_metodologia_001_fases_orko.yml"
-      status: draft
+      status: published
       layer: 3
 
     - urn: "urn:knowledge:orko:metodologia:playbooks:1.0.0"
       title: "Playbooks ORKO"
       description: "Playbooks por nivel de salud: Survival, Minimal, Advanced"
       file: "knowledge/domains/metodologia/kb_metodologia_002_playbooks_orko.yml"
-      status: draft
+      status: published
       layer: 3
 
     - urn: "urn:knowledge:orko:implementacion:toolkit:1.0.0"
       title: "ORKO Toolkit (Layer 4-5)"
       description: "Calculadoras, scripts, herramientas compiladas para usuario final"
       file: "knowledge/domains/implementacion/kb_implementacion_001_toolkit_orko.yml"
-      status: draft
+      status: published
       layer: 4
 
   Agents:

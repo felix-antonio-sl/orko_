@@ -1,5 +1,6 @@
 # ORKO Fundamentos Teóricos - Layer 0
-# Base axiomática irreducible del sistema ORKO
+# Base axiomática irreducible del sistema ORKO.
+# Fuente: /sources/orko_knowledge/00_fundamentos_teoricos/
 
 _manifest:
   urn: "urn:knowledge:orko:core:fundamentos:1.0.0"
@@ -8,451 +9,296 @@ _manifest:
     license: "MIT"
   provenance:
     created_by: "FS"
-    created_at: "2025-12-13"
-    last_modified_at: "2025-12-13"
+    source_version: "v1.0.0-verified"
+    last_modified: "2025-12-18"
 
 Metadata:
   ID: "ORKO-CORE-FUND-01"
-  Version: "1.0.0"
+  Version: "1.1.0"
   Status: "Published"
   Human-Creator: "FS"
-  Human-Editor: "FS"
-  Model-Collaborator: "Claude"
-  Creation-Date: "2025-12-13"
-  Modification-Date: "2025-12-13"
-  Ctx: "Fundamentos teóricos ORKO - Genoma irreducible del sistema"
-
-LLM_Parsing_Instructions:
-  Purp: "Guía parsing artefacto KODA/Spec ORKO Layer 0"
-  Format: "YAML jerárquico keyword-driven"
-  Lexicon_Tier2_ORKO:
-    - "Axiom, Primitive, Invariant, Theorem"
-    - "Domain, Cycle, Equation"
-    - "Genoma, Fenotipo"
-  Framework:
-    Genoma: "Núcleo irreducible, universal, inmutable"
-    Fenotipo: "Expresiones contextuales, configurables"
-  Interpretation:
-    - "Axiomas A1-A5: Base ontológica irreducible"
-    - "Primitivos P1-P5: Operacionalización de axiomas"
-    - "Invariantes I1-I8: Propiedades preservadas"
-    - "Dominios D1-D4: Áreas ortogonales"
-    - "Ciclos SDA+WSLC: Dinámicas fundamentales"
+  Model-Collaborator: "KODA-TRANSFORMER"
+  Ctx: "Genoma irreducible del sistema ORKO. Contiene Axiomas, Primitivos, Invariantes y Teoremas."
 
 # =============================================================================
-# AXIOMAS FUNDAMENTALES (A1-A5)
+# PART I: AXIOMAS IRREDUCIBLES (A1-A5)
 # =============================================================================
 
 Axiomas:
   ID: "ORKO-AXIOMAS-01"
-  Purp: "5 axiomas irreducibles - base ontológica ORKO"
-  Ctx: "[GENOMA] - No modificables, universales"
+  Purp: "Verades fundamentales no derivables. Genoma ontológico."
 
   A1_Transformacion:
-    ID: "ORKO-A1-01"
-    Enunciado: "Todo sistema organizacional existe para transformar estados"
-    Formal: "∀ org ∈ Organizaciones: ∃ T tal que T: S_inicial → S_final"
-    Justificacion: "Sin transformación, no hay propósito de existencia"
+    ID: "ORKO-AX-A1"
+    Enunciado: "Todo sistema organizacional existe para transformar estados (S1 → S2)."
+    Formal: "∀ org: ∃ T | T: S_in → S_out"
+    Just_Irreducibilidad: "Sin T, sistema es estático (inerte). No derivable."
     Derivaciones:
-      - "P2 (Flujo) - estructura de transformación"
-      - "Ciclo SDA - operacionaliza transformación"
+      - P2_Flujo (Estructura de T)
+      - Propiedades: Duración, Costo, Calidad.
 
   A2_Capacidad:
-    ID: "ORKO-A2-01"
-    Enunciado: "Toda transformación requiere capacidad que la ejecute"
-    Formal: "∀ T: ∃ C tal que C ejecuta T"
-    Justificacion: "Transformación sin ejecutor es imposible"
+    ID: "ORKO-AX-A2"
+    Enunciado: "Existe capacidad que efectúa la transformación. No ocurre espontáneamente."
+    Formal: "∀ T: ∃ C | C executes T"
+    Just_Irreducibilidad: "T requiere agente causal. C es el potencial de actuar."
     Derivaciones:
-      - "P1 (Capacidad) - agente transformador"
-      - "Sustratos: Humano, Algorítmico, Mecánico, Mixto"
+      - P1_Capacidad (Agente transformador)
+      - Distinciones: Agente (Cog) vs Actor (Sustrato).
 
   A3_Informacion:
-    ID: "ORKO-A3-01"
-    Enunciado: "Toda transformación opera sobre información"
-    Formal: "∀ T: ∃ I_in, I_out tal que T(I_in) = I_out"
-    Justificacion: "Contenido de entrada/salida debe existir"
+    ID: "ORKO-AX-A3"
+    Enunciado: "Existe estructura portadora de significado que coordina transformaciones."
+    Formal: "∀ T: ∃ I_in, I_out | T(I_in) = I_out"
+    Just_Irreducibilidad: "Sin I, no hay coordinación ni memoria. Caos."
     Derivaciones:
-      - "P3 (Información) - contenido transformado"
-      - "Tipos: Persistente, Transitoria, Agregada"
+      - P3_Informacion (Estructura, Lineage)
+      - Unificación: Dato (Persistente) + Señal (Transitoria) + Estado (Agregada).
 
   A4_Restriccion:
-    ID: "ORKO-A4-01"
-    Enunciado: "Toda transformación opera dentro de límites"
-    Formal: "∀ T: ∃ L tal que T ⊆ espacio_factible(L)"
-    Justificacion: "Sin límites, espacio infinito no operable"
+    ID: "ORKO-AX-A4"
+    Enunciado: "No todo es posible. Existen restricciones que acotan el espacio de posibilidades."
+    Formal: "∀ T: T ⊆ Espacio_Factible(L)"
+    Just_Irreducibilidad: "Sin L, espacio infinito no operable. Física/Regulación exigen L."
     Derivaciones:
-      - "P4 (Límite) - constraints operativos"
-      - "Tipos: Físico, Regulatorio, Organizacional, Económico, Técnico"
+      - P4_Limite (Constraint explícito)
+      - Tipos: Físico, Regulatorio, Org, Económico, Técnico.
 
   A5_Intencionalidad:
-    ID: "ORKO-A5-01"
-    Enunciado: "Toda transformación tiene propósito direccional"
-    Formal: "∀ T: ∃ P tal que T sirve a P"
-    Justificacion: "Sin propósito, transformación es ruido"
+    ID: "ORKO-AX-A5"
+    Enunciado: "Transformación tiene propósito direccional (outcome deseado)."
+    Formal: "∀ T: ∃ P | P directs T"
+    Just_Irreducibilidad: "Sin P, movimiento es browniano (ruido). Teleología distingue Org de Caos."
     Derivaciones:
-      - "P5 (Propósito) - dirección teleológica"
-      - "Estructura OKR: objective + key_results"
+      - P5_Proposito (Outcome, OKR)
+      - Ecuación Valor: V_org derivado de P.
 
-  Validacion_Axiomas:
-    Irreducibilidad: "Ningún axioma derivable de otros"
-    Suficiencia: "Conjunto cubre todo fenómeno organizacional"
-    Consistencia: "Sin contradicciones lógicas"
+  Validacion_Axiomatica:
+    Suficiencia: "A1-A5 cubren: Acción, Agente, Medio, Límite, Fin."
+    Consistencia: "Ortogonales pares a pares."
 
 # =============================================================================
-# PRIMITIVOS FUNDAMENTALES (P1-P5)
+# PART II: PRIMITIVOS (P1-P5) - Operational Constructs
 # =============================================================================
 
 Primitivos:
   ID: "ORKO-PRIMITIVOS-01"
-  Purp: "5 primitivos operacionales derivados de axiomas"
-  Ctx: "[GENOMA] - Estructuras mínimas operables"
+  Def: "Mínima estructura necesaria para operacionalizar A1-A5."
 
   P1_Capacidad:
-    ID: "ORKO-P1-01"
-    Derivacion: "A2 (Existencia Capacidad)"
-    Def: "Habilidad de ejecutar transformaciones"
-    Estructura:
-      substrate: "{Humano | Algorítmico | Mecánico | Mixto}"
-      capacity_type: "{C0_Ejecutar | C1_Decidir | C2_Reflexionar | C3_Meta_Reflexionar}"
-      role: "{Producción | Habilitación}"
-      ownership: "{accountable_id, delegated_from, delegation_mode}"
-    Niveles_Cognitivos:
-      C0: "Ejecutar - sin decisión, determinístico"
-      C1: "Decidir - clasificación, routing basado en reglas/ML"
-      C2: "Reflexionar - razonamiento, planning, multi-step"
-      C3: "Meta-Reflexionar - reflexión sobre reflexión (solo humanos)"
-    Sustratos:
-      Humano: "Personas, equipos - todos niveles C0-C3"
-      Algoritmico: "ML, LLM, agentes - niveles C0-C2"
-      Mecanico: "Hardware, sensores - solo C0"
-      Mixto: "Combinaciones HITL - nivel del coordinador"
+    ID: "ORKO-PR-P1"
+    Deriv: "A2"
+    Def: "Potencial de ejecutar transformación. Unifica Actor y Agente."
+
+    Dimensiones_Ortogonales:
+      1_Sustrato:
+        Desc: "¿QUIÉN ejecuta? (Identidad Física = 'Actor')"
+        Valores:
+          - Humano: "Juicio, ética, creatividad (C0-C3)"
+          - Algoritmico: "Escala, velocidad (C0-C2)"
+          - Mecanico: "Fuerza, precisión (C0)"
+          - Mixto: "HITL (Human-in-the-loop)"
+
+      2_Cognicion:
+        Desc: "¿Qué NIVEL de decisión? (Inteligencia = 'Agente')"
+        Niveles:
+          C0_Ejecutar: "Determinístico. Sin decisión. (RPA, Sensor)"
+          C1_Decidir: "Selección opciones. (ML, Rule Engine)"
+          C2_Reflexionar: "Metacognición proceso. (Manager, Planner)"
+          C3_MetaReflexionar: "Reflexión sobre reflexión. (Estratega, Humano)"
+
+      3_Rol_Valor:
+        Desc: "¿PARA QUÉ? (Posición en cadena valor)"
+        Valores:
+          - Produccion: "Directo a cliente. Genera Revenue."
+          - Habilitacion: "Amplifica prod interna. Indirecto."
+
     Resolucion_Actor_Agente:
-      Nota: "Actor y Agente NO son primitivos separados"
-      Actor: "Vista_Sustrato(Capacidad)"
-      Agente: "Vista_Cognitiva(Capacidad) donde capacity_type ≥ C1"
+      Def: "Actor y Agente NO son primitivos. Son Vistas de P1."
+      Actor: "Vista filtrada por Sustrato."
+      Agente: "Vista filtrada por Cognición (Capacity ≥ C1)."
 
   P2_Flujo:
-    ID: "ORKO-P2-01"
-    Derivacion: "A1 (Existencia Transformación)"
-    Def: "Secuencia de transformaciones estructurada como DAG"
+    ID: "ORKO-PR-P2"
+    Deriv: "A1"
+    Def: "Secuencia estructurada de transformaciones (DAG)."
     Estructura:
-      steps: "List<{step_id, capacity_id, inputs, outputs}>"
-      dependencies: "DAG de precedencias"
-      type: "{Producción | Habilitación}"
-      metrics: "{cycle_time, throughput, handoff_ratio}"
-    Clasificacion:
-      Produccion: "Output → cliente externo (genera revenue)"
-      Habilitacion: "Output → capacidad interna (amplifica producción)"
-    Cognitive_Level:
-      C0_Mechanical: "RPA, scheduled jobs"
-      C1_Decisional: "ML routing, rule engines"
-      C2_Cognitive: "LLM agents, multi-agent"
+      - Steps: "Nodos atómicos (ordenados)."
+      - Dependencies: "Edges (flujo info)."
+      - Handoffs: "Cambio de Capacidad (Costos fricción)."
+    Metricas: "Cycle Time, Throughput, Handoff Ratio."
 
   P3_Informacion:
-    ID: "ORKO-P3-01"
-    Derivacion: "A3 (Existencia Información)"
-    Def: "Contenido estructurado con schema y governance"
-    Estructura:
-      information_type: "{Persistente | Transitoria | Agregada}"
-      payload: "{schema, data, encoding}"
-      lineage: "{produced_by, parent_ids, transformation}"
-      quality: "{completeness, accuracy, timeliness}"
+    ID: "ORKO-PR-P3"
+    Deriv: "A3"
+    Def: "Contenido estructurado + Propiedades Temporales + Lineage."
     Tipos:
-      Persistente: "Datos estables, durables"
-      Transitoria: "Eventos, señales temporales"
-      Agregada: "Derivada de múltiples fuentes (DAG)"
+      - Persistente: "Datos estables (Docs, Records). Validity ∞."
+      - Transitoria: "Eventos/Señales. Validity corta (TTL)."
+      - Agregada: "Estado derivado (Dashboards). Validity composita."
+    Propiedades:
+      - Lineage: "Trazabilidad origen (Producer Flow/Cap)."
+      - Freshness: "Age vs Validity."
 
   P4_Limite:
-    ID: "ORKO-P4-01"
-    Derivacion: "A4 (Existencia Restricción)"
-    Def: "Constraint que acota espacio de posibilidades"
-    Estructura:
-      limit_type: "{Físico | Regulatorio | Organizacional | Económico | Técnico}"
-      constraint: "{target_entity, expression, enforcement}"
-      compliance: "{violations, severity_score}"
+    ID: "ORKO-PR-P4"
+    Deriv: "A4"
+    Def: "Constraint que acota espacio posibilidades."
+    Tipos:
+      - Fisico: "Inmutable (Leyes naturales)."
+      - Regulatorio: "Hard constraint externo (Ley, Compliance)."
+      - Organizacional: "Soft constraint interno (Policy, RACI)."
+      - Economico: "Resource constraint (Budget)."
+      - Tecnico: "Capacity constraint (Rate limit)."
     Enforcement:
-      Preventivo: "Bloquea antes de violación"
-      Detectivo: "Alerta durante/después"
-      Correctivo: "Remedia post-violación"
+      - Preventivo: "Bloqueo ante-facto (Critical)."
+      - Detectivo: "Alerta post-facto (Error/Warning)."
+      - Correctivo: "Compensación auto."
 
   P5_Proposito:
-    ID: "ORKO-P5-01"
-    Derivacion: "A5 (Existencia Intencionalidad)"
-    Def: "Outcome deseado con métricas y jerarquía"
-    Estructura:
-      objective: "String cualitativo"
-      key_results: "List<{metric, baseline, target}>"
-      hierarchy: "{scope, parent_id, children}"
-      ownership: "Humano/Mixto únicamente (I5)"
-    Jerarquia:
-      Organization: "North star, misión"
-      Unit: "Objetivos departamentales"
-      Team: "OKRs de equipo"
-      Individual: "Metas personales alineadas"
+    ID: "ORKO-PR-P5"
+    Deriv: "A5"
+    Def: "Outcome deseado con métricas y jerarquía."
+    Estructura_OKR:
+      - Objective: "Cualitativo, inspiracional."
+      - Key_Results: "Cuantitativos (Metric, Target, Current)."
+      - Hierarchy: "Org → Unit → Team → Individual."
+      - Owner: "Humano Accountable (Mandatory)."
 
 # =============================================================================
-# INVARIANTES (I1-I8)
+# PART III: INVARIANTES (I1-I8) - System Constraints
 # =============================================================================
 
 Invariantes:
   ID: "ORKO-INVARIANTES-01"
-  Purp: "8 propiedades preservadas en todo sistema ORKO válido"
-  Ctx: "[GENOMA] - Constraints ejecutables"
+  Def: "Propiedades que DEBEN preservarse en todo estado válido."
 
-  I1_Minimalidad:
-    ID: "ORKO-I1-01"
-    Enunciado: "El sistema usa conjunto mínimo necesario y suficiente de primitivos"
-    Test: "∀ elemento: ∃ justificación desde P1-P5"
-    Enforcement: "Rechazar elemento sin trazabilidad"
+  I1_Minimalidad: "Sistema usa conjunto mínimo necesario (P1-P5). Nada sobra."
+  I2_Ortogonalidad: "P1-P5 mutuamente independientes. Cambiar uno no rompe otro."
+  I3_Trazabilidad: "Todo artefacto tiene Lineage, Owner, Timestamp."
+  I4_Clasificacion: "Todo elemento es Producción o Habilitación (contextual)."
 
-  I2_Ortogonalidad:
-    ID: "ORKO-I2-01"
-    Enunciado: "Primitivos son mutuamente independientes"
-    Test: "∀ par (Pi, Pj): Pi puede variar sin cambiar Pj"
-    Enforcement: "Separación de concerns en dominios D1-D4"
+  I5_HAIC_Primacia_Humana:
+    ID: "ORKO-INV-I5"
+    Def: "Human-AI Collaboration. AI tiene autonomía acotada, accountability humana intransferible."
+    Niveles_Delegacion_AI:
+      M1_Monitorear: "AI observa. Humano decide."
+      M2_Informar: "AI sugiere. Humano decide."
+      M3_Habilitar: "Humano invoca. AI ejecuta supervisada."
+      M4_Controlar: "AI decide (reglas). Humano handles exceptions."
+      M5_Coproducir: "Humano + AI colaboran par-a-par."
+      M6_Ejecutar: "AI autónoma (bounded). Humano supervisa/override."
+    Constraints:
+      - "Accountability moral siempre es Humana."
+      - "Override mechanism siempre disponible (M4-M6)."
+      - "Explainability obligatoria (M3+)."
 
-  I3_Trazabilidad:
-    ID: "ORKO-I3-01"
-    Enunciado: "Toda transformación es auditable desde inputs hasta outputs"
-    Test: "∀ información: lineage completo disponible"
-    Enforcement: "Metadata obligatoria, audit trail"
-
-  I4_Clasificacion_Contextual:
-    ID: "ORKO-I4-01"
-    Enunciado: "Todo elemento clasificado como Producción o Habilitación"
-    Test: "Test cliente externo: ¿pagaría directamente?"
-    Enforcement: "role + role_context obligatorios"
-
-  I5_HAIC:
-    ID: "ORKO-I5-01"
-    Enunciado: "Human-AI Collaboration - primacía humana explícita"
-    Test: "∀ Capacidad(Algorítmica, C1+): ∃ Humano accountable"
-    Enforcement: "delegated_from NOT NULL para algorítmicos C1+"
-    Delegation_Modes:
-      M1_Monitorear: "Humano ejecuta, AI observa"
-      M2_Asistir: "Humano ejecuta, AI sugiere"
-      M3_Habilitar: "AI prepara, humano decide"
-      M4_Controlar: "AI ejecuta, humano aprueba"
-      M5_Supervisar: "AI ejecuta, humano audita"
-      M6_Ejecutar: "AI autónomo, humano override disponible"
-
-  I6_Trajectory:
-    ID: "ORKO-I6-01"
-    Enunciado: "Progresión autonomía y cambios documentados"
-    Test: "∀ Algorítmico: trajectory_log disponible"
-    Enforcement: "Log (timestamp, input, output, success)"
-
-  I7_Emergencia:
-    ID: "ORKO-I7-01"
-    Enunciado: "Prácticas emergen según complejidad organizacional"
-    Test: "Práctica P implementada en nivel ≥ nivel_mínimo(P)"
-    Niveles:
-      L0: "Startup - minimal viable"
-      L1: "Decisión local"
-      L2: "Reflexión operacional"
-      L3: "Reflexión estructural"
-      L4: "Reflexión estratégica"
-      L5: "Meta-reflexión"
-
-  I8_Adaptacion:
-    ID: "ORKO-I8-01"
-    Enunciado: "Metodología parametrizable sin violar genoma"
-    Test: "Adaptaciones documentadas con justificación"
-    Enforcement: "Separación genoma/fenotipo explícita"
+  I6_Trajectory: "Capacidad Algorítmica evoluciona con historial (Logs → Mejora)."
+  I7_Emergencia: "Prácticas emergen en niveles complejidad (L0-L5). No over-engineering."
+  I8_Adaptacion: "Separación Genoma (Rígido) vs Fenotipo (Flexible)."
 
 # =============================================================================
-# CICLOS FUNDAMENTALES
+# PART IV: CICLOS FUNDAMENTALES (SDA & WSLC)
 # =============================================================================
 
 Ciclos:
   ID: "ORKO-CICLOS-01"
-  Purp: "Dinámicas fundamentales del sistema"
-  Ctx: "[GENOMA] - Patrones temporales irreducibles"
 
   SDA_Sense_Decide_Act:
-    ID: "ORKO-SDA-01"
-    Def: "Ciclo operacional de transformación"
-    Derivacion: "A1 (Transformación) + A3 (Información)"
+    ID: "ORKO-CYC-SDA"
+    Def: "Ciclo canónico de transformación operativa."
     Fases:
-      Sense: "Capturar información del entorno (D2 Percepción)"
-      Decide: "Procesar y elegir acción (D3 Decisión)"
-      Act: "Ejecutar transformación (D4 Operación)"
-    Propiedades:
-      Atomicidad: "Ciclo completo o rollback"
-      Trazabilidad: "Cada fase auditable"
-      Feedback: "Act alimenta próximo Sense"
+      1_Sense: "Capturar estado (D2). [Inputs: Sensores, Observables]."
+      2_Decide: "Seleccionar acción (D3). [Inputs: Info, Propósito, Límites]."
+      3_Act: "Ejecutar transformación (D4). [Inputs: Capacidad, Acción]."
+    Latencias_Comparativas:
+      - Humano: "Sense(s) → Decide(min/h) → Act(min)."
+      - Algoritmo: "Sense(ms) → Decide(ms) → Act(ms). (1000x faster)."
+    Propiedad: "Recursivo (Fractal)."
 
-  WSLC_Work_System_Lifecycle:
-    ID: "ORKO-WSLC-01"
-    Def: "Ciclo de vida de sistemas de trabajo"
-    Derivacion: "A5 (Intencionalidad) + evolución"
+  WSLC_Work_System_LifeCycle:
+    ID: "ORKO-CYC-WSLC"
+    Def: "Ciclo de vida evolutivo del sistema mismo."
     Fases:
-      Initiation: "F1-F3 - Contexto, visión, trayectoria"
-      Development: "F4-F9 - Diseño arquitectónico"
-      Implementation: "F10-F12 - Despliegue"
-      Operation: "F13-F15 - Ejecución continua"
-      Evolution: "F16-F18 - Aprendizaje, adaptación"
-    Propiedades:
-      Iterativo: "Múltiples ciclos durante vida org"
-      Adaptativo: "Trayectoria ajustable según contexto"
+      W1_Initiation: "Concepción, Business Case."
+      W2_Development: "Construcción, Diseño."
+      W3_Implementation: "Despliegue, Cutover."
+      W4_Operation: "Ejecución continua (contiene SDAs)."
+      W5_Retirement: "Decommission, Learning."
+    Relacion_SDA: "WSLC evoluciona el sistema que ejecuta SDAs."
 
 # =============================================================================
-# DOMINIOS ORTOGONALES (D1-D4)
+# PART V: DOMINIOS (D1-D4) - Orthogonal Concerns
 # =============================================================================
 
 Dominios:
   ID: "ORKO-DOMINIOS-01"
-  Purp: "4 áreas ortogonales de responsabilidad"
-  Ctx: "[GENOMA] - Separación de concerns"
+  Def: "Separación de responsabilidades ortogonales para manejo complejidad."
 
   D1_Arquitectura:
-    ID: "ORKO-D1-01"
-    Pregunta: "¿Quién hace qué, con qué autoridad?"
-    Primitivos_Primarios: "P1, P4, P5"
-    Primitivos_Secundarios: "P2, P3"
-    Responsabilidades:
-      - "Diseño estructural"
-      - "Asignación autoridad (RACI)"
-      - "Gestión límites"
-      - "Alineación propósitos"
-    Metrica: "A_Score"
+    Pregunta: "¿Quién hace qué? (Estructura)."
+    Resp: "Diseño Estructural, Autoridad (RACI), Límites."
+    Metrica: "A_Score (Claridad, Span, Alignment)."
 
   D2_Percepcion:
-    ID: "ORKO-D2-01"
-    Pregunta: "¿Qué está pasando? ¿Qué detectamos?"
-    Primitivos_Primarios: "P3"
-    Primitivos_Secundarios: "P1, P5"
-    Responsabilidades:
-      - "Instrumentación 16 observables"
-      - "Detección anomalías"
-      - "Proyección tendencias"
-    Observables:
-      Externos: "EX1-EX8 (mercado, competencia, regulación, tech, clientes, disrupción, social, economía)"
-      Internos: "IN1-IN8 (velocidad, talento, eficiencia, calidad, utilización, alineación, violaciones, debt)"
-    Metrica: "P_Score"
+    Pregunta: "¿Qué pasa? (Observabilidad)."
+    Resp: "Instrumentación 16 Observables (EX1-8 Externos, IN1-8 Internos)."
+    Metrica: "P_Score (Coverage, Freshness, Accuracy)."
 
   D3_Decision:
-    ID: "ORKO-D3-01"
-    Pregunta: "¿Qué hacemos? ¿Qué priorizamos?"
-    Primitivos_Primarios: "P5, P4"
-    Primitivos_Secundarios: "P2, P3"
-    Responsabilidades:
-      - "Estrategia"
-      - "Planificación OKRs"
-      - "Priorización (RICE, WSJF)"
-      - "Gobernanza"
-    Metrica: "D_Score"
+    Pregunta: "¿Qué hacer? (Estrategia)."
+    Resp: "Propósitos (OKRs), Priorización (RICE), Portfolio Mgmt."
+    Metrica: "D_Score (Alignment, Quality, Velocity)."
 
   D4_Operacion:
-    ID: "ORKO-D4-01"
-    Pregunta: "¿Cómo lo hacemos? ¿Cómo entregamos?"
-    Primitivos_Primarios: "P2, P1"
-    Primitivos_Secundarios: "P3, P5"
-    Responsabilidades:
-      - "Ejecución flujos"
-      - "Optimización continua"
-      - "Gestión capacidades"
-      - "Resolución incidentes"
-    Metrica: "O_Score"
-
-  H_org_Formula:
-    ID: "ORKO-HORG-01"
-    Formula: "H_org = A_Score×0.25 + D_Score×0.25 + O_Score×0.30 + P_Score×0.20"
-    Threshold: "≥70 para transformaciones estructurales"
+    Pregunta: "¿Cómo ejecutar? (Delivery)."
+    Resp: "Ejecución Flujos, Optimización, Incident Mgmt."
+    Metrica: "O_Score (Throughput, Reliability, Efficiency)."
 
 # =============================================================================
-# TEOREMAS FUNDAMENTALES (T1-T6)
-# =============================================================================
-
-Teoremas:
-  ID: "ORKO-TEOREMAS-01"
-  Purp: "Validación formal propiedades del sistema"
-  Ctx: "[GENOMA] - Demostraciones lógicas"
-
-  T1_Completitud_Ontologica:
-    ID: "ORKO-T1-01"
-    Teorema: "A1-A5 ontológicamente completo para sistemas organizacionales"
-    Demostracion: "Por construcción - todo fenómeno descomponible en transformación, capacidad, información, restricción, intencionalidad"
-
-  T2_Ortogonalidad_Total:
-    ID: "ORKO-T2-01"
-    Teorema: "P1-P5 mutuamente ortogonales"
-    Demostracion: "Test exhaustivo pares - cada Pi puede variar independiente de Pj"
-
-  T3_Minimalidad:
-    ID: "ORKO-T3-01"
-    Teorema: "No existe conjunto < 5 primitivos que sea completo"
-    Demostracion: "Por contradicción - eliminar cualquier Pi genera gap"
-
-  T4_Suficiencia_Dominios:
-    ID: "ORKO-T4-01"
-    Teorema: "D1-D4 necesarios y suficientes"
-    Demostracion: "Toda actividad descomponible en exactamente 1 dominio"
-
-  T5_Emergencia_Niveles:
-    ID: "ORKO-T5-01"
-    Teorema: "Prácticas emergen en niveles específicos L0-L5"
-    Implicacion: "No implementar práctica en nivel < nivel_mínimo"
-
-  T6_Composicionalidad:
-    ID: "ORKO-T6-01"
-    Teorema: "P1-P5 componibles preservando tipos"
-    Operadores: "⊕ (paralelo), ⊗ (secuencial), ∪ (fusión), ∩ (restricción)"
-
-# =============================================================================
-# ECUACIÓN MAESTRA
+# PART VI: ECUACION MAESTRA & METRICAS
 # =============================================================================
 
 Ecuacion_Maestra:
-  ID: "ORKO-ECUACION-01"
-  Purp: "Formalización valor organizacional"
-  Ctx: "[GENOMA] - Derivada de P5"
+  ID: "ORKO-EQ-MAESTRA"
 
-  Definicion:
-    Formula: "V_org(t) = Σ outcome_i(t) - Σ cost_i(t)"
-    Outcome: "outcome_i(t) = f_evaluate(output, propósito) × volume"
-    Cost: "cost(t) = Σ (capacity × time × unit_cost)"
+  V_org_Valor_Organizacional:
+    Formula: "V_org(t) = Σ Outcomes(t) - Σ Costos(t)"
+    Outcome: "Volume × f_evaluate(Quality, Purpose)"
+    Costo: "Producción + Habilitación (Total Cost of Capacity)."
 
-  AOC_Integration:
-    Formula: "f_evaluate_enhanced = f_evaluate_base × AOC_multiplier"
-    AOC_Multiplier: "w_coh·Coherencia + w_res·Resonancia + w_flu·Flujo"
-    Pesos_Default: "w_coh=0.4, w_res=0.3, w_flu=0.3"
+  Integracion_AOC:
+    Def: "Arquitectura Organizacional Cuántica (Meyer)."
+    Multiplier: "AOC = w1·Coherencia + w2·Resonancia + w3·Flujo"
+    Impacto: "Mejor arquitectura = Mayor Quality multiplier."
 
-  Invariante_Health_Value:
-    Enunciado: "IF H_org < H_min THEN ∂V_org/∂t < 0"
-    Justificacion: "Salud baja → debt → velocity decae → V_org decrece"
+  H_org_Health:
+    Formula: "H_org = 0.25·A + 0.20·P + 0.25·D + 0.30·O"
+    Threshold: "H_min = 70. Si H < 70, sistema entra en deuda/degradación."
 
 # =============================================================================
-# MODELO RELACIONAL
+# PART VII: TEOREMAS Y MODELO RELACIONAL
 # =============================================================================
+
+Teoremas:
+  T1_Completitud: "P1-P5 suficientes para expresar todo concepto org."
+  T2_Ortogonalidad: "P1-P5 dimensión independiente comprobada."
+  T3_Minimalidad: "Remover cualquier Pi rompe el sistema (Axioma violado)."
+  T5_Emergencia: "Prácticas solo válidas si Nivel_Complexity ≥ Nivel_Práctica."
 
 Modelo_Relacional:
-  ID: "ORKO-MODELO-REL-01"
-  Purp: "Estructura relaciones entre primitivos"
-  Ctx: "[GENOMA] - Formas lógicas"
-
-  Entidades:
-    E1: "Capacidad (P1)"
-    E2: "Flujo (P2)"
-    E3: "Información (P3)"
-    E4: "Límite (P4)"
-    E5: "Propósito (P5)"
-
-  Relaciones:
-    R1: "Capacidad ↔ Flujo (N:M) - ejecuta"
-    R2: "Flujo → Información (1:N) - produce"
-    R3: "Capacidad → Información (1:N) - produce"
-    R4: "Capacidad ↔ Información (N:M) - consume"
-    R5: "Información ↔ Información (N:M DAG) - deriva"
-    R6: "Límite ↔ Capacidad (N:M) - restringe"
-    R7: "Límite ↔ Flujo (N:M) - restringe"
-    R8: "Límite ↔ Información (N:M) - restringe"
-    R9: "Propósito → Flujo (1:N) - direcciona"
-    R10: "Propósito → Capacidad (N:1) - asigna owner"
-    R11: "Propósito ↔ Propósito (Tree) - jerarquía"
-    R12: "Capacidad ↔ Capacidad (1:N) - composición"
-    R13: "Capacidad → Capacidad (HAIC) - delegación"
-
+  ID: "ORKO-MODELO-REL"
+  Entidades: "E1(Cap), E2(Flu), E3(Inf), E4(Lim), E5(Prop)."
+  Relaciones_Clave:
+    R1: "Capacidad ejecuta Flujo (N:M)."
+    R2: "Flujo produce Información (1:N)."
+    R6: "Límite restringe Capacidad/Flujo (N:M)."
+    R9: "Propósito direcciona Flujo (1:N)."
+    R13: "Capacidad(Human) delega Capacidad(Algo) [HAIC Base]."
+  Constraints:
+    - "Acyclicity en DAGs (Lineage, Flujos)."
+    - "Mandatory Owner para Propósito."
+    - "Mandatory Human Accountable para AI."
 # =============================================================================
-# FIN guide_core_000_fundamentos_orko.yml
+# FIN ARTEFACTO: guide_core_000_fundamentos_orko.yml
 # =============================================================================

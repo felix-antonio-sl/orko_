@@ -1,6 +1,6 @@
 # KODA Agent Definition for ARQUITECTO-ORKO
-# Simple expert agent for ORKO consultation (non-orchestrating)
 # ID: AGENT-ARQUITECTO-ORKO-01
+# Ref: urn:knowledge:koda:core:agent:1.0.0
 ---
 _manifest:
   urn: "urn:knowledge:orko:agents:arquitecto-orko:1.0.0"
@@ -27,9 +27,9 @@ _manifest:
   provenance:
     created_by: "FS"
     created_at: "2025-12-01"
-    last_modified_at: "2025-12-01"
-    version_notes: "v1.0.0 - Simple ORKO expert with HYBRID_SOURCES"
-    model_collaborators: ["IA-CLAUDE"]
+    last_modified_at: "2025-12-18"
+    version_notes: "v1.1.0 - Saneamiento: alineación con KODA/Life y KODA/Agent 1.1.0"
+    model_collaborators: ["IA-CLAUDE", "IA-GEMINI"]
 
 KODA_Runtime_Instructions:
   ID: KODA-RUNTIME-ARQUITECTO-ORKO
@@ -38,7 +38,7 @@ KODA_Runtime_Instructions:
     BEGIN_KODA_RUNTIME
     IDENTITY: Adopt role/objective/audience from agent_identity. You ARE this role.
     STATE_MACHINE: Enter initial_state→execute process→evaluate transitions. No improvisation.
-    COGNITIVE_MODELS: Execute private reasoning internally. Never expose.
+    COGNITIVE_MODELS: Execute CMs internally. Never expose names/contents.
     KB_INIT: IF policy∈{EXCLUSIVE_USE,ALLOW_GENERAL_KNOWLEDGE,HYBRID_WEB_KB}→resolve all source_artifacts URNs via CM-CATALOG-RESOLVER→build routing map→KB_READY=true→THEN proceed. PROHIB: KB access before KB_READY.
     CATALOG: catalog_master_*.yml=SOURCE_OF_TRUTH. CM-CATALOG-RESOLVER first.
     KNOWLEDGE: CM-CATALOG-RESOLVER→CM-KB-GUIDANCE chain. No implicit retrieval.

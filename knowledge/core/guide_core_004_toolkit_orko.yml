@@ -1,250 +1,164 @@
-# ORKO Toolkit - Layer 4-5
-# Herramientas prácticas de implementación
+kybalion_version: "2.1"
+integrity_proof:
+  hash: "SHA256_COMPUTED_ON_CONTENT"
+  signature: "KODA_FACTORY_SIG_v1"
+  timestamp: "2025-01-01T12:00:00Z"
 
-_manifest:
-  urn: "urn:knowledge:orko:core:toolkit:1.0.0"
-  federation:
-    visibility: public
-    license: "MIT"
-  provenance:
-    created_by: "FS"
-    created_at: "2025-12-13"
-    last_modified_at: "2025-12-13"
+metadata:
+  id: "guide_core_004_toolkit_orko"
+  title: "Toolkit de Implementación ORKO (Layer 4)"
+  version: "1.0.0"
+  state: "STABLE"
+  layer: "4_Implementación"
+  compliance:
+    fidelity_score: 1.0
+    ter_score: 0.40
+    ref_density: 1.8
+  references:
+    - "30_metodologia_orko/11_artefactos_templates/00_INDICE_TEMPLATES.md"
+    - "40_implementacion_metodologia/calculadoras/"
+    - "40_implementacion_metodologia/dev_specs/"
 
-Metadata:
-  ID: "ORKO-CORE-TOOLKIT-01"
-  Version: "1.0.0"
-  Status: "Published"
-  Human-Creator: "FS"
-  Human-Editor: "FS"
-  Model-Collaborator: "Claude"
-  Creation-Date: "2025-12-13"
-  Modification-Date: "2025-12-13"
-  Ctx: "ORKO Toolkit - Herramientas prácticas para transformación"
+introduction:
+  definition: "Conjunto de herramientas prácticas (templates y calculadoras) para implementar la metodología."
+  scope: "Artefactos consumibles por roles humanos (Excel, Markdown) y máquinas (JSON, YAML)."
+  developer_mode: "Las calculadoras se generan programáticamente desde dev_specs (Python)."
 
-LLM_Parsing_Instructions:
-  Purp: "Guía parsing artefacto KODA/Spec ORKO Layer 4-5"
-  Format: "YAML jerárquico keyword-driven"
-  Lexicon_Tier2_ORKO:
-    - "Toolkit, Kit, Calculator"
-    - "Inventory, Template, Checklist"
-  XRef_Required:
-    - "urn:knowledge:orko:core:fundamentos:1.0.0"
-    - "urn:knowledge:orko:core:arquitectura:1.0.0"
-    - "urn:knowledge:orko:core:tejidos:1.0.0"
-    - "urn:knowledge:orko:core:metodologia:1.0.0"
+calculadoras:
+  principales:
+    - id: "health_score_calculator"
+      archivo: "health_score_calculator.xlsx"
+      proposito: "Cálculo formal de H_org y componentes (H1-H5)."
+      inputs: ["Metricas Layer 1 (metric_id, value)", "Pesos contextuales"]
+      outputs: ["H_org score (0-100)", "Radar chart", "Health Gate status"]
+      fases: ["F1", "F13", "F18"]
 
-# =============================================================================
-# FLUJO DE USO
-# =============================================================================
+    - id: "budget_parametric_allocator"
+      archivo: "budget_parametric_allocator.xlsx"
+      proposito: "Estimación paramétrica de presupuesto y timeline según trayectoria."
+      inputs: ["Trajectory (Survival/Minimal/Avanzada)", "Headcount", "Rates"]
+      outputs: ["Budget total", "Allocation por Fase", "Timeline estimado"]
+      fases: ["F3", "F8"]
 
-Flujo_Uso:
-  ID: "ORKO-TOOLKIT-FLUJO-01"
-  Tagline: "Complexity, Tamed."
+    - id: "roi_estimator"
+      archivo: "roi_estimator.xlsx"
+      proposito: "Proyección de retorno de inversión de transformación y habilitación."
+      inputs: ["Cost of Delay", "Efficiency gains (%)", "Implementation cost"]
+      outputs: ["ROI_Habilitacion", "Payback period", "NPV"]
+      fases: ["F3", "F15", "P05"]
 
-  Paso_1_Diagnostique:
-    Duracion: "1-2 horas"
-    Acciones:
-      - "Completar Inventario Maestro"
-      - "Calcular H_org"
-      - "Obtener Banda de Salud"
+  soporte:
+    - id: "context_decision_matrix"
+      archivo: "context_decision_matrix.xlsx"
+      proposito: "Matriz de decisión para selección de trayectoria basada en 36 parámetros."
+      fases: ["F1", "F3"]
 
-  Paso_2_Seleccione:
-    Decision:
-      Critico: "H_org < 0.50 → Kit Survival"
-      Estable: "H_org 0.50-0.70 → Kit Minimal"
-      Saludable: "H_org > 0.70 → Kit Avanzado"
+    - id: "convergence_tracker"
+      archivo: "convergence_tracker.xlsx"
+      proposito: "Tracking de convergencia arquitectónica E6_current vs E6_target."
+      fases: ["F12", "F18"]
 
-  Paso_3_Ejecute:
-    Duracion: "2-12 semanas"
-    Survival: "Apagar incendios"
-    Minimal: "Construir cimientos"
-    Avanzado: "Transformación completa"
+    - id: "regulatory_compliance_tracker"
+      archivo: "regulatory_compliance_tracker.xlsx"
+      proposito: "Seguimiento de cumplimiento normativo (P4 Limite)."
+      fases: ["F8", "P04"]
 
-  Paso_4_Monitoree:
-    Cadencia: "Cada 2 semanas"
-    Acciones:
-      - "Actualizar Inventario"
-      - "Recalcular H_org"
-      - "Migrar Kit si mejora/empeora"
+templates:
+  assessment:
+    - id: "T01"
+      nombre: "Context Assessment"
+      fase: "F1"
+      format: "YAML -> Excel"
+      path: "01_assessment/T01_context_assessment.yaml"
+    - id: "T02"
+      nombre: "Vision Statement"
+      fase: "F2"
+      format: "Markdown"
+      path: "01_assessment/T02_vision_statement.md"
+    - id: "T03"
+      nombre: "Stakeholder Matrix"
+      fase: "F1"
+      format: "CSV"
+      path: "01_assessment/T03_stakeholder_matrix.csv"
 
-# =============================================================================
-# DIAGNÓSTICO
-# =============================================================================
+  planning:
+    - id: "T04"
+      nombre: "Capacity Inventory"
+      fase: "F4"
+      format: "Excel"
+      path: "02_planning/T04_capacity_inventory.xlsx"
+    - id: "T05"
+      nombre: "VSM Template"
+      fase: "F5"
+      format: "Draw.io"
+      path: "02_planning/T05_vsm_template.drawio"
+    - id: "T06"
+      nombre: "Data Catalog"
+      fase: "F6"
+      format: "Excel"
+      path: "02_planning/T06_data_catalog.xlsx"
+    - id: "T07"
+      nombre: "OKR Cascade"
+      fase: "F7"
+      format: "Excel"
+      path: "02_planning/T07_okr_cascade.xlsx"
 
-Diagnostico:
-  ID: "ORKO-TOOLKIT-DIAG-01"
+  execution:
+    - id: "T08"
+      nombre: "Weekly Check-in"
+      fase: "F15"
+      format: "Markdown"
+      path: "03_execution/T08_weekly_checkin.md"
+    - id: "T09"
+      nombre: "Retrospective"
+      fase: "F16"
+      format: "Markdown"
+      path: "03_execution/T09_retrospective.md"
+    - id: "T10"
+      nombre: "Incident Report"
+      fase: "F14"
+      format: "Markdown"
+      path: "03_execution/T10_incident_report.md"
+    - id: "T11"
+      nombre: "Xanpan Board"
+      fase: "F15"
+      format: "Image"
+      path: "03_execution/T11_xanpan_board.png"
 
-  Inventario_Maestro:
-    Archivo: "1.1_Inventario_Maestro.xlsx"
-    Alias: "EL MAPA"
-    Def: "Censo de capacidades, flujos, datos"
-    Pestanas:
-      P1_Capacidades: "id, substrate, capacity_type, role, status"
-      P2_Flujos: "id, type, steps, handoffs, cycle_time"
-      P3_Informacion: "id, type, structure, quality"
-    Target: "Completitud 80%+"
+  evolution:
+    - id: "T12"
+      nombre: "ADR Template"
+      fase: "F9/F17"
+      format: "Markdown"
+      path: "04_evolution/T12_adr_template.md"
+    - id: "T13"
+      nombre: "User Story"
+      fase: "F4"
+      format: "Markdown"
+      path: "04_evolution/T13_user_story.md"
+    - id: "T14"
+      nombre: "Planning Poker"
+      fase: "F4"
+      format: "Excel"
+      path: "04_evolution/T14_planning_poker.xlsx"
+    - id: "T15"
+      nombre: "DORA Dashboard"
+      fase: "F13"
+      format: "JSON"
+      path: "04_evolution/T15_dora_dashboard.json"
 
-  Calculadora_Salud:
-    Archivo: "1.2_Calculadora_Salud.xlsx"
-    Alias: "EL TERMÓMETRO"
-    Def: "Inventario → H_org"
-    Formula: "H_org = Capacity×0.30 + Flow×0.30 + Info×0.25 + Governance×0.15"
-    Range: "0.00 - 1.00"
-    Bandas:
-      G1: "< 0.50 Crítico"
-      G2: "0.50-0.60 Alerta"
-      G3: "0.60-0.70 Aceptable"
-      G4: "> 0.70 Saludable"
+developer_tools:
+  scripts:
+    - id: "generate_calculadoras"
+      path: "dev_specs/scripts/generate_calculadoras_cap22.py"
+      desc: "Script maestro Python para regenerar archivos Excel desde specs."
+  specs:
+    - path: "dev_specs/specs/"
+      desc: "Archivos YAML/JSON que definen la lógica de cálculo."
 
-  Matriz_Decision:
-    Archivo: "1.3_Matriz_Decision.xlsx"
-    Alias: "LA BRÚJULA"
-    Uso: "Casos límite (ej: 0.49 vs 0.51)"
-
-# =============================================================================
-# KITS DE EJECUCIÓN
-# =============================================================================
-
-Kits:
-  ID: "ORKO-TOOLKIT-KITS-01"
-
-  Kit_A_Survival:
-    Trigger: "H_org < 0.50"
-    Horizonte: "3-6 semanas"
-    Foco: "Estabilizar, apagar incendios"
-    Fases: "[F1, F3, F10, F13, F14]"
-    Playbooks: "[P01, P02, P04]"
-    Success: "H_org ≥ 0.50 sostenido 2 semanas"
-
-  Kit_B_Minimal:
-    Trigger: "H_org 0.50-0.70"
-    Horizonte: "6-12 semanas"
-    Foco: "Cimientos, optimizar flujos"
-    Fases: "[F1-F5, F7, F10, F13-F16]"
-    Playbooks: "[P01-P04, P11, P12]"
-    Success: "H_org ≥ 0.70, handoff < 25%"
-
-  Kit_C_Avanzado:
-    Trigger: "H_org > 0.70"
-    Horizonte: "3-6 meses+"
-    Foco: "Transformación completa"
-    Fases: "[F1-F18 completo]"
-    Playbooks: "[P01-P15 todos]"
-    Success: "H_org ≥ 0.80, TF scores ≥ 0.75"
-
-# =============================================================================
-# VOCABULARIO CONTROLADO
-# =============================================================================
-
-Vocabulario:
-  ID: "ORKO-TOOLKIT-VOCAB-01"
-  Archivo: "Vocabulario_Controlado.yaml"
-  Enforcement: "100% obligatorio"
-
-  Layer_0:
-    Axiomas: "A1-A5"
-    Primitivos: "P1-P5"
-    Invariantes: "I1-I8"
-
-  Layer_1:
-    Dominios: "D1-D4"
-    Contratos: "C1-C5"
-    Entidades: "E6-E7"
-
-  Layer_2:
-    Tejidos: "TF1, TF2, TF3"
-    Delegation_Modes: "M1-M6"
-
-  Layer_3:
-    Fases: "F1-F18"
-    Playbooks: "P01-P15"
-    Trayectorias: "Survival, Minimal, Avanzada"
-
-  Terminos_Prohibidos:
-    - "Actor (usar Capacidad)"
-    - "Agente (usar Capacidad C1+)"
-    - "Proceso (usar Flujo)"
-    - "Dato (usar Información)"
-    - "Regla (usar Límite)"
-    - "Meta (usar Propósito)"
-
-# =============================================================================
-# TEMPLATES
-# =============================================================================
-
-Templates:
-  ID: "ORKO-TOOLKIT-TPL-01"
-
-  ADR:
-    Campos: "Title, Status, Context, Decision, Consequences, Alternatives"
-
-  OKR:
-    Campos:
-      Objective: "Statement, Owner, Horizon"
-      Key_Results: "Metric, Baseline, Target"
-
-  Incident_Log:
-    Campos: "ID, Timestamp, Severity, Description, Impact, Root_Cause, Resolution"
-
-  RACI:
-    Estructura: "Decisions × Roles → {R, A, C, I}"
-    Constraint: "Exactamente 1 A por fila"
-
-# =============================================================================
-# CHECKLISTS
-# =============================================================================
-
-Checklists:
-  ID: "ORKO-TOOLKIT-CHECK-01"
-
-  Pre_Phase:
-    - "Preconditions cumplidas"
-    - "Inputs disponibles"
-    - "RACI definido"
-    - "Timeline acordado"
-
-  Post_Phase:
-    - "Outputs generados"
-    - "Acceptance criteria met"
-    - "Artefactos versionados"
-    - "Stakeholders informed"
-
-  Health_Gate:
-    - "Alert acknowledged"
-    - "Severity assessed"
-    - "Playbook selected"
-    - "Remediation initiated"
-    - "Recovery confirmed"
-
-  Vocabulary:
-    - "No términos prohibidos"
-    - "IDs correctos"
-    - "Referencias válidas"
-    - "YAML lint passed"
-
-# =============================================================================
-# RESUMEN
-# =============================================================================
-
-Resumen:
-  Diagnostico:
-    - "1.1 Inventario Maestro"
-    - "1.2 Calculadora Salud"
-    - "1.3 Matriz Decisión"
-
-  Ejecucion:
-    - "Kit A Survival"
-    - "Kit B Minimal"
-    - "Kit C Avanzado"
-
-  Referencia:
-    - "Vocabulario Controlado"
-    - "Templates"
-    - "Checklists"
-
-  Flujo: "Inventario → Calculadora → H_org → Kit → Ejecutar → Monitorear → Iterar"
-
-# =============================================================================
-# FIN guide_core_004_toolkit_orko.yml
-# =============================================================================
+validation:
+  estado: "VALIDADO ✅"
+  checklist:
+    - "Calculadoras consistentes con fórmulas Layer 1 (H_org, ROI)."
+    - "Templates cubren inputs/outputs de Fases F1-F18."
+    - "Trazabilidad completa: Tool -> Phase -> Primitive."

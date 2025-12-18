@@ -291,28 +291,28 @@ Contenido:
           Src: "sources/ORKO_Toolkit_v1.0.0/02_EJECUCION/A_Kit_Survival/Playbooks/P02_handoff_reduction.md"
           Markdown: |-
             # P02_handoff_reduction
-            
+
             **Tipo:** Playbook Recovery  
             **ID:** P02  
             **Trigger:** Deterioro de `H_org` o `ROI_Habilitacion` atribuido a handoffs  
             **Estimación Ejecución:** `P2D`
-            
+
             ---
-            
+
             ## §0. FUNDAMENTO
-            
+
             **Layer 0:** `A1`, `A3`, `P2`, `I2`, `I3`, `I6`  
             **Layer 1:** `D1`, `D4`, `E7`  
             **Layer 2:** `TF2`
-            
+
             **Justificación:** Handoffs excesivos elevan el tiempo de ciclo y degradan `H_org`/`ROI_Habilitacion`. Este playbook aplica principios de flujo (`P2`) y ortogonalidad (`I2`) para estabilizar operaciones (`D4`) y recuperar eficiencia, manteniendo trazabilidad (`I3`) y aprendizaje para ajustes de trayectoria (`I6`).
-            
+
             ---
-            
+
             ## §1. INTERFAZ
-            
+
             ### Trigger Conditions
-            
+
             ```yaml
             triggers:
               - condition: "H_org < 70 con evidencia de handoffs altos en F5/F11"
@@ -328,9 +328,9 @@ Contenido:
                 threshold: "G1"
                 source: "13_metricas_validacion/02_health_gates.md"
             ```
-            
+
             ### Outputs
-            
+
             ```yaml
             outputs:
               - report: "P02_execution_report.md"
@@ -340,27 +340,27 @@ Contenido:
               - metric_update: "ROI_Habilitacion_post_P02"
                 consumers: ["F13", "G1"]
             ```
-            
+
             ---
-            
+
             ## §2. EJECUCIÓN
-            
+
             **Pasos**:
             1. **Mapeo flujos** (4-6h): Identificar handoffs críticos en TF2
             2. **Análisis impacto** (2h): Cuantificar delay por handoff
             3. **Rediseño flujos** (1 día): Reducir handoffs, aumentar bounded autonomy
             4. **Implementación** (2-3 días): Ejecutar cambios flujo
             5. **Validación** (continuo): Medir ROI_Habilitacion improvement
-            
+
             **Criterios éxito**:
             - Reducción >30% handoffs críticos
             - ROI_Habilitacion > 1.0
             - H_org recovery
-            
+
             ---
-            
+
             ## §3. RACI
-            
+
             ```yaml
             raci:
               responsible: ["Role_FlowOwner", "TF2_Lead"]
@@ -373,28 +373,28 @@ Contenido:
           Src: "sources/ORKO_Toolkit_v1.0.0/02_EJECUCION/A_Kit_Survival/Playbooks/P04_security_remediation.md"
           Markdown: |-
             # P04_security_remediation
-            
+
             **Tipo:** Playbook Recovery  
             **ID:** P04  
             **Trigger:** Incidente de seguridad o gap de cumplimiento que amenaza `H_org`/`ROI_Habilitacion`  
             **Estimación Ejecución:** `P2D`
-            
+
             ---
-            
+
             ## §0. FUNDAMENTO
-            
+
             **Layer 0:** `A1`, `A4`, `P3`, `P4`, `I3`, `I5`, `I6`  
             **Layer 1:** `D2`, `D4`, `E6`  
             **Layer 2:** `TF3`
-            
+
             **Justificación:** Los incidentes de seguridad o gaps regulatorios (`P4`) impactan directamente la salud organizacional (`H_org`) y el retorno de habilitación (`ROI_Habilitacion`). P04 define respuesta inmediata y trazable (`I3`) preservando responsabilidad humana (`I5`) y aprendizaje para ajustes posteriores (`I6`).
-            
+
             ---
-            
+
             ## §1. INTERFAZ
-            
+
             ### Trigger Conditions
-            
+
             ```yaml
             triggers:
               - condition: "Security incident confirmado por F11"
@@ -410,9 +410,9 @@ Contenido:
                 threshold: "G1/G2"
                 source: "13_metricas_validacion/02_health_gates.md"
             ```
-            
+
             ### Outputs
-            
+
             ```yaml
             outputs:
               - report: "P04_security_report.md"
@@ -422,28 +422,28 @@ Contenido:
               - metric_update: "H_org_security_delta"
                 consumers: ["F13", "G1", "G2"]
             ```
-            
+
             ---
-            
+
             ## §2. EJECUCIÓN
-            
+
             **Pasos**:
             1. **Contención** (inmediato): Mitigar riesgo security/compliance
             2. **Análisis impacto** (4h): Evaluar impacto H_org y ROI_Habilitacion
             3. **Plan remediación** (1 día): Definir acciones correctivas
             4. **Implementación** (2-5 días): Ejecutar remediation plan
             5. **Post-mortem** (4h): Documentar learnings y prevención
-            
+
             **Criterios éxito**:
             - Incident cerrado
             - Compliance gap remediado
             - H_org recovery
             - Post-mortem publicado
-            
+
             ---
-            
+
             ## §3. RACI
-            
+
             ```yaml
             raci:
               responsible: ["Role_SecurityOwner", "Role_ComplianceOfficer"]
@@ -487,28 +487,28 @@ Contenido:
           Src: "sources/ORKO_Toolkit_v1.0.0/02_EJECUCION/B_Kit_Minimal/Playbooks/P05_bounded_autonomy_m6.md"
           Markdown: |-
             # P05_bounded_autonomy_m6
-            
+
             **Tipo:** Playbook Transformation  
             **ID:** P05  
             **Trigger:** `eta_org` y/o `ROI_Habilitacion` subóptimos con `H_org` suficiente para aumentar autonomía (M6)  
             **Estimación Ejecución:** `P4W`
-            
+
             ---
-            
+
             ## §0. FUNDAMENTO
-            
+
             **Layer 0:** `A1`, `A3`, `A5`, `P1`, `P2`, `P5`, `I3`, `I5`, `I6`  
             **Layer 1:** `D1`, `D2`, `D4`, `E6`, `E7`  
             **Layer 2:** `TF1`, `TF2`
-            
+
             **Justificación:** Cuando `H_org` es suficientemente alto pero `eta_org` y/o `ROI_Habilitacion` no alcanzan el potencial esperado, una causa recurrente es un modelo de autonomía/decisión pobremente diseñado. P05 define cómo pasar a modos de autonomía más avanzados (en especial `M6_BoundedAutonomy`) articulando capacidades (`P1`), flujos (`P2`) y propósito (`P5`) sin romper límites (`P4`) ni invariantes de trazabilidad (`I3`), accountability (`I5`) y adaptación (`I6`).
-            
+
             ---
-            
+
             ## §1. INTERFAZ
-            
+
             ### Trigger Conditions
-            
+
             ```yaml
             triggers:
               - condition: "H_org >= 70 AND eta_org < target_minimal"
@@ -524,9 +524,9 @@ Contenido:
                 threshold: "Minimal->Avanzada"
                 source: "F3.trayectoria_decision"
             ```
-            
+
             ### Outputs
-            
+
             ```yaml
             outputs:
               - report: "P05_autonomy_design_report.md"
@@ -536,14 +536,14 @@ Contenido:
               - metric_update: "eta_org_autonomy_expected_delta"
                 consumers: ["F13", "F17"]
             ```
-            
+
             ---
-            
+
             ## §2. EJECUCIÓN
             **Pasos**: 1) Diseñar modelo M6 autonomía, 2) Pilotear con 1-2 equipos, 3) Escalar, 4) Monitorear eta_org
-            
+
             ---
-            
+
             ## §3. RACI
             ```yaml
             raci:
@@ -557,28 +557,28 @@ Contenido:
           Src: "sources/ORKO_Toolkit_v1.0.0/02_EJECUCION/B_Kit_Minimal/Playbooks/P10_capacity_gap_resolution.md"
           Markdown: |-
             # P10_capacity_gap_resolution
-            
+
             **Tipo:** Playbook Transformation  
             **ID:** P10  
             **Trigger:** Gaps críticos de capacidad en F4/F10 que explican baja `H_org`/`eta_org` o bajo `ROI_Habilitacion`  
             **Estimación Ejecución:** `P4W`
-            
+
             ---
-            
+
             ## §0. FUNDAMENTO
-            
+
             **Layer 0:** `A1`, `A3`, `A5`, `P1`, `P2`, `P5`, `I3`, `I6`  
             **Layer 1:** `D1`, `D4`, `E6`  
             **Layer 2:** `TF1`, `TF2`
-            
+
             **Justificación:** P10 se activa cuando la degradación de `H_org`/`eta_org` o el bajo `ROI_Habilitacion` se explican por gaps de capacidad (skills, FTE, plataformas) identificados en `F4`/`F10`. Su objetivo es diseñar y ejecutar un plan de cierre de gaps que restaure la eficiencia y prepare a la organización para escenarios G3/G4, en coordinación con P05, P06 y P11.
-            
+
             ---
-            
+
             ## §1. INTERFAZ
-            
+
             ### Trigger Conditions
-            
+
             ```yaml
             triggers:
               - condition: "F4/F10 identifican gaps críticos de capacidad que explican baja H_org/eta_org o bajo ROI_Habilitacion"
@@ -590,9 +590,9 @@ Contenido:
                 threshold: "G3_activo"
                 source: "02_health_gates.md"
             ```
-            
+
             ### Outputs
-            
+
             ```yaml
             outputs:
               - report: "P10_capacity_gap_resolution_report.md"
@@ -600,15 +600,15 @@ Contenido:
               - artifact: "capacity_gap_resolution_plan.yaml"
                 consumers: ["F10", "F17", "P05", "P06"]
             ```
-            
-            
+
+
             ---
-            
+
             ## §2. EJECUCIÓN
             **Pasos**: 1) Identificar gap capacidad (TF1), 2) Evaluar opciones (hire/buy/build/borrow), 3) Ejecutar adquisición, 4) Onboard, 5) Validar gap cerrado
-            
+
             ---
-            
+
             ## §3. RACI
             ```yaml
             raci:
@@ -622,7 +622,6 @@ Contenido:
         T04:
           Src: "sources/ORKO_Toolkit_v1.0.0/02_EJECUCION/B_Kit_Minimal/Templates/T04_capacity_inventory.xlsx"
           Markdown: |-
-
 
   Referencia:
     Guia_Uso_Calculadoras:
